@@ -1,5 +1,5 @@
 {
-  "name": "@zapplyjobs/job-board-shared",
+  "name": "@zapply/job-board-shared",
   "version": "1.0.0",
   "description": "Shared utilities for ZapplyJobs job board repositories",
   "main": "src/index.js",
