@@ -1,0 +1,27 @@
+{
+  "name": "@zapplyjobs/job-board-shared",
+  "version": "1.0.0",
+  "description": "Shared utilities for ZapplyJobs job board repositories",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zapplyjobs/job-board-shared.git"
+  },
+  "keywords": [
+    "job-board",
+    "discord",
+    "utilities",
+    "routing"
+  ],
+  "author": "ZapplyJobs",
+  "license": "MIT",
+  "files": [
+    "src/**/*"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
