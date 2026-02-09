@@ -1,0 +1,22 @@
+{
+  "name": "@zapply/job-board-shared",
+  "version": "1.0.0",
+  "description": "Shared utilities and functions for Zapply job board repositories",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "dependencies": {
+    "axios": "^1.13.2"
+  },
+  "author": "zapplyjobs",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "job-board",
+    "shared",
+    "utilities"
+  ]
+}
