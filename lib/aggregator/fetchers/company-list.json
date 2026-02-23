@@ -3,7 +3,7 @@
     "description": "Curated list of tech companies using Greenhouse, Lever, and Ashby ATS platforms",
     "last_updated": "2026-02-23",
     "verified": "All slugs verified live with entry-level job counts as of 2026-02-23",
-    "notes": "Session 57: Added 12 Greenhouse boards (mongodb/twilio/okta/scaleai/databricks/elastic/robinhood/airbnb/lyft/block/hubspotjobs/ripple). Added 3 Ashby boards (notion/ramp/openai). Removed dead Lever (nominal=0 jobs, januaryinc=VP-only). Removed stale Ashby (railway=111d, clerk=39d, linear=41d)."
+    "notes": "Session 57: Added 12 Greenhouse boards (mongodb/twilio/okta/scaleai/databricks/elastic/robinhood/airbnb/lyft/block/hubspotjobs/ripple). Added 3 Ashby boards (notion/ramp/openai). Removed dead Lever (nominal=0 jobs, januaryinc=VP-only). Removed stale Ashby (railway=111d, clerk=39d, linear=41d). Session 60: Added SpaceX/Anduril/Lucid Motors (hardware boards, I-fix-3). Slugs verified: spacex=1528 jobs, andurilindustries=1542 jobs, lucidmotors=274 jobs."
   },
   "greenhouse": [
     {
@@ -125,6 +125,18 @@
     {
       "slug": "ripple",
       "name": "Ripple"
+    },
+    {
+      "slug": "spacex",
+      "name": "SpaceX"
+    },
+    {
+      "slug": "andurilindustries",
+      "name": "Anduril"
+    },
+    {
+      "slug": "lucidmotors",
+      "name": "Lucid Motors"
     }
   ],
   "lever": [
