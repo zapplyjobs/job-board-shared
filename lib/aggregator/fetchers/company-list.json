@@ -3,7 +3,7 @@
     "description": "Curated list of tech companies using Greenhouse, Lever, and Ashby ATS platforms",
     "last_updated": "2026-02-23",
     "verified": "All slugs verified live with entry-level job counts as of 2026-02-23",
-    "notes": "Session 57: Added 12 Greenhouse boards (mongodb/twilio/okta/scaleai/databricks/elastic/robinhood/airbnb/lyft/block/hubspotjobs/ripple). Added 3 Ashby boards (notion/ramp/openai). Removed dead Lever (nominal=0 jobs, januaryinc=VP-only). Removed stale Ashby (railway=111d, clerk=39d, linear=41d). Session 60: Added SpaceX/Anduril/Lucid Motors (hardware boards, I-fix-3). Slugs verified: spacex=1528 jobs, andurilindustries=1542 jobs, lucidmotors=274 jobs."
+    "notes": "Session 57: Added 12 Greenhouse boards (mongodb/twilio/okta/scaleai/databricks/elastic/robinhood/airbnb/lyft/block/hubspotjobs/ripple). Added 3 Ashby boards (notion/ramp/openai). Removed dead Lever (nominal=0 jobs, januaryinc=VP-only). Removed stale Ashby (railway=111d, clerk=39d, linear=41d). Session 60: Added SpaceX/Anduril/Lucid Motors (hardware boards, I-fix-3). Slugs verified: spacex=1528 jobs, andurilindustries=1542 jobs, lucidmotors=274 jobs. Session 60 L-2: Added Palantir (Lever, 244 jobs, 20 new grad roles). Added 5 Ashby boards: sentry (46, 39 US), benchling (62, 49 US), replit (76, 70 US), perplexity (80, 53 US), zip (106, 70 US). Skipped cohere (123 jobs but 81% non-US/Toronto). All verified live 2026-02-23."
   },
   "greenhouse": [
     {
@@ -147,6 +147,10 @@
     {
       "slug": "gohighlevel",
       "name": "HighLevel"
+    },
+    {
+      "slug": "palantir",
+      "name": "Palantir"
     }
   ],
   "ashby": [
@@ -169,6 +173,26 @@
     {
       "slug": "openai",
       "name": "OpenAI"
+    },
+    {
+      "slug": "sentry",
+      "name": "Sentry"
+    },
+    {
+      "slug": "benchling",
+      "name": "Benchling"
+    },
+    {
+      "slug": "replit",
+      "name": "Replit"
+    },
+    {
+      "slug": "perplexity",
+      "name": "Perplexity"
+    },
+    {
+      "slug": "zip",
+      "name": "Zip"
     }
   ],
   "workable": []
