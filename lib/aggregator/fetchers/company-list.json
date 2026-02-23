@@ -1,9 +1,9 @@
 {
   "_meta": {
     "description": "Curated list of tech companies using Greenhouse, Lever, and Ashby ATS platforms",
-    "last_updated": "2026-02-03",
-    "verified": "All slugs tested and working as of 2026-02-03",
-    "notes": "Removed 12 dead YC Winter 2012 companies (Greenhouse boards no longer exist). Kept Matterport (active with 94 jobs)."
+    "last_updated": "2026-02-23",
+    "verified": "All slugs verified live with entry-level job counts as of 2026-02-23",
+    "notes": "Session 57: Added 12 Greenhouse boards (mongodb/twilio/okta/scaleai/databricks/elastic/robinhood/airbnb/lyft/block/hubspotjobs/ripple). Added 3 Ashby boards (notion/ramp/openai). Removed dead Lever (nominal=0 jobs, januaryinc=VP-only). Removed stale Ashby (railway=111d, clerk=39d, linear=41d)."
   },
   "greenhouse": [
     {
@@ -77,6 +77,54 @@
     {
       "slug": "matterport",
       "name": "Matterport"
+    },
+    {
+      "slug": "mongodb",
+      "name": "MongoDB"
+    },
+    {
+      "slug": "twilio",
+      "name": "Twilio"
+    },
+    {
+      "slug": "okta",
+      "name": "Okta"
+    },
+    {
+      "slug": "scaleai",
+      "name": "Scale AI"
+    },
+    {
+      "slug": "databricks",
+      "name": "Databricks"
+    },
+    {
+      "slug": "elastic",
+      "name": "Elastic"
+    },
+    {
+      "slug": "robinhood",
+      "name": "Robinhood"
+    },
+    {
+      "slug": "airbnb",
+      "name": "Airbnb"
+    },
+    {
+      "slug": "lyft",
+      "name": "Lyft"
+    },
+    {
+      "slug": "block",
+      "name": "Block"
+    },
+    {
+      "slug": "hubspotjobs",
+      "name": "HubSpot"
+    },
+    {
+      "slug": "ripple",
+      "name": "Ripple"
     }
   ],
   "lever": [
@@ -85,27 +133,11 @@
       "name": "Spotify"
     },
     {
-      "slug": "nominal",
-      "name": "Nominal"
-    },
-    {
       "slug": "gohighlevel",
       "name": "HighLevel"
-    },
-    {
-      "slug": "januaryinc",
-      "name": "January AI"
     }
   ],
   "ashby": [
-    {
-      "slug": "linear",
-      "name": "Linear"
-    },
-    {
-      "slug": "railway",
-      "name": "Railway"
-    },
     {
       "slug": "resend",
       "name": "Resend"
@@ -115,8 +147,16 @@
       "name": "Supabase"
     },
     {
-      "slug": "clerk",
-      "name": "Clerk"
+      "slug": "notion",
+      "name": "Notion"
+    },
+    {
+      "slug": "ramp",
+      "name": "Ramp"
+    },
+    {
+      "slug": "openai",
+      "name": "OpenAI"
     }
   ],
   "workable": []
