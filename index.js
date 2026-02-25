@@ -5,34 +5,38 @@
  *
  * Usage:
  * const shared = require('@zapply/job-board-shared');
- * const { generateJobId, isDuplicate, formatTimeAgo, logger, withRetry } = shared;
+ * const { generateJobId, formatTimeAgo, logger } = shared;
  */
 
-const jobId = require('./lib/jobId');
-const deduplication = require('./lib/deduplication');
 const utils = require('./lib/utils');
 const config = require('./config');
-const logger = require('./lib/logger');
-const errorHandler = require('./lib/error-handler');
+
+// Minimal logger — lib/logger.js was removed in N-6 cleanup
+const _log = (level, msg, ctx) => {
+  const ts = new Date().toISOString();
+  const ctxStr = ctx && Object.keys(ctx).length ? ' ' + JSON.stringify(ctx) : '';
+  console.log(`[${ts}] [${level}]${ctxStr} ${msg}`);
+};
+const _logger = {
+  debug:    (msg, ctx) => _log('DEBUG', msg, ctx),
+  info:     (msg, ctx) => _log('INFO',  msg, ctx),
+  warn:     (msg, ctx) => _log('WARN',  msg, ctx),
+  error:    (msg, ctx) => _log('ERROR', msg, ctx),
+  fatal:    (msg, ctx) => { _log('FATAL', msg, ctx); },
+  start:    (msg, ctx) => _log('START', msg, ctx),
+  complete: (msg, ctx) => _log('DONE',  msg, ctx),
+  logError: (msg, ctx) => _log('ERROR', msg, ctx),
+};
 
 module.exports = {
-  // Job ID generation
-  ...jobId,
-
-  // Deduplication
-  ...deduplication,
-
   // Utilities
   ...utils,
 
   // Configuration
   ...config,
 
-  // Logging
-  ...logger,
-
-  // Error handling
-  ...errorHandler
+  // Logger
+  logger: _logger,
 };
 
 // Export specific functions for convenience
@@ -42,12 +46,8 @@ module.exports.generateJobIdHash = utils.generateJobIdHash;
 module.exports.generateEnhancedId = utils.generateEnhancedId;
 module.exports.migrateOldJobId = utils.migrateOldJobId;
 
-module.exports.generateFingerprint = deduplication.generateFingerprint;
 module.exports.generateJobFingerprint = utils.generateJobFingerprint;
 module.exports.generateMinimalJobFingerprint = utils.generateMinimalJobFingerprint;
-module.exports.isDuplicate = deduplication.isDuplicate;
-module.exports.filterDuplicates = deduplication.filterDuplicates;
-module.exports.enrichJob = deduplication.enrichJob;
 
 module.exports.normalizeCompanyName = utils.normalizeCompanyName;
 module.exports.getCompanyEmoji = utils.getCompanyEmoji;
@@ -67,14 +67,3 @@ module.exports.initCompanyDatabase = utils.initCompanyDatabase;
 
 // Export config
 module.exports.config = config;
-
-// Export logger
-module.exports.logger = logger.default;
-module.exports.createChildLogger = logger.createChild;
-
-// Export error handler
-module.exports.tryCatch = errorHandler.tryCatch;
-module.exports.withRetry = errorHandler.withRetry;
-module.exports.parallel = errorHandler.parallel;
-module.exports.validateParams = errorHandler.validateParams;
-module.exports.createHandler = errorHandler.createHandler;
