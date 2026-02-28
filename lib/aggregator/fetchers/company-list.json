@@ -452,7 +452,8 @@
       "domains": [
         "nursing",
         "general"
-      ]
+      ],
+      "us_only": true
     },
     {
       "name": "Mass General Brigham",
@@ -496,7 +497,8 @@
       "domains": [
         "nursing",
         "general"
-      ]
+      ],
+      "us_only": true
     },
     {
       "name": "Montefiore Medical Center",
