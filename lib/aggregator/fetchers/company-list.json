@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "description": "Curated list of tech companies using Greenhouse, Lever, and Ashby ATS platforms",
-    "last_updated": "2026-02-23",
-    "verified": "All slugs verified live with entry-level job counts as of 2026-02-23",
-    "notes": "Session 57: Added 12 Greenhouse boards (mongodb/twilio/okta/scaleai/databricks/elastic/robinhood/airbnb/lyft/block/hubspotjobs/ripple). Added 3 Ashby boards (notion/ramp/openai). Removed dead Lever (nominal=0 jobs, januaryinc=VP-only). Removed stale Ashby (railway=111d, clerk=39d, linear=41d). Session 60: Added SpaceX/Anduril/Lucid Motors (hardware boards, I-fix-3). Slugs verified: spacex=1528 jobs, andurilindustries=1542 jobs, lucidmotors=274 jobs. Session 60 L-2: Added Palantir (Lever, 244 jobs, 20 new grad roles). Added 5 Ashby boards: sentry (46, 39 US), benchling (62, 49 US), replit (76, 70 US), perplexity (80, 53 US), zip (106, 70 US). Skipped cohere (123 jobs but 81% non-US/Toronto). All verified live 2026-02-23."
+    "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, and Workday ATS platforms",
+    "last_updated": "2026-02-28",
+    "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. Hospital systems (Kaiser/Vanderbilt) not yet verified — add after browser check."
   },
   "greenhouse": [
     {
@@ -193,6 +193,176 @@
     {
       "slug": "zip",
       "name": "Zip"
+    }
+  ],
+  "workday": [
+    {
+      "name": "NVIDIA",
+      "url": "https://nvidia.wd5.myworkdayjobs.com",
+      "site": "nvidiaexternalcareersite",
+      "verified_jobs": 2000,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Salesforce",
+      "url": "https://salesforce.wd12.myworkdayjobs.com",
+      "site": "External_Career_Site",
+      "verified_jobs": 1311,
+      "verified_date": "2026-02-28",
+      "domains": ["software"]
+    },
+    {
+      "name": "CrowdStrike",
+      "url": "https://crowdstrike.wd5.myworkdayjobs.com",
+      "site": "crowdstrikecareers",
+      "verified_jobs": 627,
+      "verified_date": "2026-02-28",
+      "domains": ["software"]
+    },
+    {
+      "name": "Capital One",
+      "url": "https://capitalone.wd12.myworkdayjobs.com",
+      "site": "Capital_One",
+      "verified_jobs": 1624,
+      "verified_date": "2026-02-28",
+      "domains": ["software", "finance"]
+    },
+    {
+      "name": "RTX",
+      "url": "https://globalhr.wd5.myworkdayjobs.com",
+      "site": "rec_rtx_ext_gateway",
+      "verified_jobs": 3745,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware", "defense"]
+    },
+    {
+      "name": "Leidos",
+      "url": "https://leidos.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 1818,
+      "verified_date": "2026-02-28",
+      "domains": ["software", "defense"]
+    },
+    {
+      "name": "Booz Allen Hamilton",
+      "url": "https://bah.wd1.myworkdayjobs.com",
+      "site": "bah_jobs",
+      "verified_jobs": 1479,
+      "verified_date": "2026-02-28",
+      "domains": ["software", "defense"]
+    },
+    {
+      "name": "Applied Materials",
+      "url": "https://amat.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 1497,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "HPE",
+      "url": "https://hpe.wd5.myworkdayjobs.com",
+      "site": "acjobsite",
+      "verified_jobs": 1647,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "AT&T",
+      "url": "https://att.wd1.myworkdayjobs.com",
+      "site": "ATTGeneral",
+      "verified_jobs": 1230,
+      "verified_date": "2026-02-28",
+      "domains": ["software"]
+    },
+    {
+      "name": "Mastercard",
+      "url": "https://mastercard.wd1.myworkdayjobs.com",
+      "site": "CorporateCareers",
+      "verified_jobs": 953,
+      "verified_date": "2026-02-28",
+      "domains": ["software", "finance"]
+    },
+    {
+      "name": "Boeing",
+      "url": "https://boeing.wd1.myworkdayjobs.com",
+      "site": "EXTERNAL_CAREERS",
+      "verified_jobs": 1080,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware", "defense"]
+    },
+    {
+      "name": "Blue Origin",
+      "url": "https://blueorigin.wd5.myworkdayjobs.com",
+      "site": "blueorigin",
+      "verified_jobs": 930,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware", "defense"]
+    },
+    {
+      "name": "Cadence",
+      "url": "https://cadence.wd1.myworkdayjobs.com",
+      "site": "External_Careers",
+      "verified_jobs": 553,
+      "verified_date": "2026-02-28",
+      "domains": ["software", "hardware"]
+    },
+    {
+      "name": "Motorola Solutions",
+      "url": "https://motorolasolutions.wd5.myworkdayjobs.com",
+      "site": "Careers",
+      "verified_jobs": 837,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "GE HealthCare",
+      "url": "https://gehc.wd5.myworkdayjobs.com",
+      "site": "GEHC_ExternalSite",
+      "verified_jobs": 1120,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware", "software", "nursing"]
+    },
+    {
+      "name": "Adobe",
+      "url": "https://adobe.wd5.myworkdayjobs.com",
+      "site": "external_experienced",
+      "verified_jobs": 1121,
+      "verified_date": "2026-02-28",
+      "domains": ["software"]
+    },
+    {
+      "name": "Zendesk",
+      "url": "https://zendesk.wd1.myworkdayjobs.com",
+      "site": "Zendesk",
+      "verified_jobs": 199,
+      "verified_date": "2026-02-28",
+      "domains": ["software"]
+    },
+    {
+      "name": "Caterpillar",
+      "url": "https://cat.wd5.myworkdayjobs.com",
+      "site": "caterpillarcareers",
+      "verified_jobs": 849,
+      "verified_date": "2026-02-28",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "Proofpoint",
+      "url": "https://proofpoint.wd5.myworkdayjobs.com",
+      "site": "proofpointcareers",
+      "verified_jobs": 197,
+      "verified_date": "2026-02-28",
+      "domains": ["software"]
+    },
+    {
+      "name": "F5",
+      "url": "https://ffive.wd5.myworkdayjobs.com",
+      "site": "f5jobs",
+      "verified_jobs": 265,
+      "verified_date": "2026-02-28",
+      "domains": ["software", "hardware"]
     }
   ]
 }
