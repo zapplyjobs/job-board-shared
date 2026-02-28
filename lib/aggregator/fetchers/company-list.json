@@ -3,7 +3,7 @@
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, and Workday ATS platforms",
     "last_updated": "2026-02-28",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. Hospital systems (Kaiser/Vanderbilt) not yet verified — add after browser check."
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) \u2014 WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages)."
   },
   "greenhouse": [
     {
@@ -202,7 +202,10 @@
       "site": "nvidiaexternalcareersite",
       "verified_jobs": 2000,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Salesforce",
@@ -210,7 +213,9 @@
       "site": "External_Career_Site",
       "verified_jobs": 1311,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "CrowdStrike",
@@ -218,7 +223,9 @@
       "site": "crowdstrikecareers",
       "verified_jobs": 627,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Capital One",
@@ -226,7 +233,10 @@
       "site": "Capital_One",
       "verified_jobs": 1624,
       "verified_date": "2026-02-28",
-      "domains": ["software", "finance"]
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
       "name": "RTX",
@@ -234,7 +244,10 @@
       "site": "rec_rtx_ext_gateway",
       "verified_jobs": 3745,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "defense"]
+      "domains": [
+        "hardware",
+        "defense"
+      ]
     },
     {
       "name": "Leidos",
@@ -242,7 +255,10 @@
       "site": "External",
       "verified_jobs": 1818,
       "verified_date": "2026-02-28",
-      "domains": ["software", "defense"]
+      "domains": [
+        "software",
+        "defense"
+      ]
     },
     {
       "name": "Booz Allen Hamilton",
@@ -250,7 +266,10 @@
       "site": "bah_jobs",
       "verified_jobs": 1479,
       "verified_date": "2026-02-28",
-      "domains": ["software", "defense"]
+      "domains": [
+        "software",
+        "defense"
+      ]
     },
     {
       "name": "Applied Materials",
@@ -258,7 +277,9 @@
       "site": "External",
       "verified_jobs": 1497,
       "verified_date": "2026-02-28",
-      "domains": ["hardware"]
+      "domains": [
+        "hardware"
+      ]
     },
     {
       "name": "HPE",
@@ -266,7 +287,10 @@
       "site": "acjobsite",
       "verified_jobs": 1647,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "AT&T",
@@ -274,7 +298,9 @@
       "site": "ATTGeneral",
       "verified_jobs": 1230,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Mastercard",
@@ -282,7 +308,10 @@
       "site": "CorporateCareers",
       "verified_jobs": 953,
       "verified_date": "2026-02-28",
-      "domains": ["software", "finance"]
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
       "name": "Boeing",
@@ -290,7 +319,10 @@
       "site": "EXTERNAL_CAREERS",
       "verified_jobs": 1080,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "defense"]
+      "domains": [
+        "hardware",
+        "defense"
+      ]
     },
     {
       "name": "Blue Origin",
@@ -298,7 +330,10 @@
       "site": "blueorigin",
       "verified_jobs": 930,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "defense"]
+      "domains": [
+        "hardware",
+        "defense"
+      ]
     },
     {
       "name": "Cadence",
@@ -306,7 +341,10 @@
       "site": "External_Careers",
       "verified_jobs": 553,
       "verified_date": "2026-02-28",
-      "domains": ["software", "hardware"]
+      "domains": [
+        "software",
+        "hardware"
+      ]
     },
     {
       "name": "Motorola Solutions",
@@ -314,7 +352,10 @@
       "site": "Careers",
       "verified_jobs": 837,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "GE HealthCare",
@@ -322,7 +363,11 @@
       "site": "GEHC_ExternalSite",
       "verified_jobs": 1120,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "software", "nursing"]
+      "domains": [
+        "hardware",
+        "software",
+        "nursing"
+      ]
     },
     {
       "name": "Adobe",
@@ -330,7 +375,9 @@
       "site": "external_experienced",
       "verified_jobs": 1121,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Zendesk",
@@ -338,7 +385,9 @@
       "site": "Zendesk",
       "verified_jobs": 199,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Caterpillar",
@@ -346,7 +395,9 @@
       "site": "caterpillarcareers",
       "verified_jobs": 849,
       "verified_date": "2026-02-28",
-      "domains": ["hardware"]
+      "domains": [
+        "hardware"
+      ]
     },
     {
       "name": "Proofpoint",
@@ -354,7 +405,9 @@
       "site": "proofpointcareers",
       "verified_jobs": 197,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "F5",
@@ -362,7 +415,111 @@
       "site": "f5jobs",
       "verified_jobs": 265,
       "verified_date": "2026-02-28",
-      "domains": ["software", "hardware"]
+      "domains": [
+        "software",
+        "hardware"
+      ]
+    },
+    {
+      "name": "Cleveland Clinic",
+      "url": "https://ccf.wd1.myworkdayjobs.com",
+      "site": "ClevelandClinicCareers",
+      "verified_jobs": 2107,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ],
+      "us_only": true
+    },
+    {
+      "name": "Vanderbilt University Medical Center",
+      "url": "https://vumc.wd1.myworkdayjobs.com",
+      "site": "vumccareers",
+      "verified_jobs": 650,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ]
+    },
+    {
+      "name": "Intermountain Health",
+      "url": "https://imh.wd108.myworkdayjobs.com",
+      "site": "IntermountainCareers",
+      "verified_jobs": 1023,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ]
+    },
+    {
+      "name": "Mass General Brigham",
+      "url": "https://massgeneralbrigham.wd1.myworkdayjobs.com",
+      "site": "MGBExternal",
+      "verified_jobs": 2000,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ]
+    },
+    {
+      "name": "Geisinger Health",
+      "url": "https://geisinger.wd5.myworkdayjobs.com",
+      "site": "GeisingerExternal",
+      "verified_jobs": 1540,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ]
+    },
+    {
+      "name": "Ochsner Health",
+      "url": "https://ochsner.wd1.myworkdayjobs.com",
+      "site": "Ochsner",
+      "verified_jobs": 1939,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ]
+    },
+    {
+      "name": "Saint Luke's Health System",
+      "url": "https://saintlukes.wd1.myworkdayjobs.com",
+      "site": "saintlukeshealthcareers",
+      "verified_jobs": 482,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ]
+    },
+    {
+      "name": "Montefiore Medical Center",
+      "url": "https://montefiore.wd12.myworkdayjobs.com",
+      "site": "MMC",
+      "verified_jobs": 330,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ],
+      "us_only": true
+    },
+    {
+      "name": "Sharp Healthcare",
+      "url": "https://sharp.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 162,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ]
     }
   ]
 }
