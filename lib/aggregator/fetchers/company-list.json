@@ -3,7 +3,7 @@
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, and Workday ATS platforms",
     "last_updated": "2026-02-28",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) \u2014 WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages)."
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) \u2014 WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js."
   },
   "greenhouse": [
     {
@@ -137,6 +137,22 @@
     {
       "slug": "lucidmotors",
       "name": "Lucid Motors"
+    },
+    {
+      "slug": "janestreet",
+      "name": "Jane Street"
+    },
+    {
+      "slug": "imc",
+      "name": "IMC Trading"
+    },
+    {
+      "slug": "akunacapital",
+      "name": "Akuna Capital"
+    },
+    {
+      "slug": "jumptrading",
+      "name": "Jump Trading"
     }
   ],
   "lever": [
