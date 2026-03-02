@@ -1,215 +1,221 @@
 {
   "_meta": {
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, and Workday ATS platforms",
-    "last_updated": "2026-02-28",
+    "last_updated": "2026-03-02",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) \u2014 WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js."
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01)."
   },
   "greenhouse": [
-    {
-      "slug": "anthropic",
-      "name": "Anthropic"
-    },
-    {
-      "slug": "discord",
-      "name": "Discord"
-    },
-    {
-      "slug": "stripe",
-      "name": "Stripe"
-    },
-    {
-      "slug": "figma",
-      "name": "Figma"
-    },
-    {
-      "slug": "coinbase",
-      "name": "Coinbase"
-    },
-    {
-      "slug": "datadog",
-      "name": "Datadog"
-    },
-    {
-      "slug": "brex",
-      "name": "Brex"
-    },
-    {
-      "slug": "airtable",
-      "name": "Airtable"
-    },
-    {
-      "slug": "reddit",
-      "name": "Reddit"
-    },
-    {
-      "slug": "duolingo",
-      "name": "Duolingo"
-    },
-    {
-      "slug": "dropbox",
-      "name": "Dropbox"
-    },
-    {
-      "slug": "cloudflare",
-      "name": "Cloudflare"
-    },
-    {
-      "slug": "verkada",
-      "name": "Verkada"
-    },
-    {
-      "slug": "retool",
-      "name": "Retool"
-    },
-    {
-      "slug": "vercel",
-      "name": "Vercel"
-    },
-    {
-      "slug": "samsara",
-      "name": "Samsara"
-    },
-    {
-      "slug": "instacart",
-      "name": "Instacart"
-    },
-    {
-      "slug": "matterport",
-      "name": "Matterport"
-    },
-    {
-      "slug": "mongodb",
-      "name": "MongoDB"
-    },
-    {
-      "slug": "twilio",
-      "name": "Twilio"
-    },
-    {
-      "slug": "okta",
-      "name": "Okta"
-    },
-    {
-      "slug": "scaleai",
-      "name": "Scale AI"
-    },
-    {
-      "slug": "databricks",
-      "name": "Databricks"
-    },
-    {
-      "slug": "elastic",
-      "name": "Elastic"
-    },
-    {
-      "slug": "robinhood",
-      "name": "Robinhood"
-    },
-    {
-      "slug": "airbnb",
-      "name": "Airbnb"
-    },
-    {
-      "slug": "lyft",
-      "name": "Lyft"
-    },
-    {
-      "slug": "block",
-      "name": "Block"
-    },
-    {
-      "slug": "hubspotjobs",
-      "name": "HubSpot"
-    },
-    {
-      "slug": "ripple",
-      "name": "Ripple"
-    },
-    {
-      "slug": "spacex",
-      "name": "SpaceX"
-    },
-    {
-      "slug": "andurilindustries",
-      "name": "Anduril"
-    },
-    {
-      "slug": "lucidmotors",
-      "name": "Lucid Motors"
-    },
-    {
-      "slug": "janestreet",
-      "name": "Jane Street"
-    },
-    {
-      "slug": "imc",
-      "name": "IMC Trading"
-    },
-    {
-      "slug": "akunacapital",
-      "name": "Akuna Capital"
-    },
-    {
-      "slug": "jumptrading",
-      "name": "Jump Trading"
-    }
+    { "slug": "anthropic", "name": "Anthropic" },
+    { "slug": "discord", "name": "Discord" },
+    { "slug": "stripe", "name": "Stripe" },
+    { "slug": "figma", "name": "Figma" },
+    { "slug": "coinbase", "name": "Coinbase" },
+    { "slug": "datadog", "name": "Datadog" },
+    { "slug": "brex", "name": "Brex" },
+    { "slug": "airtable", "name": "Airtable" },
+    { "slug": "reddit", "name": "Reddit" },
+    { "slug": "duolingo", "name": "Duolingo" },
+    { "slug": "dropbox", "name": "Dropbox" },
+    { "slug": "cloudflare", "name": "Cloudflare" },
+    { "slug": "verkada", "name": "Verkada" },
+    { "slug": "retool", "name": "Retool" },
+    { "slug": "vercel", "name": "Vercel" },
+    { "slug": "samsara", "name": "Samsara" },
+    { "slug": "instacart", "name": "Instacart" },
+    { "slug": "matterport", "name": "Matterport" },
+    { "slug": "mongodb", "name": "MongoDB" },
+    { "slug": "twilio", "name": "Twilio" },
+    { "slug": "okta", "name": "Okta" },
+    { "slug": "scaleai", "name": "Scale AI" },
+    { "slug": "databricks", "name": "Databricks" },
+    { "slug": "elastic", "name": "Elastic" },
+    { "slug": "robinhood", "name": "Robinhood" },
+    { "slug": "airbnb", "name": "Airbnb" },
+    { "slug": "lyft", "name": "Lyft" },
+    { "slug": "block", "name": "Block" },
+    { "slug": "hubspotjobs", "name": "HubSpot" },
+    { "slug": "ripple", "name": "Ripple" },
+    { "slug": "spacex", "name": "SpaceX" },
+    { "slug": "andurilindustries", "name": "Anduril" },
+    { "slug": "lucidmotors", "name": "Lucid Motors" },
+    { "slug": "janestreet", "name": "Jane Street" },
+    { "slug": "imc", "name": "IMC Trading" },
+    { "slug": "akunacapital", "name": "Akuna Capital" },
+    { "slug": "jumptrading", "name": "Jump Trading" },
+    { "slug": "affirm", "name": "Affirm" },
+    { "slug": "appliedintuition", "name": "Applied Intuition" },
+    { "slug": "applovin", "name": "AppLovin" },
+    { "slug": "astranis", "name": "Astranis" },
+    { "slug": "braze", "name": "Braze" },
+    { "slug": "bridgewater89", "name": "Bridgewater Associates" },
+    { "slug": "celonis", "name": "Celonis" },
+    { "slug": "chime", "name": "Chime" },
+    { "slug": "creditkarma", "name": "Credit Karma" },
+    { "slug": "deepmind", "name": "DeepMind" },
+    { "slug": "dialpad", "name": "Dialpad" },
+    { "slug": "drweng", "name": "D.E. Shaw" },
+    { "slug": "faire", "name": "Faire" },
+    { "slug": "figureai", "name": "Figure AI" },
+    { "slug": "flowtraders", "name": "Flow Traders" },
+    { "slug": "gitlab", "name": "GitLab" },
+    { "slug": "gleanwork", "name": "Glean" },
+    { "slug": "grafanalabs", "name": "Grafana Labs" },
+    { "slug": "grammarly", "name": "Grammarly" },
+    { "slug": "gusto", "name": "Gusto" },
+    { "slug": "hackerrank", "name": "HackerRank" },
+    { "slug": "hudl", "name": "Hudl" },
+    { "slug": "inflectionai", "name": "Inflection AI" },
+    { "slug": "khanacademy", "name": "Khan Academy" },
+    { "slug": "labelbox", "name": "Labelbox" },
+    { "slug": "lightspeedhq", "name": "Lightspeed" },
+    { "slug": "lucidsoftware", "name": "Lucid Software" },
+    { "slug": "marqeta", "name": "Marqeta" },
+    { "slug": "mercury", "name": "Mercury" },
+    { "slug": "merge", "name": "Merge" },
+    { "slug": "moloco", "name": "Moloco" },
+    { "slug": "motional", "name": "Motional" },
+    { "slug": "mozilla", "name": "Mozilla" },
+    { "slug": "neuralink", "name": "Neuralink" },
+    { "slug": "opentable", "name": "OpenTable" },
+    { "slug": "pdtpartners", "name": "PDT Partners" },
+    { "slug": "pendo", "name": "Pendo" },
+    { "slug": "point72", "name": "Point72" },
+    { "slug": "purestorage", "name": "Pure Storage" },
+    { "slug": "redis", "name": "Redis" },
+    { "slug": "rocketlab", "name": "Rocket Lab" },
+    { "slug": "rockstargames", "name": "Rockstar Games" },
+    { "slug": "safariai", "name": "Safari AI" },
+    { "slug": "samsungsemiconductor", "name": "Samsung Semiconductor" },
+    { "slug": "sigmacomputing", "name": "Sigma Computing" },
+    { "slug": "singlestore", "name": "SingleStore" },
+    { "slug": "sonyinteractiveentertainmentglobal", "name": "Sony Interactive Entertainment" },
+    { "slug": "speechify", "name": "Speechify" },
+    { "slug": "taketwo", "name": "Take-Two Interactive" },
+    { "slug": "tenstorrent", "name": "Tenstorrent" },
+    { "slug": "thetradedesk", "name": "The Trade Desk" },
+    { "slug": "togetherai", "name": "Together AI" },
+    { "slug": "torcrobotics", "name": "Torc Robotics" },
+    { "slug": "tripadvisor", "name": "Tripadvisor" },
+    { "slug": "twitch", "name": "Twitch" },
+    { "slug": "vikingglobalinvestors", "name": "Viking Global Investors" },
+    { "slug": "workato", "name": "Workato" },
+    { "slug": "worldquant", "name": "WorldQuant" },
+    { "slug": "xai", "name": "xAI" },
+    { "slug": "xometry", "name": "Xometry" },
+    { "slug": "yugabyte", "name": "YugabyteDB" },
+    { "slug": "zscaler", "name": "Zscaler" }
   ],
   "lever": [
-    {
-      "slug": "spotify",
-      "name": "Spotify"
-    },
-    {
-      "slug": "gohighlevel",
-      "name": "HighLevel"
-    },
-    {
-      "slug": "palantir",
-      "name": "Palantir"
-    }
+    { "slug": "spotify", "name": "Spotify" },
+    { "slug": "gohighlevel", "name": "HighLevel" },
+    { "slug": "palantir", "name": "Palantir" },
+    { "slug": "arrivelogistics", "name": "Arrive Logistics" },
+    { "slug": "belvederetrading", "name": "Belvedere Trading" },
+    { "slug": "brilliant", "name": "Brilliant" },
+    { "slug": "bumbleinc", "name": "Bumble" },
+    { "slug": "cfsenergy", "name": "CFS Energy" },
+    { "slug": "deepgenomics", "name": "Deep Genomics" },
+    { "slug": "dexterity", "name": "Dexterity" },
+    { "slug": "findhelp", "name": "Findhelp" },
+    { "slug": "fireworkhq", "name": "Firework" },
+    { "slug": "fullscript", "name": "Fullscript" },
+    { "slug": "gearset", "name": "Gearset" },
+    { "slug": "hermeus", "name": "Hermeus" },
+    { "slug": "highspot", "name": "Highspot" },
+    { "slug": "immuta", "name": "Immuta" },
+    { "slug": "kabam", "name": "Kabam" },
+    { "slug": "kitware", "name": "Kitware" },
+    { "slug": "leantaas", "name": "LeanTaaS" },
+    { "slug": "lumafield", "name": "Lumafield" },
+    { "slug": "magnetforensics", "name": "Magnet Forensics" },
+    { "slug": "matchgroup", "name": "Match Group" },
+    { "slug": "mistral", "name": "Mistral AI" },
+    { "slug": "nimblerx", "name": "NimbleRx" },
+    { "slug": "nium", "name": "Nium" },
+    { "slug": "perforce", "name": "Perforce" },
+    { "slug": "piplabs", "name": "Pip Labs" },
+    { "slug": "qrypt", "name": "Qrypt" },
+    { "slug": "ranger", "name": "Ranger" },
+    { "slug": "rover", "name": "Rover" },
+    { "slug": "sambatv", "name": "Samba TV" },
+    { "slug": "saviynt", "name": "Saviynt" },
+    { "slug": "shieldai", "name": "Shield AI" },
+    { "slug": "sophos", "name": "Sophos" },
+    { "slug": "theathletic", "name": "The Athletic" },
+    { "slug": "uncountable", "name": "Uncountable" },
+    { "slug": "valkyrietrading", "name": "Valkyrie Trading" },
+    { "slug": "versapay", "name": "Versapay" },
+    { "slug": "voltus", "name": "Voltus" },
+    { "slug": "waabi", "name": "Waabi" },
+    { "slug": "weride", "name": "WeRide" },
+    { "slug": "whoop", "name": "WHOOP" },
+    { "slug": "wintermute-trading", "name": "Wintermute Trading" },
+    { "slug": "zoox", "name": "Zoox" }
   ],
   "ashby": [
-    {
-      "slug": "resend",
-      "name": "Resend"
-    },
-    {
-      "slug": "supabase",
-      "name": "Supabase"
-    },
-    {
-      "slug": "notion",
-      "name": "Notion"
-    },
-    {
-      "slug": "ramp",
-      "name": "Ramp"
-    },
-    {
-      "slug": "openai",
-      "name": "OpenAI"
-    },
-    {
-      "slug": "sentry",
-      "name": "Sentry"
-    },
-    {
-      "slug": "benchling",
-      "name": "Benchling"
-    },
-    {
-      "slug": "replit",
-      "name": "Replit"
-    },
-    {
-      "slug": "perplexity",
-      "name": "Perplexity"
-    },
-    {
-      "slug": "zip",
-      "name": "Zip"
-    }
+    { "slug": "resend", "name": "Resend" },
+    { "slug": "supabase", "name": "Supabase" },
+    { "slug": "notion", "name": "Notion" },
+    { "slug": "ramp", "name": "Ramp" },
+    { "slug": "openai", "name": "OpenAI" },
+    { "slug": "sentry", "name": "Sentry" },
+    { "slug": "benchling", "name": "Benchling" },
+    { "slug": "replit", "name": "Replit" },
+    { "slug": "perplexity", "name": "Perplexity" },
+    { "slug": "zip", "name": "Zip" },
+    { "slug": "abridge", "name": "Abridge" },
+    { "slug": "allium", "name": "Allium" },
+    { "slug": "anyscale", "name": "Anyscale" },
+    { "slug": "atomicsemi", "name": "Atomic Semi" },
+    { "slug": "baseten", "name": "Baseten" },
+    { "slug": "candidhealth", "name": "Candid Health" },
+    { "slug": "cape", "name": "Cape" },
+    { "slug": "cartesia", "name": "Cartesia" },
+    { "slug": "cohere", "name": "Cohere" },
+    { "slug": "confluent", "name": "Confluent" },
+    { "slug": "crusoe", "name": "Crusoe" },
+    { "slug": "dandy", "name": "Dandy" },
+    { "slug": "datologyai", "name": "Datology AI" },
+    { "slug": "decagon", "name": "Decagon" },
+    { "slug": "eightsleep", "name": "Eight Sleep" },
+    { "slug": "elevenlabs", "name": "ElevenLabs" },
+    { "slug": "eliseai", "name": "EliseAI" },
+    { "slug": "etched", "name": "Etched" },
+    { "slug": "fable", "name": "Fable" },
+    { "slug": "gecko-robotics", "name": "Gecko Robotics" },
+    { "slug": "gptzero", "name": "GPTZero" },
+    { "slug": "handshake", "name": "Handshake" },
+    { "slug": "harvey", "name": "Harvey" },
+    { "slug": "ideogram", "name": "Ideogram" },
+    { "slug": "illumio", "name": "Illumio" },
+    { "slug": "imprint", "name": "Imprint" },
+    { "slug": "keyrock", "name": "Keyrock" },
+    { "slug": "lambda", "name": "Lambda" },
+    { "slug": "lightspark", "name": "Lightspark" },
+    { "slug": "mercor", "name": "Mercor" },
+    { "slug": "metalenz", "name": "Metalenz" },
+    { "slug": "northwoodspace", "name": "Northwood Space" },
+    { "slug": "parafin", "name": "Parafin" },
+    { "slug": "patreon", "name": "Patreon" },
+    { "slug": "persona", "name": "Persona" },
+    { "slug": "pulse", "name": "Pulse" },
+    { "slug": "pylon", "name": "Pylon" },
+    { "slug": "quora", "name": "Quora" },
+    { "slug": "realitydefender", "name": "Reality Defender" },
+    { "slug": "reflect-orbital", "name": "Reflect Orbital" },
+    { "slug": "rilla", "name": "Rilla" },
+    { "slug": "sierra", "name": "Sierra" },
+    { "slug": "snowflake", "name": "Snowflake" },
+    { "slug": "suno", "name": "Suno" },
+    { "slug": "the-exploration-company", "name": "The Exploration Company" },
+    { "slug": "uipath", "name": "UiPath" },
+    { "slug": "unify", "name": "Unify" },
+    { "slug": "voyant-photonics", "name": "Voyant Photonics" },
+    { "slug": "warp", "name": "Warp" },
+    { "slug": "whatnot", "name": "Whatnot" },
+    { "slug": "witnessai", "name": "Witness AI" },
+    { "slug": "zapier", "name": "Zapier" }
   ],
   "workday": [
     {
@@ -218,10 +224,7 @@
       "site": "nvidiaexternalcareersite",
       "verified_jobs": 2000,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware",
-        "software"
-      ]
+      "domains": ["hardware", "software"]
     },
     {
       "name": "Salesforce",
@@ -229,9 +232,7 @@
       "site": "External_Career_Site",
       "verified_jobs": 1311,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software"
-      ]
+      "domains": ["software"]
     },
     {
       "name": "CrowdStrike",
@@ -239,9 +240,7 @@
       "site": "crowdstrikecareers",
       "verified_jobs": 627,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software"
-      ]
+      "domains": ["software"]
     },
     {
       "name": "Capital One",
@@ -249,10 +248,7 @@
       "site": "Capital_One",
       "verified_jobs": 1624,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software",
-        "finance"
-      ]
+      "domains": ["software", "finance"]
     },
     {
       "name": "RTX",
@@ -260,10 +256,7 @@
       "site": "rec_rtx_ext_gateway",
       "verified_jobs": 3745,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware",
-        "defense"
-      ]
+      "domains": ["hardware", "defense"]
     },
     {
       "name": "Leidos",
@@ -271,10 +264,7 @@
       "site": "External",
       "verified_jobs": 1818,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software",
-        "defense"
-      ]
+      "domains": ["software", "defense"]
     },
     {
       "name": "Booz Allen Hamilton",
@@ -282,10 +272,7 @@
       "site": "bah_jobs",
       "verified_jobs": 1479,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software",
-        "defense"
-      ]
+      "domains": ["software", "defense"]
     },
     {
       "name": "Applied Materials",
@@ -293,9 +280,7 @@
       "site": "External",
       "verified_jobs": 1497,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware"
-      ]
+      "domains": ["hardware"]
     },
     {
       "name": "HPE",
@@ -303,10 +288,7 @@
       "site": "acjobsite",
       "verified_jobs": 1647,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware",
-        "software"
-      ]
+      "domains": ["hardware", "software"]
     },
     {
       "name": "AT&T",
@@ -314,9 +296,7 @@
       "site": "ATTGeneral",
       "verified_jobs": 1230,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software"
-      ]
+      "domains": ["software"]
     },
     {
       "name": "Mastercard",
@@ -324,10 +304,7 @@
       "site": "CorporateCareers",
       "verified_jobs": 953,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software",
-        "finance"
-      ]
+      "domains": ["software", "finance"]
     },
     {
       "name": "Boeing",
@@ -335,10 +312,7 @@
       "site": "EXTERNAL_CAREERS",
       "verified_jobs": 1080,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware",
-        "defense"
-      ]
+      "domains": ["hardware", "defense"]
     },
     {
       "name": "Blue Origin",
@@ -346,10 +320,7 @@
       "site": "blueorigin",
       "verified_jobs": 930,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware",
-        "defense"
-      ]
+      "domains": ["hardware", "defense"]
     },
     {
       "name": "Cadence",
@@ -357,10 +328,7 @@
       "site": "External_Careers",
       "verified_jobs": 553,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software",
-        "hardware"
-      ]
+      "domains": ["software", "hardware"]
     },
     {
       "name": "Motorola Solutions",
@@ -368,10 +336,7 @@
       "site": "Careers",
       "verified_jobs": 837,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware",
-        "software"
-      ]
+      "domains": ["hardware", "software"]
     },
     {
       "name": "GE HealthCare",
@@ -379,11 +344,7 @@
       "site": "GEHC_ExternalSite",
       "verified_jobs": 1120,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware",
-        "software",
-        "nursing"
-      ]
+      "domains": ["hardware", "software", "nursing"]
     },
     {
       "name": "Adobe",
@@ -391,9 +352,7 @@
       "site": "external_experienced",
       "verified_jobs": 1121,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software"
-      ]
+      "domains": ["software"]
     },
     {
       "name": "Zendesk",
@@ -401,9 +360,7 @@
       "site": "Zendesk",
       "verified_jobs": 199,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software"
-      ]
+      "domains": ["software"]
     },
     {
       "name": "Caterpillar",
@@ -411,9 +368,7 @@
       "site": "caterpillarcareers",
       "verified_jobs": 849,
       "verified_date": "2026-02-28",
-      "domains": [
-        "hardware"
-      ]
+      "domains": ["hardware"]
     },
     {
       "name": "Proofpoint",
@@ -421,9 +376,7 @@
       "site": "proofpointcareers",
       "verified_jobs": 197,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software"
-      ]
+      "domains": ["software"]
     },
     {
       "name": "F5",
@@ -431,10 +384,7 @@
       "site": "f5jobs",
       "verified_jobs": 265,
       "verified_date": "2026-02-28",
-      "domains": [
-        "software",
-        "hardware"
-      ]
+      "domains": ["software", "hardware"]
     },
     {
       "name": "Cleveland Clinic",
@@ -442,10 +392,7 @@
       "site": "ClevelandClinicCareers",
       "verified_jobs": 2107,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ],
+      "domains": ["nursing", "general"],
       "us_only": true
     },
     {
@@ -454,10 +401,7 @@
       "site": "vumccareers",
       "verified_jobs": 650,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ]
+      "domains": ["nursing", "general"]
     },
     {
       "name": "Intermountain Health",
@@ -465,10 +409,7 @@
       "site": "IntermountainCareers",
       "verified_jobs": 1023,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ],
+      "domains": ["nursing", "general"],
       "us_only": true
     },
     {
@@ -477,10 +418,7 @@
       "site": "MGBExternal",
       "verified_jobs": 2000,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ]
+      "domains": ["nursing", "general"]
     },
     {
       "name": "Geisinger Health",
@@ -488,10 +426,7 @@
       "site": "GeisingerExternal",
       "verified_jobs": 1540,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ]
+      "domains": ["nursing", "general"]
     },
     {
       "name": "Ochsner Health",
@@ -499,10 +434,7 @@
       "site": "Ochsner",
       "verified_jobs": 1939,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ]
+      "domains": ["nursing", "general"]
     },
     {
       "name": "Saint Luke's Health System",
@@ -510,10 +442,7 @@
       "site": "saintlukeshealthcareers",
       "verified_jobs": 482,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ],
+      "domains": ["nursing", "general"],
       "us_only": true
     },
     {
@@ -522,10 +451,7 @@
       "site": "MMC",
       "verified_jobs": 330,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ],
+      "domains": ["nursing", "general"],
       "us_only": true
     },
     {
@@ -534,10 +460,167 @@
       "site": "External",
       "verified_jobs": 162,
       "verified_date": "2026-02-28",
-      "domains": [
-        "nursing",
-        "general"
-      ]
+      "domains": ["nursing", "general"]
+    },
+    {
+      "name": "Micron",
+      "url": "https://micron.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "KBR",
+      "url": "https://kbr.wd5.myworkdayjobs.com",
+      "site": "KBR_Careers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software", "defense"]
+    },
+    {
+      "name": "CACI",
+      "url": "https://caci.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software", "defense"]
+    },
+    {
+      "name": "Nationwide Children's",
+      "url": "https://nationwidechildrens.wd5.myworkdayjobs.com",
+      "site": "NCHCareers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["nursing", "general"]
+    },
+    {
+      "name": "PayPal",
+      "url": "https://paypal.wd1.myworkdayjobs.com",
+      "site": "jobs",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software", "finance"]
+    },
+    {
+      "name": "Banner Health",
+      "url": "https://bannerhealth.wd108.myworkdayjobs.com",
+      "site": "Careers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["nursing", "general"]
+    },
+    {
+      "name": "GlobalFoundries",
+      "url": "https://globalfoundries.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "Intel",
+      "url": "https://intel.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Marvell",
+      "url": "https://marvell.wd1.myworkdayjobs.com",
+      "site": "MarvellCareers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "NXP",
+      "url": "https://nxp.wd3.myworkdayjobs.com",
+      "site": "Careers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "Trimble",
+      "url": "https://trimble.wd1.myworkdayjobs.com",
+      "site": "TrimbleCareers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Red Hat",
+      "url": "https://redhat.wd5.myworkdayjobs.com",
+      "site": "jobs",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software"]
+    },
+    {
+      "name": "Zoom",
+      "url": "https://zoom.wd5.myworkdayjobs.com",
+      "site": "zoom",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software"]
+    },
+    {
+      "name": "Exact Sciences",
+      "url": "https://exactsciences.wd1.myworkdayjobs.com",
+      "site": "Exact_Sciences",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["general"]
+    },
+    {
+      "name": "Workiva",
+      "url": "https://workiva.wd503.myworkdayjobs.com",
+      "site": "careers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software"]
+    },
+    {
+      "name": "DraftKings",
+      "url": "https://draftkings.wd1.myworkdayjobs.com",
+      "site": "DraftKings",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software"]
+    },
+    {
+      "name": "iRhythm",
+      "url": "https://irhythmtech.wd5.myworkdayjobs.com",
+      "site": "iRhythm",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["general"]
+    },
+    {
+      "name": "nCino",
+      "url": "https://ncino.wd5.myworkdayjobs.com",
+      "site": "ncinoCareers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software", "finance"]
+    },
+    {
+      "name": "Autodesk",
+      "url": "https://autodesk.wd1.myworkdayjobs.com",
+      "site": "Ext",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["software"]
+    },
+    {
+      "name": "WVU Medicine",
+      "url": "https://wvumedicine.wd1.myworkdayjobs.com",
+      "site": "WVUH",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": ["nursing", "general"]
     }
   ]
 }
