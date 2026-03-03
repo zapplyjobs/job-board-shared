@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, and Workday ATS platforms",
-    "last_updated": "2026-03-02 S118",
+    "last_updated": "2026-03-03 S120",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
     "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01)."
   },
@@ -104,7 +104,11 @@
     { "slug": "yugabyte", "name": "YugabyteDB" },
     { "slug": "zscaler", "name": "Zscaler" },
     { "slug": "roblox", "name": "Roblox" },
-    { "slug": "fiveringsllc", "name": "Five Rings" }
+    { "slug": "fiveringsllc", "name": "Five Rings" },
+    { "slug": "snorkelai", "name": "Snorkel AI" },
+    { "slug": "waymo", "name": "Waymo" },
+    { "slug": "relativity", "name": "Relativity Space" },
+    { "slug": "apptronik", "name": "Apptronik" }
   ],
   "lever": [
     { "slug": "spotify", "name": "Spotify" },
