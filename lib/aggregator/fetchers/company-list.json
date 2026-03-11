@@ -1,9 +1,9 @@
 {
   "_meta": {
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, and Workday ATS platforms",
-    "last_updated": "2026-03-11 S147",
+    "last_updated": "2026-03-11 S148",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform."
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial — all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise)."
   },
   "greenhouse": [
     { "slug": "anthropic", "name": "Anthropic" },
@@ -698,6 +698,78 @@
       "verified_jobs": 932,
       "verified_date": "2026-03-11",
       "domains": ["general", "software"]
+    },
+    {
+      "name": "Fidelity Investments",
+      "url": "https://fmr.wd1.myworkdayjobs.com",
+      "site": "fidelitycareers",
+      "verified_jobs": 607,
+      "verified_date": "2026-03-11",
+      "domains": ["software", "finance"]
+    },
+    {
+      "name": "Analog Devices",
+      "url": "https://analogdevices.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 949,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Stryker",
+      "url": "https://stryker.wd1.myworkdayjobs.com",
+      "site": "StrykerCareers",
+      "verified_jobs": 1563,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware", "general"]
+    },
+    {
+      "name": "State Street",
+      "url": "https://statestreet.wd1.myworkdayjobs.com",
+      "site": "Global",
+      "verified_jobs": 931,
+      "verified_date": "2026-03-11",
+      "domains": ["software", "finance"]
+    },
+    {
+      "name": "KLA",
+      "url": "https://kla.wd1.myworkdayjobs.com",
+      "site": "Search",
+      "verified_jobs": 687,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "Moog",
+      "url": "https://moog.wd5.myworkdayjobs.com",
+      "site": "moog_external_career_site",
+      "verified_jobs": 339,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "Entegris",
+      "url": "https://entegris.wd1.myworkdayjobs.com",
+      "site": "entegriscareers",
+      "verified_jobs": 382,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "Rolls-Royce",
+      "url": "https://rollsroyce.wd3.myworkdayjobs.com",
+      "site": "professional",
+      "verified_jobs": 467,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "LPL Financial",
+      "url": "https://lplfinancial.wd1.myworkdayjobs.com",
+      "site": "university",
+      "verified_jobs": 22,
+      "verified_date": "2026-03-11",
+      "domains": ["software", "finance"]
     }
   ],
   "eightfold": [
