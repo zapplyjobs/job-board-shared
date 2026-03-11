@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, and Workday ATS platforms",
-    "last_updated": "2026-03-11 S153",
+    "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, Workday, Eightfold, and SmartRecruiters ATS platforms",
+    "last_updated": "2026-03-11 S154",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial — all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise)."
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial — all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume."
   },
   "greenhouse": [
     { "slug": "anthropic", "name": "Anthropic" },
@@ -906,5 +906,24 @@
       "verified_date": "2026-03-11",
       "domains": ["hardware", "software"]
     }
+  ],
+  "smartrecruiters": [
+    { "slug": "AbbVie",               "name": "AbbVie",               "verified_us_jobs": 904, "verified_interns": 33,  "verified_date": "2026-03-11" },
+    { "slug": "VeoliaEnvironnementSA", "name": "Veolia",               "verified_us_jobs": 438, "verified_interns": 45,  "verified_date": "2026-03-11" },
+    { "slug": "ServiceNow",           "name": "ServiceNow",           "verified_us_jobs": 422, "verified_interns": 4,   "verified_date": "2026-03-11" },
+    { "slug": "Visa",                 "name": "Visa",                 "verified_us_jobs": 418, "verified_interns": 7,   "verified_date": "2026-03-11" },
+    { "slug": "RedBull",              "name": "Red Bull",              "verified_us_jobs": 393, "verified_interns": 18,  "verified_date": "2026-03-11" },
+    { "slug": "NBCUniversal3",        "name": "NBCUniversal",          "verified_us_jobs": 389, "verified_interns": 21,  "verified_date": "2026-03-11" },
+    { "slug": "Intuitive",            "name": "Intuitive Surgical",   "verified_us_jobs": 358, "verified_interns": 16,  "verified_date": "2026-03-11" },
+    { "slug": "BoschGroup",           "name": "Bosch Group",          "verified_us_jobs": 248, "verified_interns": 42,  "verified_date": "2026-03-11" },
+    { "slug": "LinkedIn3",            "name": "LinkedIn",             "verified_us_jobs": 209, "verified_interns": 3,   "verified_date": "2026-03-11" },
+    { "slug": "SmithsGroup2",         "name": "Smiths Group",         "verified_us_jobs": 178, "verified_interns": 12,  "verified_date": "2026-03-11" },
+    { "slug": "RESPECInc",            "name": "RESPEC",               "verified_us_jobs": 120, "verified_interns": 18,  "verified_date": "2026-03-11" },
+    { "slug": "WesternDigital",       "name": "Western Digital",      "verified_us_jobs": 106, "verified_interns": 14,  "verified_date": "2026-03-11" },
+    { "slug": "EVERSANA1",            "name": "EVERSANA",             "verified_us_jobs": 84,  "verified_interns": 0,   "verified_date": "2026-03-11" },
+    { "slug": "Sandisk",              "name": "SanDisk",              "verified_us_jobs": 83,  "verified_interns": 22,  "verified_date": "2026-03-11" },
+    { "slug": "Experian",             "name": "Experian",             "verified_us_jobs": 56,  "verified_interns": 1,   "verified_date": "2026-03-11" },
+    { "slug": "WellmarkInc",          "name": "Wellmark",             "verified_us_jobs": 44,  "verified_interns": 0,   "verified_date": "2026-03-11" },
+    { "slug": "RaytheonTechnologies", "name": "Raytheon Technologies","verified_us_jobs": 17,  "verified_interns": 0,   "verified_date": "2026-03-11" }
   ]
 }
