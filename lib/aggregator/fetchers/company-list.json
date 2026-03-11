@@ -625,6 +625,54 @@
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
       "domains": ["nursing", "general"]
+    },
+    {
+      "name": "ASML",
+      "url": "https://asml.wd3.myworkdayjobs.com",
+      "site": "asmlext1",
+      "verified_jobs": 243,
+      "verified_date": "2026-03-08",
+      "domains": ["hardware"]
+    },
+    {
+      "name": "Broadcom",
+      "url": "https://broadcom.wd1.myworkdayjobs.com",
+      "site": "External_Career",
+      "verified_jobs": 371,
+      "verified_date": "2026-03-08",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Northrop Grumman",
+      "url": "https://ngc.wd1.myworkdayjobs.com",
+      "site": "Northrop_Grumman_External_Site",
+      "verified_jobs": 2228,
+      "verified_date": "2026-03-07",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Cisco",
+      "url": "https://cisco.wd5.myworkdayjobs.com",
+      "site": "Cisco_Careers",
+      "verified_jobs": 1036,
+      "verified_date": "2026-03-07",
+      "domains": ["software", "hardware"]
+    },
+    {
+      "name": "Disney",
+      "url": "https://disney.wd5.myworkdayjobs.com",
+      "site": "disneycareer",
+      "verified_jobs": 626,
+      "verified_date": "2026-03-08",
+      "domains": ["software", "general"]
+    },
+    {
+      "name": "HP Inc",
+      "url": "https://hp.wd5.myworkdayjobs.com",
+      "site": "ExternalCareerSite",
+      "verified_jobs": 461,
+      "verified_date": "2026-03-08",
+      "domains": ["hardware", "software"]
     }
   ]
 }
