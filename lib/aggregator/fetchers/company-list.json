@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, and Workday ATS platforms",
-    "last_updated": "2026-03-11 S148",
+    "last_updated": "2026-03-11 S153",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
     "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial — all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise)."
   },
@@ -114,7 +114,24 @@
     { "slug": "doordashusa", "name": "DoorDash" },
     { "slug": "pinterest", "name": "Pinterest" },
     { "slug": "cockroachlabs", "name": "CockroachLabs" },
-    { "slug": "starburst", "name": "Starburst" }
+    { "slug": "starburst", "name": "Starburst" },
+    { "slug": "axon", "name": "Axon" },
+    { "slug": "cresta", "name": "Cresta" },
+    { "slug": "dashlane", "name": "Dashlane" },
+    { "slug": "datacamp", "name": "DataCamp" },
+    { "slug": "graphcore", "name": "Graphcore" },
+    { "slug": "intrinsicrobotics", "name": "Intrinsic Robotics" },
+    { "slug": "maintainx", "name": "MaintainX" },
+    { "slug": "boxinc", "name": "Box" },
+    { "slug": "constructortech", "name": "Constructor" },
+    { "slug": "blockchain", "name": "Blockchain.com" },
+    { "slug": "showpad", "name": "Showpad" },
+    { "slug": "guidepoint", "name": "Guidepoint" },
+    { "slug": "udemybedi", "name": "Udemy" },
+    { "slug": "visiersolutionsinc", "name": "Visier" },
+    { "slug": "leagueinc", "name": "League" },
+    { "slug": "ada18", "name": "Ada" },
+    { "slug": "gardacp", "name": "GardaWorld" }
   ],
   "lever": [
     { "slug": "spotify", "name": "Spotify" },
@@ -817,6 +834,54 @@
       "verified_jobs": 480,
       "verified_date": "2026-03-11",
       "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Baker Hughes",
+      "url": "https://bakerhughes.wd5.myworkdayjobs.com",
+      "site": "BakerHughes",
+      "verified_jobs": 700,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware", "general"]
+    },
+    {
+      "name": "Logitech",
+      "url": "https://logitech.wd5.myworkdayjobs.com",
+      "site": "Logitech",
+      "verified_jobs": 214,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Stryker",
+      "url": "https://stryker.wd1.myworkdayjobs.com",
+      "site": "StrykerCareers",
+      "verified_jobs": 1565,
+      "verified_date": "2026-03-11",
+      "domains": ["general", "hardware"]
+    },
+    {
+      "name": "Marvell",
+      "url": "https://marvell.wd1.myworkdayjobs.com",
+      "site": "MarvellCareers",
+      "verified_jobs": 460,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware", "software"]
+    },
+    {
+      "name": "Proofpoint",
+      "url": "https://proofpoint.wd5.myworkdayjobs.com",
+      "site": "ProofpointCareers",
+      "verified_jobs": 203,
+      "verified_date": "2026-03-11",
+      "domains": ["software"]
+    },
+    {
+      "name": "Hitachi",
+      "url": "https://hitachi.wd1.myworkdayjobs.com",
+      "site": "hitachi",
+      "verified_jobs": 2000,
+      "verified_date": "2026-03-11",
+      "domains": ["hardware", "software", "general"]
     }
   ],
   "eightfold": [
