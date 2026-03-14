@@ -1,248 +1,1023 @@
 {
   "_meta": {
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, Workday, Eightfold, and SmartRecruiters ATS platforms",
-    "last_updated": "2026-03-11 S154",
+    "last_updated": "2026-03-14 S167",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial — all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume."
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) \u2014 WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) \u2014 verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) \u2014 new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial \u2014 all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume. S167: SUPPLY-NEW-COMPANIES \u2014 removed 9 WD duplicates (ASML/Broadcom/Northrop/Cisco/Disney/HP/Marvell/Proofpoint/Stryker). GH +19 (CoreWeave/Rubrik/OscarHealth/Canonical/Appian/Anaplan/SoFi/Nuro/Formlabs/Qualtrics/IXLLearning/AlphaSights/Figure/SamsungResearchAmerica/LatitudeAI/AlphaFMC/Oklo/UnderdogFantasy/Loop). WD +40 (Microsoft/Rivian/Deloitte/EA/Zipline/Qorvo/Keysight/PGE/Westinghouse/XDev/CadenceUniv/BlackRock/GM/HPEUniv/Abbott/Southwest/SBD/ResMed/Ciena/SiliconLabs/FLIR/Aptiv/BostonDynamics/Expedia/Lumentum/InterDigital/Rockwell/Moderna/ThomsonReuters/Elevance/TMobile/Allstate/Philips/Etsy/PNC/Travelers/USAA/Cox/FactSet/TransUnion). GH: 126\u2192145. WD: 79\u2192110."
   },
   "greenhouse": [
-    { "slug": "anthropic", "name": "Anthropic" },
-    { "slug": "discord", "name": "Discord" },
-    { "slug": "stripe", "name": "Stripe" },
-    { "slug": "figma", "name": "Figma" },
-    { "slug": "coinbase", "name": "Coinbase" },
-    { "slug": "datadog", "name": "Datadog" },
-    { "slug": "brex", "name": "Brex" },
-    { "slug": "airtable", "name": "Airtable" },
-    { "slug": "reddit", "name": "Reddit" },
-    { "slug": "duolingo", "name": "Duolingo" },
-    { "slug": "dropbox", "name": "Dropbox" },
-    { "slug": "cloudflare", "name": "Cloudflare" },
-    { "slug": "verkada", "name": "Verkada" },
-    { "slug": "vercel", "name": "Vercel" },
-    { "slug": "samsara", "name": "Samsara" },
-    { "slug": "instacart", "name": "Instacart" },
-    { "slug": "mongodb", "name": "MongoDB" },
-    { "slug": "twilio", "name": "Twilio" },
-    { "slug": "okta", "name": "Okta" },
-    { "slug": "scaleai", "name": "Scale AI" },
-    { "slug": "databricks", "name": "Databricks" },
-    { "slug": "elastic", "name": "Elastic" },
-    { "slug": "robinhood", "name": "Robinhood" },
-    { "slug": "airbnb", "name": "Airbnb" },
-    { "slug": "lyft", "name": "Lyft" },
-    { "slug": "block", "name": "Block" },
-    { "slug": "hubspotjobs", "name": "HubSpot" },
-    { "slug": "ripple", "name": "Ripple" },
-    { "slug": "spacex", "name": "SpaceX" },
-    { "slug": "andurilindustries", "name": "Anduril" },
-    { "slug": "lucidmotors", "name": "Lucid Motors" },
-    { "slug": "janestreet", "name": "Jane Street" },
-    { "slug": "imc", "name": "IMC Trading" },
-    { "slug": "akunacapital", "name": "Akuna Capital" },
-    { "slug": "jumptrading", "name": "Jump Trading" },
-    { "slug": "affirm", "name": "Affirm" },
-    { "slug": "appliedintuition", "name": "Applied Intuition" },
-    { "slug": "applovin", "name": "AppLovin" },
-    { "slug": "astranis", "name": "Astranis" },
-    { "slug": "braze", "name": "Braze" },
-    { "slug": "bridgewater89", "name": "Bridgewater Associates" },
-    { "slug": "celonis", "name": "Celonis" },
-    { "slug": "chime", "name": "Chime" },
-    { "slug": "creditkarma", "name": "Credit Karma" },
-    { "slug": "deepmind", "name": "DeepMind" },
-    { "slug": "dialpad", "name": "Dialpad" },
-    { "slug": "drweng", "name": "D.E. Shaw" },
-    { "slug": "faire", "name": "Faire" },
-    { "slug": "figureai", "name": "Figure AI" },
-    { "slug": "flowtraders", "name": "Flow Traders" },
-    { "slug": "gitlab", "name": "GitLab" },
-    { "slug": "gleanwork", "name": "Glean" },
-    { "slug": "grafanalabs", "name": "Grafana Labs" },
-    { "slug": "grammarly", "name": "Grammarly" },
-    { "slug": "gusto", "name": "Gusto" },
-    { "slug": "hackerrank", "name": "HackerRank" },
-    { "slug": "hudl", "name": "Hudl" },
-    { "slug": "inflectionai", "name": "Inflection AI" },
-    { "slug": "khanacademy", "name": "Khan Academy" },
-    { "slug": "labelbox", "name": "Labelbox" },
-    { "slug": "lightspeedhq", "name": "Lightspeed" },
-    { "slug": "lucidsoftware", "name": "Lucid Software" },
-    { "slug": "marqeta", "name": "Marqeta" },
-    { "slug": "mercury", "name": "Mercury" },
-    { "slug": "merge", "name": "Merge" },
-    { "slug": "moloco", "name": "Moloco" },
-    { "slug": "motional", "name": "Motional" },
-    { "slug": "mozilla", "name": "Mozilla" },
-    { "slug": "neuralink", "name": "Neuralink" },
-    { "slug": "opentable", "name": "OpenTable" },
-    { "slug": "pdtpartners", "name": "PDT Partners" },
-    { "slug": "pendo", "name": "Pendo" },
-    { "slug": "point72", "name": "Point72" },
-    { "slug": "purestorage", "name": "Pure Storage" },
-    { "slug": "redis", "name": "Redis" },
-    { "slug": "rocketlab", "name": "Rocket Lab" },
-    { "slug": "rockstargames", "name": "Rockstar Games" },
-    { "slug": "safariai", "name": "Safari AI" },
-    { "slug": "samsungsemiconductor", "name": "Samsung Semiconductor" },
-    { "slug": "sigmacomputing", "name": "Sigma Computing" },
-    { "slug": "singlestore", "name": "SingleStore" },
-    { "slug": "sonyinteractiveentertainmentglobal", "name": "Sony Interactive Entertainment" },
-    { "slug": "taketwo", "name": "Take-Two Interactive" },
-    { "slug": "tenstorrent", "name": "Tenstorrent" },
-    { "slug": "thetradedesk", "name": "The Trade Desk" },
-    { "slug": "togetherai", "name": "Together AI" },
-    { "slug": "torcrobotics", "name": "Torc Robotics" },
-    { "slug": "tripadvisor", "name": "Tripadvisor" },
-    { "slug": "twitch", "name": "Twitch" },
-    { "slug": "vikingglobalinvestors", "name": "Viking Global Investors" },
-    { "slug": "workato", "name": "Workato" },
-    { "slug": "worldquant", "name": "WorldQuant" },
-    { "slug": "xai", "name": "xAI" },
-    { "slug": "xometry", "name": "Xometry" },
-    { "slug": "yugabyte", "name": "YugabyteDB" },
-    { "slug": "zscaler", "name": "Zscaler" },
-    { "slug": "roblox", "name": "Roblox" },
-    { "slug": "fiveringsllc", "name": "Five Rings" },
-    { "slug": "snorkelai", "name": "Snorkel AI" },
-    { "slug": "waymo", "name": "Waymo" },
-    { "slug": "relativity", "name": "Relativity Space" },
-    { "slug": "apptronik", "name": "Apptronik" },
-    { "slug": "klaviyo", "name": "Klaviyo" },
-    { "slug": "asana", "name": "Asana" },
-    { "slug": "squarespace", "name": "Squarespace" },
-    { "slug": "doordashusa", "name": "DoorDash" },
-    { "slug": "pinterest", "name": "Pinterest" },
-    { "slug": "cockroachlabs", "name": "CockroachLabs" },
-    { "slug": "starburst", "name": "Starburst" },
-    { "slug": "axon", "name": "Axon" },
-    { "slug": "cresta", "name": "Cresta" },
-    { "slug": "dashlane", "name": "Dashlane" },
-    { "slug": "datacamp", "name": "DataCamp" },
-    { "slug": "graphcore", "name": "Graphcore" },
-    { "slug": "intrinsicrobotics", "name": "Intrinsic Robotics" },
-    { "slug": "maintainx", "name": "MaintainX" },
-    { "slug": "boxinc", "name": "Box" },
-    { "slug": "constructortech", "name": "Constructor" },
-    { "slug": "blockchain", "name": "Blockchain.com" },
-    { "slug": "showpad", "name": "Showpad" },
-    { "slug": "guidepoint", "name": "Guidepoint" },
-    { "slug": "udemybedi", "name": "Udemy" },
-    { "slug": "visiersolutionsinc", "name": "Visier" },
-    { "slug": "leagueinc", "name": "League" },
-    { "slug": "ada18", "name": "Ada" },
-    { "slug": "gardacp", "name": "GardaWorld" }
+    {
+      "slug": "anthropic",
+      "name": "Anthropic"
+    },
+    {
+      "slug": "discord",
+      "name": "Discord"
+    },
+    {
+      "slug": "stripe",
+      "name": "Stripe"
+    },
+    {
+      "slug": "figma",
+      "name": "Figma"
+    },
+    {
+      "slug": "coinbase",
+      "name": "Coinbase"
+    },
+    {
+      "slug": "datadog",
+      "name": "Datadog"
+    },
+    {
+      "slug": "brex",
+      "name": "Brex"
+    },
+    {
+      "slug": "airtable",
+      "name": "Airtable"
+    },
+    {
+      "slug": "reddit",
+      "name": "Reddit"
+    },
+    {
+      "slug": "duolingo",
+      "name": "Duolingo"
+    },
+    {
+      "slug": "dropbox",
+      "name": "Dropbox"
+    },
+    {
+      "slug": "cloudflare",
+      "name": "Cloudflare"
+    },
+    {
+      "slug": "verkada",
+      "name": "Verkada"
+    },
+    {
+      "slug": "vercel",
+      "name": "Vercel"
+    },
+    {
+      "slug": "samsara",
+      "name": "Samsara"
+    },
+    {
+      "slug": "instacart",
+      "name": "Instacart"
+    },
+    {
+      "slug": "mongodb",
+      "name": "MongoDB"
+    },
+    {
+      "slug": "twilio",
+      "name": "Twilio"
+    },
+    {
+      "slug": "okta",
+      "name": "Okta"
+    },
+    {
+      "slug": "scaleai",
+      "name": "Scale AI"
+    },
+    {
+      "slug": "databricks",
+      "name": "Databricks"
+    },
+    {
+      "slug": "elastic",
+      "name": "Elastic"
+    },
+    {
+      "slug": "robinhood",
+      "name": "Robinhood"
+    },
+    {
+      "slug": "airbnb",
+      "name": "Airbnb"
+    },
+    {
+      "slug": "lyft",
+      "name": "Lyft"
+    },
+    {
+      "slug": "block",
+      "name": "Block"
+    },
+    {
+      "slug": "hubspotjobs",
+      "name": "HubSpot"
+    },
+    {
+      "slug": "ripple",
+      "name": "Ripple"
+    },
+    {
+      "slug": "spacex",
+      "name": "SpaceX"
+    },
+    {
+      "slug": "andurilindustries",
+      "name": "Anduril"
+    },
+    {
+      "slug": "lucidmotors",
+      "name": "Lucid Motors"
+    },
+    {
+      "slug": "janestreet",
+      "name": "Jane Street"
+    },
+    {
+      "slug": "imc",
+      "name": "IMC Trading"
+    },
+    {
+      "slug": "akunacapital",
+      "name": "Akuna Capital"
+    },
+    {
+      "slug": "jumptrading",
+      "name": "Jump Trading"
+    },
+    {
+      "slug": "affirm",
+      "name": "Affirm"
+    },
+    {
+      "slug": "appliedintuition",
+      "name": "Applied Intuition"
+    },
+    {
+      "slug": "applovin",
+      "name": "AppLovin"
+    },
+    {
+      "slug": "astranis",
+      "name": "Astranis"
+    },
+    {
+      "slug": "braze",
+      "name": "Braze"
+    },
+    {
+      "slug": "bridgewater89",
+      "name": "Bridgewater Associates"
+    },
+    {
+      "slug": "celonis",
+      "name": "Celonis"
+    },
+    {
+      "slug": "chime",
+      "name": "Chime"
+    },
+    {
+      "slug": "creditkarma",
+      "name": "Credit Karma"
+    },
+    {
+      "slug": "deepmind",
+      "name": "DeepMind"
+    },
+    {
+      "slug": "dialpad",
+      "name": "Dialpad"
+    },
+    {
+      "slug": "drweng",
+      "name": "D.E. Shaw"
+    },
+    {
+      "slug": "faire",
+      "name": "Faire"
+    },
+    {
+      "slug": "figureai",
+      "name": "Figure AI"
+    },
+    {
+      "slug": "flowtraders",
+      "name": "Flow Traders"
+    },
+    {
+      "slug": "gitlab",
+      "name": "GitLab"
+    },
+    {
+      "slug": "gleanwork",
+      "name": "Glean"
+    },
+    {
+      "slug": "grafanalabs",
+      "name": "Grafana Labs"
+    },
+    {
+      "slug": "grammarly",
+      "name": "Grammarly"
+    },
+    {
+      "slug": "gusto",
+      "name": "Gusto"
+    },
+    {
+      "slug": "hackerrank",
+      "name": "HackerRank"
+    },
+    {
+      "slug": "hudl",
+      "name": "Hudl"
+    },
+    {
+      "slug": "inflectionai",
+      "name": "Inflection AI"
+    },
+    {
+      "slug": "khanacademy",
+      "name": "Khan Academy"
+    },
+    {
+      "slug": "labelbox",
+      "name": "Labelbox"
+    },
+    {
+      "slug": "lightspeedhq",
+      "name": "Lightspeed"
+    },
+    {
+      "slug": "lucidsoftware",
+      "name": "Lucid Software"
+    },
+    {
+      "slug": "marqeta",
+      "name": "Marqeta"
+    },
+    {
+      "slug": "mercury",
+      "name": "Mercury"
+    },
+    {
+      "slug": "merge",
+      "name": "Merge"
+    },
+    {
+      "slug": "moloco",
+      "name": "Moloco"
+    },
+    {
+      "slug": "motional",
+      "name": "Motional"
+    },
+    {
+      "slug": "mozilla",
+      "name": "Mozilla"
+    },
+    {
+      "slug": "neuralink",
+      "name": "Neuralink"
+    },
+    {
+      "slug": "opentable",
+      "name": "OpenTable"
+    },
+    {
+      "slug": "pdtpartners",
+      "name": "PDT Partners"
+    },
+    {
+      "slug": "pendo",
+      "name": "Pendo"
+    },
+    {
+      "slug": "point72",
+      "name": "Point72"
+    },
+    {
+      "slug": "purestorage",
+      "name": "Pure Storage"
+    },
+    {
+      "slug": "redis",
+      "name": "Redis"
+    },
+    {
+      "slug": "rocketlab",
+      "name": "Rocket Lab"
+    },
+    {
+      "slug": "rockstargames",
+      "name": "Rockstar Games"
+    },
+    {
+      "slug": "safariai",
+      "name": "Safari AI"
+    },
+    {
+      "slug": "samsungsemiconductor",
+      "name": "Samsung Semiconductor"
+    },
+    {
+      "slug": "sigmacomputing",
+      "name": "Sigma Computing"
+    },
+    {
+      "slug": "singlestore",
+      "name": "SingleStore"
+    },
+    {
+      "slug": "sonyinteractiveentertainmentglobal",
+      "name": "Sony Interactive Entertainment"
+    },
+    {
+      "slug": "taketwo",
+      "name": "Take-Two Interactive"
+    },
+    {
+      "slug": "tenstorrent",
+      "name": "Tenstorrent"
+    },
+    {
+      "slug": "thetradedesk",
+      "name": "The Trade Desk"
+    },
+    {
+      "slug": "togetherai",
+      "name": "Together AI"
+    },
+    {
+      "slug": "torcrobotics",
+      "name": "Torc Robotics"
+    },
+    {
+      "slug": "tripadvisor",
+      "name": "Tripadvisor"
+    },
+    {
+      "slug": "twitch",
+      "name": "Twitch"
+    },
+    {
+      "slug": "vikingglobalinvestors",
+      "name": "Viking Global Investors"
+    },
+    {
+      "slug": "workato",
+      "name": "Workato"
+    },
+    {
+      "slug": "worldquant",
+      "name": "WorldQuant"
+    },
+    {
+      "slug": "xai",
+      "name": "xAI"
+    },
+    {
+      "slug": "xometry",
+      "name": "Xometry"
+    },
+    {
+      "slug": "yugabyte",
+      "name": "YugabyteDB"
+    },
+    {
+      "slug": "zscaler",
+      "name": "Zscaler"
+    },
+    {
+      "slug": "roblox",
+      "name": "Roblox"
+    },
+    {
+      "slug": "fiveringsllc",
+      "name": "Five Rings"
+    },
+    {
+      "slug": "snorkelai",
+      "name": "Snorkel AI"
+    },
+    {
+      "slug": "waymo",
+      "name": "Waymo"
+    },
+    {
+      "slug": "relativity",
+      "name": "Relativity Space"
+    },
+    {
+      "slug": "apptronik",
+      "name": "Apptronik"
+    },
+    {
+      "slug": "klaviyo",
+      "name": "Klaviyo"
+    },
+    {
+      "slug": "asana",
+      "name": "Asana"
+    },
+    {
+      "slug": "squarespace",
+      "name": "Squarespace"
+    },
+    {
+      "slug": "doordashusa",
+      "name": "DoorDash"
+    },
+    {
+      "slug": "pinterest",
+      "name": "Pinterest"
+    },
+    {
+      "slug": "cockroachlabs",
+      "name": "CockroachLabs"
+    },
+    {
+      "slug": "starburst",
+      "name": "Starburst"
+    },
+    {
+      "slug": "axon",
+      "name": "Axon"
+    },
+    {
+      "slug": "cresta",
+      "name": "Cresta"
+    },
+    {
+      "slug": "dashlane",
+      "name": "Dashlane"
+    },
+    {
+      "slug": "datacamp",
+      "name": "DataCamp"
+    },
+    {
+      "slug": "graphcore",
+      "name": "Graphcore"
+    },
+    {
+      "slug": "intrinsicrobotics",
+      "name": "Intrinsic Robotics"
+    },
+    {
+      "slug": "maintainx",
+      "name": "MaintainX"
+    },
+    {
+      "slug": "boxinc",
+      "name": "Box"
+    },
+    {
+      "slug": "constructortech",
+      "name": "Constructor"
+    },
+    {
+      "slug": "blockchain",
+      "name": "Blockchain.com"
+    },
+    {
+      "slug": "showpad",
+      "name": "Showpad"
+    },
+    {
+      "slug": "guidepoint",
+      "name": "Guidepoint"
+    },
+    {
+      "slug": "udemybedi",
+      "name": "Udemy"
+    },
+    {
+      "slug": "visiersolutionsinc",
+      "name": "Visier"
+    },
+    {
+      "slug": "leagueinc",
+      "name": "League"
+    },
+    {
+      "slug": "ada18",
+      "name": "Ada"
+    },
+    {
+      "slug": "gardacp",
+      "name": "GardaWorld"
+    },
+    {
+      "slug": "coreweave",
+      "name": "CoreWeave"
+    },
+    {
+      "slug": "rubrik",
+      "name": "Rubrik"
+    },
+    {
+      "slug": "oscar",
+      "name": "Oscar Health"
+    },
+    {
+      "slug": "canonical",
+      "name": "Canonical"
+    },
+    {
+      "slug": "appian",
+      "name": "Appian"
+    },
+    {
+      "slug": "anaplan",
+      "name": "Anaplan"
+    },
+    {
+      "slug": "sofi",
+      "name": "SoFi"
+    },
+    {
+      "slug": "nuro",
+      "name": "Nuro"
+    },
+    {
+      "slug": "formlabs",
+      "name": "Formlabs"
+    },
+    {
+      "slug": "qualtrics",
+      "name": "Qualtrics"
+    },
+    {
+      "slug": "ixllearning",
+      "name": "IXL Learning"
+    },
+    {
+      "slug": "alphasights",
+      "name": "AlphaSights"
+    },
+    {
+      "slug": "figure",
+      "name": "Figure"
+    },
+    {
+      "slug": "samsungresearchamerica",
+      "name": "Samsung Research America"
+    },
+    {
+      "slug": "latitude",
+      "name": "Latitude AI"
+    },
+    {
+      "slug": "alphafmcroles",
+      "name": "Alpha Financial Markets Consulting"
+    },
+    {
+      "slug": "oklo",
+      "name": "Oklo"
+    },
+    {
+      "slug": "underdogfantasy",
+      "name": "Underdog Fantasy"
+    },
+    {
+      "slug": "loop",
+      "name": "Loop"
+    }
   ],
   "lever": [
-    { "slug": "spotify", "name": "Spotify" },
-    { "slug": "gohighlevel", "name": "HighLevel" },
-    { "slug": "palantir", "name": "Palantir" },
-    { "slug": "arrivelogistics", "name": "Arrive Logistics" },
-    { "slug": "belvederetrading", "name": "Belvedere Trading" },
-    { "slug": "brilliant", "name": "Brilliant" },
-    { "slug": "bumbleinc", "name": "Bumble" },
-    { "slug": "cfsenergy", "name": "CFS Energy" },
-    { "slug": "deepgenomics", "name": "Deep Genomics" },
-    { "slug": "dexterity", "name": "Dexterity" },
-    { "slug": "findhelp", "name": "Findhelp" },
-    { "slug": "fireworkhq", "name": "Firework" },
-    { "slug": "fullscript", "name": "Fullscript" },
-    { "slug": "gearset", "name": "Gearset" },
-    { "slug": "hermeus", "name": "Hermeus" },
-    { "slug": "highspot", "name": "Highspot" },
-    { "slug": "immuta", "name": "Immuta" },
-    { "slug": "kabam", "name": "Kabam" },
-    { "slug": "kitware", "name": "Kitware" },
-    { "slug": "leantaas", "name": "LeanTaaS" },
-    { "slug": "lumafield", "name": "Lumafield" },
-    { "slug": "magnetforensics", "name": "Magnet Forensics" },
-    { "slug": "matchgroup", "name": "Match Group" },
-    { "slug": "mistral", "name": "Mistral AI" },
-    { "slug": "nimblerx", "name": "NimbleRx" },
-    { "slug": "nium", "name": "Nium" },
-    { "slug": "perforce", "name": "Perforce" },
-    { "slug": "piplabs", "name": "Pip Labs" },
-    { "slug": "qrypt", "name": "Qrypt" },
-    { "slug": "ranger", "name": "Ranger" },
-    { "slug": "rover", "name": "Rover" },
-    { "slug": "sambatv", "name": "Samba TV" },
-    { "slug": "saviynt", "name": "Saviynt" },
-    { "slug": "shieldai", "name": "Shield AI" },
-    { "slug": "sophos", "name": "Sophos" },
-    { "slug": "theathletic", "name": "The Athletic" },
-    { "slug": "uncountable", "name": "Uncountable" },
-    { "slug": "valkyrietrading", "name": "Valkyrie Trading" },
-    { "slug": "versapay", "name": "Versapay" },
-    { "slug": "voltus", "name": "Voltus" },
-    { "slug": "waabi", "name": "Waabi" },
-    { "slug": "weride", "name": "WeRide" },
-    { "slug": "whoop", "name": "WHOOP" },
-    { "slug": "wintermute-trading", "name": "Wintermute Trading" },
-    { "slug": "zoox", "name": "Zoox" }
+    {
+      "slug": "spotify",
+      "name": "Spotify"
+    },
+    {
+      "slug": "gohighlevel",
+      "name": "HighLevel"
+    },
+    {
+      "slug": "palantir",
+      "name": "Palantir"
+    },
+    {
+      "slug": "arrivelogistics",
+      "name": "Arrive Logistics"
+    },
+    {
+      "slug": "belvederetrading",
+      "name": "Belvedere Trading"
+    },
+    {
+      "slug": "brilliant",
+      "name": "Brilliant"
+    },
+    {
+      "slug": "bumbleinc",
+      "name": "Bumble"
+    },
+    {
+      "slug": "cfsenergy",
+      "name": "CFS Energy"
+    },
+    {
+      "slug": "deepgenomics",
+      "name": "Deep Genomics"
+    },
+    {
+      "slug": "dexterity",
+      "name": "Dexterity"
+    },
+    {
+      "slug": "findhelp",
+      "name": "Findhelp"
+    },
+    {
+      "slug": "fireworkhq",
+      "name": "Firework"
+    },
+    {
+      "slug": "fullscript",
+      "name": "Fullscript"
+    },
+    {
+      "slug": "gearset",
+      "name": "Gearset"
+    },
+    {
+      "slug": "hermeus",
+      "name": "Hermeus"
+    },
+    {
+      "slug": "highspot",
+      "name": "Highspot"
+    },
+    {
+      "slug": "immuta",
+      "name": "Immuta"
+    },
+    {
+      "slug": "kabam",
+      "name": "Kabam"
+    },
+    {
+      "slug": "kitware",
+      "name": "Kitware"
+    },
+    {
+      "slug": "leantaas",
+      "name": "LeanTaaS"
+    },
+    {
+      "slug": "lumafield",
+      "name": "Lumafield"
+    },
+    {
+      "slug": "magnetforensics",
+      "name": "Magnet Forensics"
+    },
+    {
+      "slug": "matchgroup",
+      "name": "Match Group"
+    },
+    {
+      "slug": "mistral",
+      "name": "Mistral AI"
+    },
+    {
+      "slug": "nimblerx",
+      "name": "NimbleRx"
+    },
+    {
+      "slug": "nium",
+      "name": "Nium"
+    },
+    {
+      "slug": "perforce",
+      "name": "Perforce"
+    },
+    {
+      "slug": "piplabs",
+      "name": "Pip Labs"
+    },
+    {
+      "slug": "qrypt",
+      "name": "Qrypt"
+    },
+    {
+      "slug": "ranger",
+      "name": "Ranger"
+    },
+    {
+      "slug": "rover",
+      "name": "Rover"
+    },
+    {
+      "slug": "sambatv",
+      "name": "Samba TV"
+    },
+    {
+      "slug": "saviynt",
+      "name": "Saviynt"
+    },
+    {
+      "slug": "shieldai",
+      "name": "Shield AI"
+    },
+    {
+      "slug": "sophos",
+      "name": "Sophos"
+    },
+    {
+      "slug": "theathletic",
+      "name": "The Athletic"
+    },
+    {
+      "slug": "uncountable",
+      "name": "Uncountable"
+    },
+    {
+      "slug": "valkyrietrading",
+      "name": "Valkyrie Trading"
+    },
+    {
+      "slug": "versapay",
+      "name": "Versapay"
+    },
+    {
+      "slug": "voltus",
+      "name": "Voltus"
+    },
+    {
+      "slug": "waabi",
+      "name": "Waabi"
+    },
+    {
+      "slug": "weride",
+      "name": "WeRide"
+    },
+    {
+      "slug": "whoop",
+      "name": "WHOOP"
+    },
+    {
+      "slug": "wintermute-trading",
+      "name": "Wintermute Trading"
+    },
+    {
+      "slug": "zoox",
+      "name": "Zoox"
+    }
   ],
   "ashby": [
-    { "slug": "resend", "name": "Resend" },
-    { "slug": "supabase", "name": "Supabase" },
-    { "slug": "notion", "name": "Notion" },
-    { "slug": "ramp", "name": "Ramp" },
-    { "slug": "openai", "name": "OpenAI" },
-    { "slug": "sentry", "name": "Sentry" },
-    { "slug": "benchling", "name": "Benchling" },
-    { "slug": "replit", "name": "Replit" },
-    { "slug": "perplexity", "name": "Perplexity" },
-    { "slug": "zip", "name": "Zip" },
-    { "slug": "abridge", "name": "Abridge" },
-    { "slug": "allium", "name": "Allium" },
-    { "slug": "anyscale", "name": "Anyscale" },
-    { "slug": "atomicsemi", "name": "Atomic Semi" },
-    { "slug": "baseten", "name": "Baseten" },
-    { "slug": "candidhealth", "name": "Candid Health" },
-    { "slug": "cape", "name": "Cape" },
-    { "slug": "cartesia", "name": "Cartesia" },
-    { "slug": "cohere", "name": "Cohere" },
-    { "slug": "confluent", "name": "Confluent" },
-    { "slug": "crusoe", "name": "Crusoe" },
-    { "slug": "dandy", "name": "Dandy" },
-    { "slug": "datologyai", "name": "Datology AI" },
-    { "slug": "decagon", "name": "Decagon" },
-    { "slug": "eightsleep", "name": "Eight Sleep" },
-    { "slug": "elevenlabs", "name": "ElevenLabs" },
-    { "slug": "eliseai", "name": "EliseAI" },
-    { "slug": "etched", "name": "Etched" },
-    { "slug": "fable", "name": "Fable" },
-    { "slug": "gecko-robotics", "name": "Gecko Robotics" },
-    { "slug": "gptzero", "name": "GPTZero" },
-    { "slug": "handshake", "name": "Handshake" },
-    { "slug": "harvey", "name": "Harvey" },
-    { "slug": "ideogram", "name": "Ideogram" },
-    { "slug": "illumio", "name": "Illumio" },
-    { "slug": "imprint", "name": "Imprint" },
-    { "slug": "keyrock", "name": "Keyrock" },
-    { "slug": "lambda", "name": "Lambda" },
-    { "slug": "lightspark", "name": "Lightspark" },
-    { "slug": "mercor", "name": "Mercor" },
-    { "slug": "metalenz", "name": "Metalenz" },
-    { "slug": "northwoodspace", "name": "Northwood Space" },
-    { "slug": "parafin", "name": "Parafin" },
-    { "slug": "patreon", "name": "Patreon" },
-    { "slug": "persona", "name": "Persona" },
-    { "slug": "pulse", "name": "Pulse" },
-    { "slug": "pylon", "name": "Pylon" },
-    { "slug": "quora", "name": "Quora" },
-    { "slug": "realitydefender", "name": "Reality Defender" },
-    { "slug": "reflect-orbital", "name": "Reflect Orbital" },
-    { "slug": "rilla", "name": "Rilla" },
-    { "slug": "sierra", "name": "Sierra" },
-    { "slug": "snowflake", "name": "Snowflake" },
-    { "slug": "suno", "name": "Suno" },
-    { "slug": "the-exploration-company", "name": "The Exploration Company" },
-    { "slug": "uipath", "name": "UiPath" },
-    { "slug": "unify", "name": "Unify" },
-    { "slug": "voyant-photonics", "name": "Voyant Photonics" },
-    { "slug": "warp", "name": "Warp" },
-    { "slug": "whatnot", "name": "Whatnot" },
-    { "slug": "witnessai", "name": "Witness AI" },
-    { "slug": "zapier", "name": "Zapier" }
+    {
+      "slug": "resend",
+      "name": "Resend"
+    },
+    {
+      "slug": "supabase",
+      "name": "Supabase"
+    },
+    {
+      "slug": "notion",
+      "name": "Notion"
+    },
+    {
+      "slug": "ramp",
+      "name": "Ramp"
+    },
+    {
+      "slug": "openai",
+      "name": "OpenAI"
+    },
+    {
+      "slug": "sentry",
+      "name": "Sentry"
+    },
+    {
+      "slug": "benchling",
+      "name": "Benchling"
+    },
+    {
+      "slug": "replit",
+      "name": "Replit"
+    },
+    {
+      "slug": "perplexity",
+      "name": "Perplexity"
+    },
+    {
+      "slug": "zip",
+      "name": "Zip"
+    },
+    {
+      "slug": "abridge",
+      "name": "Abridge"
+    },
+    {
+      "slug": "allium",
+      "name": "Allium"
+    },
+    {
+      "slug": "anyscale",
+      "name": "Anyscale"
+    },
+    {
+      "slug": "atomicsemi",
+      "name": "Atomic Semi"
+    },
+    {
+      "slug": "baseten",
+      "name": "Baseten"
+    },
+    {
+      "slug": "candidhealth",
+      "name": "Candid Health"
+    },
+    {
+      "slug": "cape",
+      "name": "Cape"
+    },
+    {
+      "slug": "cartesia",
+      "name": "Cartesia"
+    },
+    {
+      "slug": "cohere",
+      "name": "Cohere"
+    },
+    {
+      "slug": "confluent",
+      "name": "Confluent"
+    },
+    {
+      "slug": "crusoe",
+      "name": "Crusoe"
+    },
+    {
+      "slug": "dandy",
+      "name": "Dandy"
+    },
+    {
+      "slug": "datologyai",
+      "name": "Datology AI"
+    },
+    {
+      "slug": "decagon",
+      "name": "Decagon"
+    },
+    {
+      "slug": "eightsleep",
+      "name": "Eight Sleep"
+    },
+    {
+      "slug": "elevenlabs",
+      "name": "ElevenLabs"
+    },
+    {
+      "slug": "eliseai",
+      "name": "EliseAI"
+    },
+    {
+      "slug": "etched",
+      "name": "Etched"
+    },
+    {
+      "slug": "fable",
+      "name": "Fable"
+    },
+    {
+      "slug": "gecko-robotics",
+      "name": "Gecko Robotics"
+    },
+    {
+      "slug": "gptzero",
+      "name": "GPTZero"
+    },
+    {
+      "slug": "handshake",
+      "name": "Handshake"
+    },
+    {
+      "slug": "harvey",
+      "name": "Harvey"
+    },
+    {
+      "slug": "ideogram",
+      "name": "Ideogram"
+    },
+    {
+      "slug": "illumio",
+      "name": "Illumio"
+    },
+    {
+      "slug": "imprint",
+      "name": "Imprint"
+    },
+    {
+      "slug": "keyrock",
+      "name": "Keyrock"
+    },
+    {
+      "slug": "lambda",
+      "name": "Lambda"
+    },
+    {
+      "slug": "lightspark",
+      "name": "Lightspark"
+    },
+    {
+      "slug": "mercor",
+      "name": "Mercor"
+    },
+    {
+      "slug": "metalenz",
+      "name": "Metalenz"
+    },
+    {
+      "slug": "northwoodspace",
+      "name": "Northwood Space"
+    },
+    {
+      "slug": "parafin",
+      "name": "Parafin"
+    },
+    {
+      "slug": "patreon",
+      "name": "Patreon"
+    },
+    {
+      "slug": "persona",
+      "name": "Persona"
+    },
+    {
+      "slug": "pulse",
+      "name": "Pulse"
+    },
+    {
+      "slug": "pylon",
+      "name": "Pylon"
+    },
+    {
+      "slug": "quora",
+      "name": "Quora"
+    },
+    {
+      "slug": "realitydefender",
+      "name": "Reality Defender"
+    },
+    {
+      "slug": "reflect-orbital",
+      "name": "Reflect Orbital"
+    },
+    {
+      "slug": "rilla",
+      "name": "Rilla"
+    },
+    {
+      "slug": "sierra",
+      "name": "Sierra"
+    },
+    {
+      "slug": "snowflake",
+      "name": "Snowflake"
+    },
+    {
+      "slug": "suno",
+      "name": "Suno"
+    },
+    {
+      "slug": "the-exploration-company",
+      "name": "The Exploration Company"
+    },
+    {
+      "slug": "uipath",
+      "name": "UiPath"
+    },
+    {
+      "slug": "unify",
+      "name": "Unify"
+    },
+    {
+      "slug": "voyant-photonics",
+      "name": "Voyant Photonics"
+    },
+    {
+      "slug": "warp",
+      "name": "Warp"
+    },
+    {
+      "slug": "whatnot",
+      "name": "Whatnot"
+    },
+    {
+      "slug": "witnessai",
+      "name": "Witness AI"
+    },
+    {
+      "slug": "zapier",
+      "name": "Zapier"
+    }
   ],
   "workday": [
     {
@@ -251,7 +1026,10 @@
       "site": "nvidiaexternalcareersite",
       "verified_jobs": 2000,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Salesforce",
@@ -259,7 +1037,9 @@
       "site": "External_Career_Site",
       "verified_jobs": 1311,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "CrowdStrike",
@@ -267,7 +1047,9 @@
       "site": "crowdstrikecareers",
       "verified_jobs": 627,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Capital One",
@@ -275,7 +1057,10 @@
       "site": "Capital_One",
       "verified_jobs": 1624,
       "verified_date": "2026-02-28",
-      "domains": ["software", "finance"]
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
       "name": "RTX",
@@ -283,7 +1068,10 @@
       "site": "rec_rtx_ext_gateway",
       "verified_jobs": 3745,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "defense"]
+      "domains": [
+        "hardware",
+        "defense"
+      ]
     },
     {
       "name": "Leidos",
@@ -291,7 +1079,10 @@
       "site": "External",
       "verified_jobs": 1818,
       "verified_date": "2026-02-28",
-      "domains": ["software", "defense"]
+      "domains": [
+        "software",
+        "defense"
+      ]
     },
     {
       "name": "Booz Allen Hamilton",
@@ -299,7 +1090,10 @@
       "site": "bah_jobs",
       "verified_jobs": 1479,
       "verified_date": "2026-02-28",
-      "domains": ["software", "defense"]
+      "domains": [
+        "software",
+        "defense"
+      ]
     },
     {
       "name": "Applied Materials",
@@ -307,7 +1101,9 @@
       "site": "External",
       "verified_jobs": 1497,
       "verified_date": "2026-02-28",
-      "domains": ["hardware"]
+      "domains": [
+        "hardware"
+      ]
     },
     {
       "name": "HPE",
@@ -315,7 +1111,10 @@
       "site": "acjobsite",
       "verified_jobs": 1647,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "AT&T",
@@ -323,7 +1122,9 @@
       "site": "ATTGeneral",
       "verified_jobs": 1230,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Mastercard",
@@ -331,7 +1132,10 @@
       "site": "CorporateCareers",
       "verified_jobs": 953,
       "verified_date": "2026-02-28",
-      "domains": ["software", "finance"]
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
       "name": "Boeing",
@@ -339,7 +1143,10 @@
       "site": "EXTERNAL_CAREERS",
       "verified_jobs": 1080,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "defense"]
+      "domains": [
+        "hardware",
+        "defense"
+      ]
     },
     {
       "name": "Blue Origin",
@@ -347,7 +1154,10 @@
       "site": "blueorigin",
       "verified_jobs": 930,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "defense"]
+      "domains": [
+        "hardware",
+        "defense"
+      ]
     },
     {
       "name": "Cadence",
@@ -355,7 +1165,10 @@
       "site": "External_Careers",
       "verified_jobs": 553,
       "verified_date": "2026-02-28",
-      "domains": ["software", "hardware"]
+      "domains": [
+        "software",
+        "hardware"
+      ]
     },
     {
       "name": "Motorola Solutions",
@@ -363,7 +1176,10 @@
       "site": "Careers",
       "verified_jobs": 837,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "GE HealthCare",
@@ -371,7 +1187,11 @@
       "site": "GEHC_ExternalSite",
       "verified_jobs": 1120,
       "verified_date": "2026-02-28",
-      "domains": ["hardware", "software", "nursing"]
+      "domains": [
+        "hardware",
+        "software",
+        "nursing"
+      ]
     },
     {
       "name": "Adobe",
@@ -379,7 +1199,9 @@
       "site": "external_experienced",
       "verified_jobs": 1121,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Zendesk",
@@ -387,7 +1209,9 @@
       "site": "Zendesk",
       "verified_jobs": 199,
       "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Caterpillar",
@@ -395,15 +1219,19 @@
       "site": "caterpillarcareers",
       "verified_jobs": 849,
       "verified_date": "2026-02-28",
-      "domains": ["hardware"]
+      "domains": [
+        "hardware"
+      ]
     },
     {
       "name": "Proofpoint",
       "url": "https://proofpoint.wd5.myworkdayjobs.com",
-      "site": "proofpointcareers",
-      "verified_jobs": 197,
-      "verified_date": "2026-02-28",
-      "domains": ["software"]
+      "site": "ProofpointCareers",
+      "verified_jobs": 203,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "F5",
@@ -411,7 +1239,10 @@
       "site": "f5jobs",
       "verified_jobs": 265,
       "verified_date": "2026-02-28",
-      "domains": ["software", "hardware"]
+      "domains": [
+        "software",
+        "hardware"
+      ]
     },
     {
       "name": "Cleveland Clinic",
@@ -419,7 +1250,10 @@
       "site": "ClevelandClinicCareers",
       "verified_jobs": 2107,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"],
+      "domains": [
+        "nursing",
+        "general"
+      ],
       "us_only": true
     },
     {
@@ -428,7 +1262,10 @@
       "site": "vumccareers",
       "verified_jobs": 650,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"]
+      "domains": [
+        "nursing",
+        "general"
+      ]
     },
     {
       "name": "Intermountain Health",
@@ -436,7 +1273,10 @@
       "site": "IntermountainCareers",
       "verified_jobs": 1023,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"],
+      "domains": [
+        "nursing",
+        "general"
+      ],
       "us_only": true
     },
     {
@@ -445,7 +1285,10 @@
       "site": "MGBExternal",
       "verified_jobs": 2000,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"]
+      "domains": [
+        "nursing",
+        "general"
+      ]
     },
     {
       "name": "Geisinger Health",
@@ -453,7 +1296,10 @@
       "site": "GeisingerExternal",
       "verified_jobs": 1540,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"]
+      "domains": [
+        "nursing",
+        "general"
+      ]
     },
     {
       "name": "Ochsner Health",
@@ -461,7 +1307,10 @@
       "site": "Ochsner",
       "verified_jobs": 1939,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"]
+      "domains": [
+        "nursing",
+        "general"
+      ]
     },
     {
       "name": "Saint Luke's Health System",
@@ -469,7 +1318,10 @@
       "site": "saintlukeshealthcareers",
       "verified_jobs": 482,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"],
+      "domains": [
+        "nursing",
+        "general"
+      ],
       "us_only": true
     },
     {
@@ -478,7 +1330,10 @@
       "site": "MMC",
       "verified_jobs": 330,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"],
+      "domains": [
+        "nursing",
+        "general"
+      ],
       "us_only": true
     },
     {
@@ -487,7 +1342,10 @@
       "site": "External",
       "verified_jobs": 162,
       "verified_date": "2026-02-28",
-      "domains": ["nursing", "general"]
+      "domains": [
+        "nursing",
+        "general"
+      ]
     },
     {
       "name": "Micron",
@@ -495,7 +1353,9 @@
       "site": "External",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["hardware"]
+      "domains": [
+        "hardware"
+      ]
     },
     {
       "name": "KBR",
@@ -503,7 +1363,10 @@
       "site": "KBR_Careers",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software", "defense"]
+      "domains": [
+        "software",
+        "defense"
+      ]
     },
     {
       "name": "CACI",
@@ -511,7 +1374,10 @@
       "site": "External",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software", "defense"]
+      "domains": [
+        "software",
+        "defense"
+      ]
     },
     {
       "name": "Nationwide Children's",
@@ -519,7 +1385,10 @@
       "site": "NCHCareers",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["nursing", "general"]
+      "domains": [
+        "nursing",
+        "general"
+      ]
     },
     {
       "name": "PayPal",
@@ -527,7 +1396,10 @@
       "site": "jobs",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software", "finance"]
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
       "name": "Banner Health",
@@ -535,7 +1407,10 @@
       "site": "Careers",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["nursing", "general"]
+      "domains": [
+        "nursing",
+        "general"
+      ]
     },
     {
       "name": "GlobalFoundries",
@@ -543,7 +1418,9 @@
       "site": "External",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["hardware"]
+      "domains": [
+        "hardware"
+      ]
     },
     {
       "name": "Intel",
@@ -551,15 +1428,21 @@
       "site": "External",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Marvell",
       "url": "https://marvell.wd1.myworkdayjobs.com",
       "site": "MarvellCareers",
-      "verified_jobs": 500,
-      "verified_date": "2026-03-01",
-      "domains": ["hardware"]
+      "verified_jobs": 460,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "NXP",
@@ -567,7 +1450,9 @@
       "site": "Careers",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["hardware"]
+      "domains": [
+        "hardware"
+      ]
     },
     {
       "name": "Trimble",
@@ -575,7 +1460,10 @@
       "site": "TrimbleCareers",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Red Hat",
@@ -583,7 +1471,9 @@
       "site": "jobs",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Zoom",
@@ -591,7 +1481,9 @@
       "site": "zoom",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "Exact Sciences",
@@ -599,7 +1491,9 @@
       "site": "Exact_Sciences",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["general"]
+      "domains": [
+        "general"
+      ]
     },
     {
       "name": "Workiva",
@@ -607,7 +1501,9 @@
       "site": "careers",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "DraftKings",
@@ -615,7 +1511,9 @@
       "site": "DraftKings",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "iRhythm",
@@ -623,7 +1521,9 @@
       "site": "iRhythm",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["general"]
+      "domains": [
+        "general"
+      ]
     },
     {
       "name": "nCino",
@@ -631,7 +1531,10 @@
       "site": "ncinoCareers",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software", "finance"]
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
       "name": "Autodesk",
@@ -639,7 +1542,9 @@
       "site": "Ext",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["software"]
+      "domains": [
+        "software"
+      ]
     },
     {
       "name": "WVU Medicine",
@@ -647,55 +1552,77 @@
       "site": "WVUH",
       "verified_jobs": 500,
       "verified_date": "2026-03-01",
-      "domains": ["nursing", "general"]
+      "domains": [
+        "nursing",
+        "general"
+      ]
     },
     {
       "name": "ASML",
       "url": "https://asml.wd3.myworkdayjobs.com",
       "site": "asmlext1",
-      "verified_jobs": 243,
-      "verified_date": "2026-03-08",
-      "domains": ["hardware"]
+      "verified_jobs": 411,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Broadcom",
       "url": "https://broadcom.wd1.myworkdayjobs.com",
       "site": "External_Career",
-      "verified_jobs": 371,
-      "verified_date": "2026-03-08",
-      "domains": ["hardware", "software"]
+      "verified_jobs": 370,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Northrop Grumman",
       "url": "https://ngc.wd1.myworkdayjobs.com",
       "site": "Northrop_Grumman_External_Site",
-      "verified_jobs": 2228,
-      "verified_date": "2026-03-07",
-      "domains": ["hardware", "software"]
+      "verified_jobs": 2293,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware",
+        "software",
+        "general"
+      ]
     },
     {
       "name": "Cisco",
       "url": "https://cisco.wd5.myworkdayjobs.com",
       "site": "Cisco_Careers",
-      "verified_jobs": 1036,
-      "verified_date": "2026-03-07",
-      "domains": ["software", "hardware"]
+      "verified_jobs": 1023,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "software",
+        "hardware"
+      ]
     },
     {
       "name": "Disney",
       "url": "https://disney.wd5.myworkdayjobs.com",
       "site": "disneycareer",
-      "verified_jobs": 626,
-      "verified_date": "2026-03-08",
-      "domains": ["software", "general"]
+      "verified_jobs": 622,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "software",
+        "general"
+      ]
     },
     {
       "name": "HP Inc",
       "url": "https://hp.wd5.myworkdayjobs.com",
       "site": "ExternalCareerSite",
-      "verified_jobs": 461,
-      "verified_date": "2026-03-08",
-      "domains": ["hardware", "software"]
+      "verified_jobs": 480,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Snap",
@@ -704,8 +1631,11 @@
       "tenant": "snapchat",
       "verified_jobs": 258,
       "verified_date": "2026-03-11",
-      "domains": ["software", "general"],
-      "notes": "myworkdaysite.com domain — tenant extracted from path, not hostname"
+      "domains": [
+        "software",
+        "general"
+      ],
+      "notes": "myworkdaysite.com domain \u2014 tenant extracted from path, not hostname"
     },
     {
       "name": "Morgan Stanley",
@@ -713,7 +1643,10 @@
       "site": "Private",
       "verified_jobs": 932,
       "verified_date": "2026-03-11",
-      "domains": ["general", "software"]
+      "domains": [
+        "general",
+        "software"
+      ]
     },
     {
       "name": "Fidelity Investments",
@@ -721,7 +1654,10 @@
       "site": "fidelitycareers",
       "verified_jobs": 607,
       "verified_date": "2026-03-11",
-      "domains": ["software", "finance"]
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
       "name": "Analog Devices",
@@ -729,127 +1665,10 @@
       "site": "External",
       "verified_jobs": 949,
       "verified_date": "2026-03-11",
-      "domains": ["hardware", "software"]
-    },
-    {
-      "name": "Stryker",
-      "url": "https://stryker.wd1.myworkdayjobs.com",
-      "site": "StrykerCareers",
-      "verified_jobs": 1563,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware", "general"]
-    },
-    {
-      "name": "State Street",
-      "url": "https://statestreet.wd1.myworkdayjobs.com",
-      "site": "Global",
-      "verified_jobs": 931,
-      "verified_date": "2026-03-11",
-      "domains": ["software", "finance"]
-    },
-    {
-      "name": "KLA",
-      "url": "https://kla.wd1.myworkdayjobs.com",
-      "site": "Search",
-      "verified_jobs": 687,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware"]
-    },
-    {
-      "name": "Moog",
-      "url": "https://moog.wd5.myworkdayjobs.com",
-      "site": "moog_external_career_site",
-      "verified_jobs": 339,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware"]
-    },
-    {
-      "name": "Entegris",
-      "url": "https://entegris.wd1.myworkdayjobs.com",
-      "site": "entegriscareers",
-      "verified_jobs": 382,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware"]
-    },
-    {
-      "name": "Rolls-Royce",
-      "url": "https://rollsroyce.wd3.myworkdayjobs.com",
-      "site": "professional",
-      "verified_jobs": 467,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware"]
-    },
-    {
-      "name": "LPL Financial",
-      "url": "https://lplfinancial.wd1.myworkdayjobs.com",
-      "site": "university",
-      "verified_jobs": 22,
-      "verified_date": "2026-03-11",
-      "domains": ["software", "finance"]
-    },
-    {
-      "name": "ASML",
-      "url": "https://asml.wd3.myworkdayjobs.com",
-      "site": "asmlext1",
-      "verified_jobs": 411,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware", "software"]
-    },
-    {
-      "name": "Broadcom",
-      "url": "https://broadcom.wd1.myworkdayjobs.com",
-      "site": "External_Career",
-      "verified_jobs": 370,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware", "software"]
-    },
-    {
-      "name": "Northrop Grumman",
-      "url": "https://ngc.wd1.myworkdayjobs.com",
-      "site": "Northrop_Grumman_External_Site",
-      "verified_jobs": 2293,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware", "software", "general"]
-    },
-    {
-      "name": "Cisco",
-      "url": "https://cisco.wd5.myworkdayjobs.com",
-      "site": "Cisco_Careers",
-      "verified_jobs": 1023,
-      "verified_date": "2026-03-11",
-      "domains": ["software", "hardware"]
-    },
-    {
-      "name": "Disney",
-      "url": "https://disney.wd5.myworkdayjobs.com",
-      "site": "disneycareer",
-      "verified_jobs": 622,
-      "verified_date": "2026-03-11",
-      "domains": ["software", "general"]
-    },
-    {
-      "name": "HP Inc",
-      "url": "https://hp.wd5.myworkdayjobs.com",
-      "site": "ExternalCareerSite",
-      "verified_jobs": 480,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware", "software"]
-    },
-    {
-      "name": "Baker Hughes",
-      "url": "https://bakerhughes.wd5.myworkdayjobs.com",
-      "site": "BakerHughes",
-      "verified_jobs": 700,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware", "general"]
-    },
-    {
-      "name": "Logitech",
-      "url": "https://logitech.wd5.myworkdayjobs.com",
-      "site": "Logitech",
-      "verified_jobs": 214,
-      "verified_date": "2026-03-11",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Stryker",
@@ -857,23 +1676,94 @@
       "site": "StrykerCareers",
       "verified_jobs": 1565,
       "verified_date": "2026-03-11",
-      "domains": ["general", "hardware"]
+      "domains": [
+        "general",
+        "hardware"
+      ]
     },
     {
-      "name": "Marvell",
-      "url": "https://marvell.wd1.myworkdayjobs.com",
-      "site": "MarvellCareers",
-      "verified_jobs": 460,
+      "name": "State Street",
+      "url": "https://statestreet.wd1.myworkdayjobs.com",
+      "site": "Global",
+      "verified_jobs": 931,
       "verified_date": "2026-03-11",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
-      "name": "Proofpoint",
-      "url": "https://proofpoint.wd5.myworkdayjobs.com",
-      "site": "ProofpointCareers",
-      "verified_jobs": 203,
+      "name": "KLA",
+      "url": "https://kla.wd1.myworkdayjobs.com",
+      "site": "Search",
+      "verified_jobs": 687,
       "verified_date": "2026-03-11",
-      "domains": ["software"]
+      "domains": [
+        "hardware"
+      ]
+    },
+    {
+      "name": "Moog",
+      "url": "https://moog.wd5.myworkdayjobs.com",
+      "site": "moog_external_career_site",
+      "verified_jobs": 339,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware"
+      ]
+    },
+    {
+      "name": "Entegris",
+      "url": "https://entegris.wd1.myworkdayjobs.com",
+      "site": "entegriscareers",
+      "verified_jobs": 382,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware"
+      ]
+    },
+    {
+      "name": "Rolls-Royce",
+      "url": "https://rollsroyce.wd3.myworkdayjobs.com",
+      "site": "professional",
+      "verified_jobs": 467,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware"
+      ]
+    },
+    {
+      "name": "LPL Financial",
+      "url": "https://lplfinancial.wd1.myworkdayjobs.com",
+      "site": "university",
+      "verified_jobs": 22,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "software",
+        "finance"
+      ]
+    },
+    {
+      "name": "Baker Hughes",
+      "url": "https://bakerhughes.wd5.myworkdayjobs.com",
+      "site": "BakerHughes",
+      "verified_jobs": 700,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware",
+        "general"
+      ]
+    },
+    {
+      "name": "Logitech",
+      "url": "https://logitech.wd5.myworkdayjobs.com",
+      "site": "Logitech",
+      "verified_jobs": 214,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "name": "Hitachi",
@@ -881,7 +1771,448 @@
       "site": "hitachi",
       "verified_jobs": 2000,
       "verified_date": "2026-03-11",
-      "domains": ["hardware", "software", "general"]
+      "domains": [
+        "hardware",
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Microsoft",
+      "url": "https://microsoft.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 5000,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "hardware"
+      ]
+    },
+    {
+      "name": "Rivian",
+      "url": "https://rivian.wd12.myworkdayjobs.com",
+      "site": "Rivian",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Deloitte",
+      "url": "https://deloitte.wd1.myworkdayjobs.com",
+      "site": "Deloitte",
+      "verified_jobs": 2000,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Electronic Arts",
+      "url": "https://ea.wd5.myworkdayjobs.com",
+      "site": "EACareer",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Zipline",
+      "url": "https://flyzipline.wd1.myworkdayjobs.com",
+      "site": "Zipline",
+      "verified_jobs": 100,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Qorvo",
+      "url": "https://qorvo.wd1.myworkdayjobs.com",
+      "site": "Qorvo_External",
+      "verified_jobs": 200,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware"
+      ]
+    },
+    {
+      "name": "Keysight Technologies",
+      "url": "https://keysight.wd5.myworkdayjobs.com",
+      "site": "jobs",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "PG&E",
+      "url": "https://pge.wd5.myworkdayjobs.com",
+      "site": "PGE_External_Career_Site",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Westinghouse Electric",
+      "url": "https://westinghouse.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "general"
+      ]
+    },
+    {
+      "name": "X Development",
+      "url": "https://xdevelopment.wd1.myworkdayjobs.com",
+      "site": "X",
+      "verified_jobs": 100,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Cadence (University)",
+      "url": "https://cadence.wd1.myworkdayjobs.com",
+      "site": "Univ_Careers",
+      "verified_jobs": 36,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "hardware"
+      ],
+      "notes": "University-specific portal. Separate from Cadence External_Careers entry."
+    },
+    {
+      "name": "BlackRock",
+      "url": "https://blackrock.wd1.myworkdayjobs.com",
+      "site": "blackrock_professional",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "finance"
+      ]
+    },
+    {
+      "name": "General Motors",
+      "url": "https://generalmotors.wd5.myworkdayjobs.com",
+      "site": "Careers_GM",
+      "verified_jobs": 1000,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "HPE (University)",
+      "url": "https://hpe.wd5.myworkdayjobs.com",
+      "site": "Jobsathpe",
+      "verified_jobs": 1584,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ],
+      "notes": "University/early-career portal. Separate from HPE acjobsite entry."
+    },
+    {
+      "name": "Abbott",
+      "url": "https://abbott.wd5.myworkdayjobs.com",
+      "site": "abbottcareers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "general"
+      ]
+    },
+    {
+      "name": "Southwest Airlines",
+      "url": "https://swa.wd1.myworkdayjobs.com",
+      "site": "external",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Stanley Black & Decker",
+      "url": "https://sbdinc.wd1.myworkdayjobs.com",
+      "site": "Stanley_Black_Decker_Career_Site",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "general"
+      ]
+    },
+    {
+      "name": "ResMed",
+      "url": "https://resmed.wd3.myworkdayjobs.com",
+      "site": "ResMed_External_Careers",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "general"
+      ]
+    },
+    {
+      "name": "Ciena",
+      "url": "https://ciena.wd5.myworkdayjobs.com",
+      "site": "Careers",
+      "verified_jobs": 200,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Silicon Labs",
+      "url": "https://silabs.wd1.myworkdayjobs.com",
+      "site": "SiliconlabsCareers",
+      "verified_jobs": 200,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware"
+      ]
+    },
+    {
+      "name": "FLIR Systems",
+      "url": "https://flir.wd1.myworkdayjobs.com",
+      "site": "flircareers",
+      "verified_jobs": 100,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware"
+      ]
+    },
+    {
+      "name": "Aptiv",
+      "url": "https://aptiv.wd5.myworkdayjobs.com",
+      "site": "aptiv_careers",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Boston Dynamics",
+      "url": "https://bostondynamics.wd1.myworkdayjobs.com",
+      "site": "Boston_Dynamics",
+      "verified_jobs": 50,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Expedia Group",
+      "url": "https://expedia.wd108.myworkdayjobs.com",
+      "site": "private",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Lumentum",
+      "url": "https://lumentum.wd5.myworkdayjobs.com",
+      "site": "LITE",
+      "verified_jobs": 100,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware"
+      ]
+    },
+    {
+      "name": "InterDigital",
+      "url": "https://interdigital.wd5.myworkdayjobs.com",
+      "site": "InterDigital_Intern",
+      "verified_jobs": 50,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Rockwell Automation",
+      "url": "https://rockwellautomation.wd1.myworkdayjobs.com",
+      "site": "External-Rockwell-Automation-Early-Careers",
+      "verified_jobs": 200,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Moderna",
+      "url": "https://modernatx.wd1.myworkdayjobs.com",
+      "site": "M_tx",
+      "verified_jobs": 200,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "general"
+      ]
+    },
+    {
+      "name": "Thomson Reuters",
+      "url": "https://thomsonreuters.wd5.myworkdayjobs.com",
+      "site": "External_Career_Site",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Elevance Health",
+      "url": "https://elevancehealth.wd1.myworkdayjobs.com",
+      "site": "ELV-ET",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "T-Mobile",
+      "url": "https://tmobile.wd1.myworkdayjobs.com",
+      "site": "external",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Allstate",
+      "url": "https://allstate.wd5.myworkdayjobs.com",
+      "site": "allstate_careers",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Philips",
+      "url": "https://philips.wd3.myworkdayjobs.com",
+      "site": "jobs-and-careers",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "hardware",
+        "general"
+      ]
+    },
+    {
+      "name": "Etsy",
+      "url": "https://etsy.wd5.myworkdayjobs.com",
+      "site": "Etsy_Careers",
+      "verified_jobs": 100,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "PNC Financial",
+      "url": "https://pnc.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "finance"
+      ]
+    },
+    {
+      "name": "Travelers",
+      "url": "https://travelers.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 200,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "USAA",
+      "url": "https://usaa.wd1.myworkdayjobs.com",
+      "site": "USAAJOBSWD",
+      "verified_jobs": 300,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "finance"
+      ]
+    },
+    {
+      "name": "Cox Enterprises",
+      "url": "https://cox.wd1.myworkdayjobs.com",
+      "site": "Cox_External_Career_Site_1",
+      "verified_jobs": 200,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "FactSet",
+      "url": "https://factset.wd108.myworkdayjobs.com",
+      "site": "FactSetCareers",
+      "verified_jobs": 100,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "finance"
+      ]
+    },
+    {
+      "name": "TransUnion",
+      "url": "https://transunion.wd5.myworkdayjobs.com",
+      "site": "TransUnion",
+      "verified_jobs": 200,
+      "verified_date": "2026-03-14",
+      "domains": [
+        "software",
+        "general"
+      ]
     }
   ],
   "eightfold": [
@@ -890,40 +2221,152 @@
       "name": "American Express",
       "verified_jobs": 493,
       "verified_date": "2026-03-11",
-      "domains": ["general", "software"]
+      "domains": [
+        "general",
+        "software"
+      ]
     },
     {
       "slug": "johndeere",
       "name": "John Deere",
       "verified_jobs": 184,
       "verified_date": "2026-03-11",
-      "domains": ["hardware", "software", "general"]
+      "domains": [
+        "hardware",
+        "software",
+        "general"
+      ]
     },
     {
       "slug": "zebra",
       "name": "Zebra Technologies",
       "verified_jobs": 266,
       "verified_date": "2026-03-11",
-      "domains": ["hardware", "software"]
+      "domains": [
+        "hardware",
+        "software"
+      ]
     }
   ],
   "smartrecruiters": [
-    { "slug": "AbbVie",               "name": "AbbVie",               "verified_us_jobs": 904, "verified_interns": 33,  "verified_date": "2026-03-11" },
-    { "slug": "VeoliaEnvironnementSA", "name": "Veolia",               "verified_us_jobs": 438, "verified_interns": 45,  "verified_date": "2026-03-11" },
-    { "slug": "ServiceNow",           "name": "ServiceNow",           "verified_us_jobs": 422, "verified_interns": 4,   "verified_date": "2026-03-11" },
-    { "slug": "Visa",                 "name": "Visa",                 "verified_us_jobs": 418, "verified_interns": 7,   "verified_date": "2026-03-11" },
-    { "slug": "RedBull",              "name": "Red Bull",              "verified_us_jobs": 393, "verified_interns": 18,  "verified_date": "2026-03-11" },
-    { "slug": "NBCUniversal3",        "name": "NBCUniversal",          "verified_us_jobs": 389, "verified_interns": 21,  "verified_date": "2026-03-11" },
-    { "slug": "Intuitive",            "name": "Intuitive Surgical",   "verified_us_jobs": 358, "verified_interns": 16,  "verified_date": "2026-03-11" },
-    { "slug": "BoschGroup",           "name": "Bosch Group",          "verified_us_jobs": 248, "verified_interns": 42,  "verified_date": "2026-03-11" },
-    { "slug": "LinkedIn3",            "name": "LinkedIn",             "verified_us_jobs": 209, "verified_interns": 3,   "verified_date": "2026-03-11" },
-    { "slug": "SmithsGroup2",         "name": "Smiths Group",         "verified_us_jobs": 178, "verified_interns": 12,  "verified_date": "2026-03-11" },
-    { "slug": "RESPECInc",            "name": "RESPEC",               "verified_us_jobs": 120, "verified_interns": 18,  "verified_date": "2026-03-11" },
-    { "slug": "WesternDigital",       "name": "Western Digital",      "verified_us_jobs": 106, "verified_interns": 14,  "verified_date": "2026-03-11" },
-    { "slug": "EVERSANA1",            "name": "EVERSANA",             "verified_us_jobs": 84,  "verified_interns": 0,   "verified_date": "2026-03-11" },
-    { "slug": "Sandisk",              "name": "SanDisk",              "verified_us_jobs": 83,  "verified_interns": 22,  "verified_date": "2026-03-11" },
-    { "slug": "Experian",             "name": "Experian",             "verified_us_jobs": 56,  "verified_interns": 1,   "verified_date": "2026-03-11" },
-    { "slug": "WellmarkInc",          "name": "Wellmark",             "verified_us_jobs": 44,  "verified_interns": 0,   "verified_date": "2026-03-11" },
-    { "slug": "RaytheonTechnologies", "name": "Raytheon Technologies","verified_us_jobs": 17,  "verified_interns": 0,   "verified_date": "2026-03-11" }
+    {
+      "slug": "AbbVie",
+      "name": "AbbVie",
+      "verified_us_jobs": 904,
+      "verified_interns": 33,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "VeoliaEnvironnementSA",
+      "name": "Veolia",
+      "verified_us_jobs": 438,
+      "verified_interns": 45,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "ServiceNow",
+      "name": "ServiceNow",
+      "verified_us_jobs": 422,
+      "verified_interns": 4,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "Visa",
+      "name": "Visa",
+      "verified_us_jobs": 418,
+      "verified_interns": 7,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "RedBull",
+      "name": "Red Bull",
+      "verified_us_jobs": 393,
+      "verified_interns": 18,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "NBCUniversal3",
+      "name": "NBCUniversal",
+      "verified_us_jobs": 389,
+      "verified_interns": 21,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "Intuitive",
+      "name": "Intuitive Surgical",
+      "verified_us_jobs": 358,
+      "verified_interns": 16,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "BoschGroup",
+      "name": "Bosch Group",
+      "verified_us_jobs": 248,
+      "verified_interns": 42,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "LinkedIn3",
+      "name": "LinkedIn",
+      "verified_us_jobs": 209,
+      "verified_interns": 3,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "SmithsGroup2",
+      "name": "Smiths Group",
+      "verified_us_jobs": 178,
+      "verified_interns": 12,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "RESPECInc",
+      "name": "RESPEC",
+      "verified_us_jobs": 120,
+      "verified_interns": 18,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "WesternDigital",
+      "name": "Western Digital",
+      "verified_us_jobs": 106,
+      "verified_interns": 14,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "EVERSANA1",
+      "name": "EVERSANA",
+      "verified_us_jobs": 84,
+      "verified_interns": 0,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "Sandisk",
+      "name": "SanDisk",
+      "verified_us_jobs": 83,
+      "verified_interns": 22,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "Experian",
+      "name": "Experian",
+      "verified_us_jobs": 56,
+      "verified_interns": 1,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "WellmarkInc",
+      "name": "Wellmark",
+      "verified_us_jobs": 44,
+      "verified_interns": 0,
+      "verified_date": "2026-03-11"
+    },
+    {
+      "slug": "RaytheonTechnologies",
+      "name": "Raytheon Technologies",
+      "verified_us_jobs": 17,
+      "verified_interns": 0,
+      "verified_date": "2026-03-11"
+    }
   ]
 }
