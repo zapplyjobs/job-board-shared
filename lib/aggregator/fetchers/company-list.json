@@ -585,6 +585,10 @@
     {
       "slug": "loop",
       "name": "Loop"
+    },
+    {
+      "slug": "unity3d",
+      "name": "Unity"
     }
   ],
   "lever": [
@@ -767,6 +771,10 @@
     {
       "slug": "zoox",
       "name": "Zoox"
+    },
+    {
+      "slug": "plaid",
+      "name": "Plaid"
     }
   ],
   "ashby": [
