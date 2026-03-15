@@ -1,9 +1,10 @@
 {
   "_meta": {
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, Workday, Eightfold, and SmartRecruiters ATS platforms",
-    "last_updated": "2026-03-15 S177",
+    "last_updated": "2026-03-15",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial — all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume. S167: SUPPLY-NEW-COMPANIES — removed 9 WD duplicates (ASML/Broadcom/Northrop/Cisco/Disney/HP/Marvell/Proofpoint/Stryker). GH +19 (CoreWeave/Rubrik/OscarHealth/Canonical/Appian/Anaplan/SoFi/Nuro/Formlabs/Qualtrics/IXLLearning/AlphaSights/Figure/SamsungResearchAmerica/LatitudeAI/AlphaFMC/Oklo/UnderdogFantasy/Loop). WD +40 (Microsoft/Rivian/Deloitte/EA/Zipline/Qorvo/Keysight/PGE/Westinghouse/XDev/CadenceUniv/BlackRock/GM/HPEUniv/Abbott/Southwest/SBD/ResMed/Ciena/SiliconLabs/FLIR/Aptiv/BostonDynamics/Expedia/Lumentum/InterDigital/Rockwell/Moderna/ThomsonReuters/Elevance/TMobile/Allstate/Philips/Etsy/PNC/Travelers/USAA/Cox/FactSet/TransUnion). GH: 126→145. WD: 79→110. S175: Removed 4 zero-tech healthcare WD tenants (WVU Medicine/Banner Health/Vanderbilt UMC/Montefiore) — 2219 jobs freed, 0 US tech value confirmed against live pool. S177: SUPPLY-SIMPLIFY-1 — GH +1 (Forerunner), Lever +1 (Nextech Systems), WD +4 (Fiserv/ICF International/Circle/Premera Blue Cross). All 6 verified live 2026-03-15. GH: 146→147. Lever: 46→47. WD: 107→111."
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) \u2014 WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) \u2014 verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) \u2014 new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial \u2014 all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume. S167: SUPPLY-NEW-COMPANIES \u2014 removed 9 WD duplicates (ASML/Broadcom/Northrop/Cisco/Disney/HP/Marvell/Proofpoint/Stryker). GH +19 (CoreWeave/Rubrik/OscarHealth/Canonical/Appian/Anaplan/SoFi/Nuro/Formlabs/Qualtrics/IXLLearning/AlphaSights/Figure/SamsungResearchAmerica/LatitudeAI/AlphaFMC/Oklo/UnderdogFantasy/Loop). WD +40 (Microsoft/Rivian/Deloitte/EA/Zipline/Qorvo/Keysight/PGE/Westinghouse/XDev/CadenceUniv/BlackRock/GM/HPEUniv/Abbott/Southwest/SBD/ResMed/Ciena/SiliconLabs/FLIR/Aptiv/BostonDynamics/Expedia/Lumentum/InterDigital/Rockwell/Moderna/ThomsonReuters/Elevance/TMobile/Allstate/Philips/Etsy/PNC/Travelers/USAA/Cox/FactSet/TransUnion). GH: 126\u2192145. WD: 79\u2192110.",
+    "workday_count": 147
   },
   "greenhouse": [
     {
@@ -589,10 +590,6 @@
     {
       "slug": "unity3d",
       "name": "Unity"
-    },
-    {
-      "slug": "forerunner",
-      "name": "Forerunner"
     }
   ],
   "lever": [
@@ -779,10 +776,6 @@
     {
       "slug": "plaid",
       "name": "Plaid"
-    },
-    {
-      "slug": "nextech",
-      "name": "Nextech Systems"
     }
   ],
   "ashby": [
@@ -1273,6 +1266,17 @@
       "us_only": true
     },
     {
+      "name": "Vanderbilt University Medical Center",
+      "url": "https://vumc.wd1.myworkdayjobs.com",
+      "site": "vumccareers",
+      "verified_jobs": 650,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ]
+    },
+    {
       "name": "Intermountain Health",
       "url": "https://imh.wd108.myworkdayjobs.com",
       "site": "IntermountainCareers",
@@ -1322,6 +1326,18 @@
       "url": "https://saintlukes.wd1.myworkdayjobs.com",
       "site": "saintlukeshealthcareers",
       "verified_jobs": 482,
+      "verified_date": "2026-02-28",
+      "domains": [
+        "nursing",
+        "general"
+      ],
+      "us_only": true
+    },
+    {
+      "name": "Montefiore Medical Center",
+      "url": "https://montefiore.wd12.myworkdayjobs.com",
+      "site": "MMC",
+      "verified_jobs": 330,
       "verified_date": "2026-02-28",
       "domains": [
         "nursing",
@@ -1392,6 +1408,17 @@
       "domains": [
         "software",
         "finance"
+      ]
+    },
+    {
+      "name": "Banner Health",
+      "url": "https://bannerhealth.wd108.myworkdayjobs.com",
+      "site": "Careers",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": [
+        "nursing",
+        "general"
       ]
     },
     {
@@ -1529,6 +1556,17 @@
       ]
     },
     {
+      "name": "WVU Medicine",
+      "url": "https://wvumedicine.wd1.myworkdayjobs.com",
+      "site": "WVUH",
+      "verified_jobs": 500,
+      "verified_date": "2026-03-01",
+      "domains": [
+        "nursing",
+        "general"
+      ]
+    },
+    {
       "name": "ASML",
       "url": "https://asml.wd3.myworkdayjobs.com",
       "site": "asmlext1",
@@ -1606,7 +1644,7 @@
         "software",
         "general"
       ],
-      "notes": "myworkdaysite.com domain — tenant extracted from path, not hostname"
+      "notes": "myworkdaysite.com domain \u2014 tenant extracted from path, not hostname"
     },
     {
       "name": "Morgan Stanley",
@@ -2194,21 +2232,43 @@
       ]
     },
     {
-      "name": "Fiserv",
-      "url": "https://fiserv.wd5.myworkdayjobs.com",
-      "site": "ext",
-      "verified_jobs": 494,
+      "name": "Dell Technologies",
+      "url": "https://dell.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 562,
       "verified_date": "2026-03-15",
       "domains": [
         "software",
-        "finance"
+        "hardware"
       ]
     },
     {
-      "name": "ICF International",
-      "url": "https://icf.wd5.myworkdayjobs.com",
-      "site": "ICFExternal_Career_Site",
-      "verified_jobs": 411,
+      "name": "CVS Health",
+      "url": "https://cvshealth.wd1.myworkdayjobs.com",
+      "site": "CVS_Health_Careers",
+      "verified_jobs": 13471,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "T. Rowe Price",
+      "url": "https://troweprice.wd5.myworkdayjobs.com",
+      "site": "TRowePrice",
+      "verified_jobs": 91,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "finance",
+        "software"
+      ]
+    },
+    {
+      "name": "Target",
+      "url": "https://target.wd5.myworkdayjobs.com",
+      "site": "TargetCareers",
+      "verified_jobs": 2000,
       "verified_date": "2026-03-15",
       "domains": [
         "software",
@@ -2216,10 +2276,281 @@
       ]
     },
     {
-      "name": "Circle",
-      "url": "https://circle.wd1.myworkdayjobs.com",
-      "site": "Circle",
-      "verified_jobs": 114,
+      "name": "Walmart",
+      "url": "https://walmart.wd5.myworkdayjobs.com",
+      "site": "WalmartExternal",
+      "verified_jobs": 2000,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Dexcom",
+      "url": "https://dexcom.wd1.myworkdayjobs.com",
+      "site": "dexcom",
+      "verified_jobs": 358,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "Medtronic",
+      "url": "https://medtronic.wd1.myworkdayjobs.com",
+      "site": "MedtronicCareers",
+      "verified_jobs": 1138,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "Freddie Mac",
+      "url": "https://freddiemac.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 96,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "finance",
+        "software"
+      ]
+    },
+    {
+      "name": "Northern Trust",
+      "url": "https://ntrs.wd1.myworkdayjobs.com",
+      "site": "NorthernTrust",
+      "verified_jobs": 226,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "finance",
+        "software"
+      ]
+    },
+    {
+      "name": "S&P Global",
+      "url": "https://spgi.wd5.myworkdayjobs.com",
+      "site": "SPGI_Careers",
+      "verified_jobs": 781,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "finance",
+        "software"
+      ]
+    },
+    {
+      "name": "Thermo Fisher Scientific",
+      "url": "https://thermofisher.wd5.myworkdayjobs.com",
+      "site": "ThermoFisherCareers",
+      "verified_jobs": 2402,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "Labcorp",
+      "url": "https://labcorp.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 1349,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "Johnson & Johnson",
+      "url": "https://jj.wd5.myworkdayjobs.com",
+      "site": "jj",
+      "verified_jobs": 1873,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "Johnson Controls",
+      "url": "https://jci.wd5.myworkdayjobs.com",
+      "site": "JCI",
+      "verified_jobs": 2472,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software",
+        "hardware"
+      ]
+    },
+    {
+      "name": "Manhattan Associates",
+      "url": "https://manh.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 37,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software"
+      ]
+    },
+    {
+      "name": "Nike",
+      "url": "https://nike.wd1.myworkdayjobs.com",
+      "site": "NKE",
+      "verified_jobs": 696,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "PricewaterhouseCoopers",
+      "url": "https://pwc.wd3.myworkdayjobs.com",
+      "site": "Global_Campus_Careers",
+      "verified_jobs": 1555,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "finance",
+        "software"
+      ]
+    },
+    {
+      "name": "Sonos",
+      "url": "https://sonos.wd1.myworkdayjobs.com",
+      "site": "Sonos",
+      "verified_jobs": 25,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software",
+        "hardware"
+      ]
+    },
+    {
+      "name": "Takeda",
+      "url": "https://takeda.wd3.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 1381,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "Unisys",
+      "url": "https://unisys.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 375,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software"
+      ]
+    },
+    {
+      "name": "Workday Inc",
+      "url": "https://workday.wd5.myworkdayjobs.com",
+      "site": "Workday",
+      "verified_jobs": 413,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software"
+      ]
+    },
+    {
+      "name": "AIG",
+      "url": "https://aig.wd1.myworkdayjobs.com",
+      "site": "AIG",
+      "verified_jobs": 635,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "finance",
+        "software"
+      ]
+    },
+    {
+      "name": "CarMax",
+      "url": "https://carmax.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 1141,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Generac",
+      "url": "https://generac.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 276,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Accuray",
+      "url": "https://accuray.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 24,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "Allegion",
+      "url": "https://allegion.wd5.myworkdayjobs.com",
+      "site": "careers",
+      "verified_jobs": 293,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Ameriprise Financial",
+      "url": "https://ameriprise.wd5.myworkdayjobs.com",
+      "site": "Ameriprise",
+      "verified_jobs": 225,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "finance",
+        "software"
+      ]
+    },
+    {
+      "name": "AspenTech",
+      "url": "https://aspentech.wd5.myworkdayjobs.com",
+      "site": "AspenTech",
+      "verified_jobs": 231,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software"
+      ]
+    },
+    {
+      "name": "AstraZeneca",
+      "url": "https://astrazeneca.wd3.myworkdayjobs.com",
+      "site": "careers",
+      "verified_jobs": 1579,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "GEICO",
+      "url": "https://geico.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 379,
       "verified_date": "2026-03-15",
       "domains": [
         "software",
@@ -2227,14 +2558,69 @@
       ]
     },
     {
-      "name": "Premera Blue Cross",
-      "url": "https://premera.wd5.myworkdayjobs.com",
-      "site": "premera",
-      "verified_jobs": 56,
+      "name": "Guidehouse",
+      "url": "https://guidehouse.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 653,
       "verified_date": "2026-03-15",
       "domains": [
         "software",
-        "healthcare"
+        "general"
+      ]
+    },
+    {
+      "name": "SEL",
+      "url": "https://selinc.wd1.myworkdayjobs.com",
+      "site": "SEL",
+      "verified_jobs": 233,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
+      "name": "Truist",
+      "url": "https://truist.wd1.myworkdayjobs.com",
+      "site": "careers",
+      "verified_jobs": 1035,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "finance",
+        "software"
+      ]
+    },
+    {
+      "name": "Xcel Energy",
+      "url": "https://xcelenergy.wd1.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 87,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
+      "name": "Centene",
+      "url": "https://centene.wd5.myworkdayjobs.com",
+      "site": "Centene_External",
+      "verified_jobs": 271,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
+      ]
+    },
+    {
+      "name": "Sanofi",
+      "url": "https://sanofi.wd3.myworkdayjobs.com",
+      "site": "SanofiCareers",
+      "verified_jobs": 1149,
+      "verified_date": "2026-03-15",
+      "domains": [
+        "healthcare",
+        "software"
       ]
     }
   ],
