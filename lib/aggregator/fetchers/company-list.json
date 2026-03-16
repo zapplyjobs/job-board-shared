@@ -304,10 +304,6 @@
       "name": "Pure Storage"
     },
     {
-      "slug": "redis",
-      "name": "Redis"
-    },
-    {
       "slug": "rocketlab",
       "name": "Rocket Lab"
     },
@@ -590,6 +586,14 @@
     {
       "slug": "unity3d",
       "name": "Unity"
+    },
+    {
+      "slug": "flyzipline",
+      "name": "Zipline",
+      "domains": [
+        "hardware",
+        "software"
+      ]
     }
   ],
   "lever": [
@@ -1026,6 +1030,10 @@
     {
       "slug": "zapier",
       "name": "Zapier"
+    },
+    {
+      "slug": "redis",
+      "name": "Redis"
     }
   ],
   "workday": [
@@ -1784,115 +1792,6 @@
         "hardware",
         "software",
         "general"
-      ]
-    },
-    {
-      "name": "Microsoft",
-      "url": "https://microsoft.wd5.myworkdayjobs.com",
-      "site": "External",
-      "verified_jobs": 5000,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "software",
-        "hardware"
-      ]
-    },
-    {
-      "name": "Rivian",
-      "url": "https://rivian.wd12.myworkdayjobs.com",
-      "site": "Rivian",
-      "verified_jobs": 500,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "hardware",
-        "software"
-      ]
-    },
-    {
-      "name": "Deloitte",
-      "url": "https://deloitte.wd1.myworkdayjobs.com",
-      "site": "Deloitte",
-      "verified_jobs": 2000,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "software",
-        "general"
-      ]
-    },
-    {
-      "name": "Electronic Arts",
-      "url": "https://ea.wd5.myworkdayjobs.com",
-      "site": "EACareer",
-      "verified_jobs": 500,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "software",
-        "general"
-      ]
-    },
-    {
-      "name": "Zipline",
-      "url": "https://flyzipline.wd1.myworkdayjobs.com",
-      "site": "Zipline",
-      "verified_jobs": 100,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "hardware",
-        "software"
-      ]
-    },
-    {
-      "name": "Qorvo",
-      "url": "https://qorvo.wd1.myworkdayjobs.com",
-      "site": "Qorvo_External",
-      "verified_jobs": 200,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "hardware"
-      ]
-    },
-    {
-      "name": "Keysight Technologies",
-      "url": "https://keysight.wd5.myworkdayjobs.com",
-      "site": "jobs",
-      "verified_jobs": 500,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "hardware",
-        "software"
-      ]
-    },
-    {
-      "name": "PG&E",
-      "url": "https://pge.wd5.myworkdayjobs.com",
-      "site": "PGE_External_Career_Site",
-      "verified_jobs": 300,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "software",
-        "general"
-      ]
-    },
-    {
-      "name": "Westinghouse Electric",
-      "url": "https://westinghouse.wd5.myworkdayjobs.com",
-      "site": "External",
-      "verified_jobs": 300,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "hardware",
-        "general"
-      ]
-    },
-    {
-      "name": "X Development",
-      "url": "https://xdevelopment.wd1.myworkdayjobs.com",
-      "site": "X",
-      "verified_jobs": 100,
-      "verified_date": "2026-03-14",
-      "domains": [
-        "hardware",
-        "software"
       ]
     },
     {
