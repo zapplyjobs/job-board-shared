@@ -1187,17 +1187,6 @@
       ]
     },
     {
-      "name": "AstraZeneca",
-      "url": "https://astrazeneca.wd3.myworkdayjobs.com",
-      "site": "careers",
-      "verified_jobs": 1579,
-      "verified_date": "2026-03-15",
-      "domains": [
-        "healthcare",
-        "software"
-      ]
-    },
-    {
       "name": "AT&T",
       "url": "https://att.wd1.myworkdayjobs.com",
       "site": "ATTGeneral",
@@ -2458,17 +2447,6 @@
       "verified_jobs": 1311,
       "verified_date": "2026-02-28",
       "domains": [
-        "software"
-      ]
-    },
-    {
-      "name": "Sanofi",
-      "url": "https://sanofi.wd3.myworkdayjobs.com",
-      "site": "SanofiCareers",
-      "verified_jobs": 1149,
-      "verified_date": "2026-03-15",
-      "domains": [
-        "healthcare",
         "software"
       ]
     },
