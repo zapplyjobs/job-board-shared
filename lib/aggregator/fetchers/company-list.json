@@ -686,6 +686,42 @@
     {
       "slug": "extrahopnetworks",
       "name": "ExtraHop"
+    },
+    {
+      "slug": "2k",
+      "name": "2K Games"
+    },
+    {
+      "slug": "8451",
+      "name": "84.51\u00b0"
+    },
+    {
+      "slug": "allencontrolsystems",
+      "name": "Allen Control Systems"
+    },
+    {
+      "slug": "assuredguaranty",
+      "name": "Assured Guaranty"
+    },
+    {
+      "slug": "audaxgroup",
+      "name": "Audax Group"
+    },
+    {
+      "slug": "babelstreet",
+      "name": "Babel Street"
+    },
+    {
+      "slug": "bracebridgecapital",
+      "name": "Bracebridge Capital"
+    },
+    {
+      "slug": "transmarketgroup",
+      "name": "TransMarket Group"
+    },
+    {
+      "slug": "arcinstitute",
+      "name": "Arc Institute"
     }
   ],
   "lever": [
@@ -920,6 +956,38 @@
     {
       "slug": "SymmetrySystems",
       "name": "Symmetry Systems"
+    },
+    {
+      "slug": "cognitiv",
+      "name": "Cognitiv"
+    },
+    {
+      "slug": "commonlit",
+      "name": "CommonLit"
+    },
+    {
+      "slug": "convergentresearch",
+      "name": "Convergent Research"
+    },
+    {
+      "slug": "demiurgestudios",
+      "name": "Demiurge Studios"
+    },
+    {
+      "slug": "ivo",
+      "name": "Ivo"
+    },
+    {
+      "slug": "perrknight",
+      "name": "Perr & Knight"
+    },
+    {
+      "slug": "sunwatercapital",
+      "name": "Sunwater Capital"
+    },
+    {
+      "slug": "until",
+      "name": "Until"
     }
   ],
   "ashby": [
@@ -1242,6 +1310,50 @@
     {
       "slug": "radiant-industries",
       "name": "Radiant Industries"
+    },
+    {
+      "slug": "anima",
+      "name": "Anima"
+    },
+    {
+      "slug": "baton",
+      "name": "Baton Corporation"
+    },
+    {
+      "slug": "blockhouse",
+      "name": "Blockhouse"
+    },
+    {
+      "slug": "casca",
+      "name": "Casca"
+    },
+    {
+      "slug": "cluely",
+      "name": "Cluely"
+    },
+    {
+      "slug": "creditgenie",
+      "name": "Credit Genie"
+    },
+    {
+      "slug": "empirical",
+      "name": "Empirical Security"
+    },
+    {
+      "slug": "kikoff",
+      "name": "Kikoff"
+    },
+    {
+      "slug": "maybern",
+      "name": "Maybern"
+    },
+    {
+      "slug": "cobot",
+      "name": "CoBot"
+    },
+    {
+      "slug": "talos-trading",
+      "name": "Talos Trading"
     }
   ],
   "workday": [
@@ -3027,6 +3139,36 @@
       "domains": [
         "software"
       ]
+    },
+    {
+      "name": "Sanofi",
+      "url": "https://sanofi.wd3.myworkdayjobs.com",
+      "site": "SanofiCareers",
+      "verified_jobs": 1147,
+      "verified_date": "2026-03-16",
+      "domains": [
+        "general"
+      ]
+    },
+    {
+      "name": "AstraZeneca",
+      "url": "https://astrazeneca.wd3.myworkdayjobs.com",
+      "site": "Careers",
+      "verified_jobs": 1587,
+      "verified_date": "2026-03-16",
+      "domains": [
+        "general"
+      ]
+    },
+    {
+      "name": "Merck & Co.",
+      "url": "https://msd.wd5.myworkdayjobs.com",
+      "site": "SearchJobs",
+      "verified_jobs": 682,
+      "verified_date": "2026-03-16",
+      "domains": [
+        "general"
+      ]
     }
   ],
   "eightfold": [
@@ -3181,6 +3323,10 @@
       "verified_us_jobs": 17,
       "verified_interns": 0,
       "verified_date": "2026-03-11"
+    },
+    {
+      "name": "Lawrence Livermore National Laboratory",
+      "companyIdentifier": "llnl"
     }
   ]
 }
