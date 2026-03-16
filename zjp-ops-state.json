@@ -1,21 +1,24 @@
 {
-  "generated_at": "2026-03-16T02:10:00.000Z",
+  "generated_at": "2026-03-16T02:20:51.000Z",
   "coder": {
-    "current_task": "DASHBOARD-ITER-0 Task 2 + LOC-BUG-2",
-    "status": "active",
+    "current_task": "idle — S186 complete. Next: LOC-BUG-2 Done-when check + PIPELINE-PERF-1 gate decision",
+    "status": "idle",
     "last_session": "2026-03-16"
   },
   "auditor": {
     "status": "idle",
-    "last_verified": "2026-03-16"
+    "last_verified": "2026-03-16",
+    "next_review": "2026-03-22 (weekly: LOC-BUG-2, PERF-1, git-crypt workflows, DATA-9)"
   },
   "strategist": {
-    "top_recommendation": "SUPPLY-EXPANSION Phase 2 — unblock after PIPELINE-PERF-1 baseline confirmed",
+    "top_recommendation": "SUPPLY-EXPANSION Phase 2 — unblock after PIPELINE-PERF-1 gate decision",
     "last_session": "2026-03-15"
   },
   "operator_decisions_pending": [
-    "SUPPLY-EXPANSION Phase 2 — unblock after PIPELINE-PERF-1 baseline confirmed (<25min avg gate)",
+    "PIPELINE-PERF-1 gate — code time ~8-10 min (passes all gates). Total wall-clock ~29 min (fails >28 gate). Adjust threshold or collect more data?",
+    "SUPPLY-EXPANSION Phase 2 — unblock after PIPELINE-PERF-1 gate confirmed",
     "SUPPLY-CUSTOM-ATS — viable path to Meta/Apple/Google/TikTok? (all automated paths closed)",
+    "DASHBOARD-ITER-1 — approve Ops tab UI spec before Coder implements",
     "MGMT-METHODOLOGY — run Strategist session when ready"
   ],
   "pipeline_alert": null
