@@ -1,25 +1,24 @@
 {
-  "generated_at": "2026-03-16T02:20:51.000Z",
+  "generated_at": "2026-03-16T17:13:44.000Z",
   "coder": {
-    "current_task": "idle — S186 complete. Next: LOC-BUG-2 Done-when check + PIPELINE-PERF-1 gate decision",
+    "current_task": "idle — S191 complete. Next: SUPPLY-EXPANSION Phase 3 (gate passed, COMPANY_LIST.md prepped)",
     "status": "idle",
     "last_session": "2026-03-16"
   },
   "auditor": {
     "status": "idle",
     "last_verified": "2026-03-16",
-    "next_review": "2026-03-22 (weekly: LOC-BUG-2, PERF-1, git-crypt workflows, DATA-9)"
+    "next_review": "2026-03-22 (weekly: Phase 3 additions, DASHBOARD-ITER-1 deploy verify)"
   },
   "strategist": {
-    "top_recommendation": "SUPPLY-EXPANSION Phase 2 — unblock after PIPELINE-PERF-1 gate decision",
-    "last_session": "2026-03-15"
+    "top_recommendation": "SUPPLY-EXPANSION Phase 3 — gate passed (avg 17.1 min, 5/5 under 25 min). COMPANY_LIST.md collision-audited. WD Tier 1 (20 entries) first.",
+    "last_session": "2026-03-16"
   },
   "operator_decisions_pending": [
-    "PIPELINE-PERF-1 gate — code time ~8-10 min (passes all gates). Total wall-clock ~29 min (fails >28 gate). Adjust threshold or collect more data?",
-    "SUPPLY-EXPANSION Phase 2 — unblock after PIPELINE-PERF-1 gate confirmed",
-    "SUPPLY-CUSTOM-ATS — viable path to Meta/Apple/Google/TikTok? (all automated paths closed)",
-    "DASHBOARD-ITER-1 — approve Ops tab UI spec before Coder implements",
-    "MGMT-METHODOLOGY — run Strategist session when ready"
+    "SUPPLY-EXPANSION Phase 3 — Coder ready. WD Tier 1 → Tier 2 → WD no-URL → GH → Lever → Ashby → SR → Eightfold",
+    "MGMT-METHODOLOGY — Wednesday ~Mar 19 follow-up. Load MGMT_CONTEXT_2026_03_15.md",
+    "GSC data pull — Performance → Queries (top 20 by impressions, 3 months). Gate for description changes",
+    "DIST-1 — join cscareers.dev Discord, check #resources. Peak window Aug-Oct 2026"
   ],
   "pipeline_alert": null
 }
