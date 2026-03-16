@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-03-16T02:10:00.000Z",
+  "coder": {
+    "current_task": "DASHBOARD-ITER-0 Task 2 + LOC-BUG-2",
+    "status": "active",
+    "last_session": "2026-03-16"
+  },
+  "auditor": {
+    "status": "idle",
+    "last_verified": "2026-03-16"
+  },
+  "strategist": {
+    "top_recommendation": "SUPPLY-EXPANSION Phase 2 — unblock after PIPELINE-PERF-1 baseline confirmed",
+    "last_session": "2026-03-15"
+  },
+  "operator_decisions_pending": [
+    "SUPPLY-EXPANSION Phase 2 — unblock after PIPELINE-PERF-1 baseline confirmed (<25min avg gate)",
+    "SUPPLY-CUSTOM-ATS — viable path to Meta/Apple/Google/TikTok? (all automated paths closed)",
+    "MGMT-METHODOLOGY — run Strategist session when ready"
+  ],
+  "pipeline_alert": null
+}
