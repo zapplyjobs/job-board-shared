@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-03-16T17:13:44.000Z",
+  "generated_at": "2026-03-17T19:29:48.000Z",
   "coder": {
-    "current_task": "idle — S191 complete. Next: SUPPLY-EXPANSION Phase 3 (gate passed, COMPANY_LIST.md prepped)",
-    "status": "idle",
-    "last_session": "2026-03-16"
+    "current_task": "DASH-QUALITY-1 — ops proxy CORS fix deployed (CF Worker). Auto-refresh next.",
+    "status": "active",
+    "last_session": "2026-03-17"
   },
   "auditor": {
     "status": "idle",
-    "last_verified": "2026-03-16",
-    "next_review": "2026-03-22 (weekly: Phase 3 additions, DASHBOARD-ITER-1 deploy verify)"
+    "last_verified": "2026-03-17",
+    "next_review": "2026-03-22 (weekly: PIPELINE-GIT-ID 5-run check, LOC-BUG-2, DISCORD-BUG-1/2 done-when)"
   },
   "strategist": {
-    "top_recommendation": "SUPPLY-EXPANSION Phase 3 — gate passed (avg 17.1 min, 5/5 under 25 min). COMPANY_LIST.md collision-audited. WD Tier 1 (20 entries) first.",
+    "top_recommendation": "TAG-QUALITY-1 — 60% of pool tagged `general`. Strategist session needed to audit tag engine domain rules.",
     "last_session": "2026-03-16"
   },
   "operator_decisions_pending": [
-    "SUPPLY-EXPANSION Phase 3 — Coder ready. WD Tier 1 → Tier 2 → WD no-URL → GH → Lever → Ashby → SR → Eightfold",
-    "MGMT-METHODOLOGY — Wednesday ~Mar 19 follow-up. Load MGMT_CONTEXT_2026_03_15.md",
-    "GSC data pull — Performance → Queries (top 20 by impressions, 3 months). Gate for description changes",
-    "DIST-1 — join cscareers.dev Discord, check #resources. Peak window Aug-Oct 2026"
+    "DASHBOARD-GATE — blocks DASHBOARD-FIX-5b (top companies) and further intelligence work",
+    "MGMT-METHODOLOGY — bring team details, session pending",
+    "GH_PAT rotation — by May 1, 2026 (expires 2026-05-30)",
+    "ZJP_SNAPSHOT.json ATS exposure — public aggregator repo exposes company counts. Strip if unintentional."
   ],
   "pipeline_alert": null
 }
