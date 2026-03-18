@@ -992,44 +992,8 @@
   ],
   "ashby": [
     {
-      "slug": "resend",
-      "name": "Resend"
-    },
-    {
-      "slug": "supabase",
-      "name": "Supabase"
-    },
-    {
-      "slug": "notion",
-      "name": "Notion"
-    },
-    {
-      "slug": "ramp",
-      "name": "Ramp"
-    },
-    {
-      "slug": "openai",
-      "name": "OpenAI"
-    },
-    {
-      "slug": "sentry",
-      "name": "Sentry"
-    },
-    {
-      "slug": "benchling",
-      "name": "Benchling"
-    },
-    {
-      "slug": "replit",
-      "name": "Replit"
-    },
-    {
-      "slug": "perplexity",
-      "name": "Perplexity"
-    },
-    {
-      "slug": "zip",
-      "name": "Zip"
+      "slug": "1password",
+      "name": "1Password"
     },
     {
       "slug": "abridge",
@@ -1038,6 +1002,10 @@
     {
       "slug": "allium",
       "name": "Allium"
+    },
+    {
+      "slug": "anima",
+      "name": "Anima"
     },
     {
       "slug": "anyscale",
@@ -1052,6 +1020,18 @@
       "name": "Baseten"
     },
     {
+      "slug": "baton",
+      "name": "Baton Corporation"
+    },
+    {
+      "slug": "benchling",
+      "name": "Benchling"
+    },
+    {
+      "slug": "blockhouse",
+      "name": "Blockhouse"
+    },
+    {
       "slug": "candidhealth",
       "name": "Candid Health"
     },
@@ -1064,12 +1044,36 @@
       "name": "Cartesia"
     },
     {
+      "slug": "casca",
+      "name": "Casca"
+    },
+    {
+      "slug": "cluely",
+      "name": "Cluely"
+    },
+    {
+      "slug": "cobot",
+      "name": "CoBot"
+    },
+    {
       "slug": "cohere",
       "name": "Cohere"
     },
     {
+      "slug": "commure",
+      "name": "Commure"
+    },
+    {
       "slug": "confluent",
       "name": "Confluent"
+    },
+    {
+      "slug": "contoro",
+      "name": "Contoro Robotics"
+    },
+    {
+      "slug": "creditgenie",
+      "name": "Credit Genie"
     },
     {
       "slug": "crusoe",
@@ -1100,8 +1104,20 @@
       "name": "EliseAI"
     },
     {
+      "slug": "empirical",
+      "name": "Empirical Security"
+    },
+    {
       "slug": "etched",
       "name": "Etched"
+    },
+    {
+      "slug": "eventual",
+      "name": "Eventual"
+    },
+    {
+      "slug": "exegy",
+      "name": "Exegy"
     },
     {
       "slug": "fable",
@@ -1110,6 +1126,18 @@
     {
       "slug": "gecko-robotics",
       "name": "Gecko Robotics"
+    },
+    {
+      "slug": "genies",
+      "name": "Genies"
+    },
+    {
+      "slug": "gimlet",
+      "name": "Gimlet Labs"
+    },
+    {
+      "slug": "glide",
+      "name": "Glide"
     },
     {
       "slug": "gptzero",
@@ -1140,12 +1168,24 @@
       "name": "Keyrock"
     },
     {
+      "slug": "kikoff",
+      "name": "Kikoff"
+    },
+    {
       "slug": "lambda",
       "name": "Lambda"
     },
     {
       "slug": "lightspark",
       "name": "Lightspark"
+    },
+    {
+      "slug": "maybern",
+      "name": "Maybern"
+    },
+    {
+      "slug": "mechanize",
+      "name": "Mechanize"
     },
     {
       "slug": "mercor",
@@ -1156,8 +1196,24 @@
       "name": "Metalenz"
     },
     {
+      "slug": "method",
+      "name": "Method"
+    },
+    {
       "slug": "northwoodspace",
       "name": "Northwood Space"
+    },
+    {
+      "slug": "notion",
+      "name": "Notion"
+    },
+    {
+      "slug": "odin-dynamics",
+      "name": "Odin Dynamics"
+    },
+    {
+      "slug": "openai",
+      "name": "OpenAI"
     },
     {
       "slug": "parafin",
@@ -1168,8 +1224,16 @@
       "name": "Patreon"
     },
     {
+      "slug": "perplexity",
+      "name": "Perplexity"
+    },
+    {
       "slug": "persona",
       "name": "Persona"
+    },
+    {
+      "slug": "promise",
+      "name": "Promise"
     },
     {
       "slug": "pulse",
@@ -1184,20 +1248,56 @@
       "name": "Quora"
     },
     {
+      "slug": "radiant-industries",
+      "name": "Radiant Industries"
+    },
+    {
+      "slug": "ramp",
+      "name": "Ramp"
+    },
+    {
       "slug": "realitydefender",
       "name": "Reality Defender"
+    },
+    {
+      "slug": "redis",
+      "name": "Redis"
     },
     {
       "slug": "reflect-orbital",
       "name": "Reflect Orbital"
     },
     {
+      "slug": "Replicant",
+      "name": "Replicant"
+    },
+    {
+      "slug": "replit",
+      "name": "Replit"
+    },
+    {
+      "slug": "resend",
+      "name": "Resend"
+    },
+    {
       "slug": "rilla",
       "name": "Rilla"
     },
     {
+      "slug": "sentra",
+      "name": "Sentra"
+    },
+    {
+      "slug": "sentry",
+      "name": "Sentry"
+    },
+    {
       "slug": "sierra",
       "name": "Sierra"
+    },
+    {
+      "slug": "sift",
+      "name": "Sift"
     },
     {
       "slug": "snowflake",
@@ -1206,6 +1306,14 @@
     {
       "slug": "suno",
       "name": "Suno"
+    },
+    {
+      "slug": "supabase",
+      "name": "Supabase"
+    },
+    {
+      "slug": "talos-trading",
+      "name": "Talos Trading"
     },
     {
       "slug": "the-exploration-company",
@@ -1224,8 +1332,16 @@
       "name": "Voyant Photonics"
     },
     {
+      "slug": "Vultr",
+      "name": "Vultr"
+    },
+    {
       "slug": "warp",
       "name": "Warp"
+    },
+    {
+      "slug": "watershed",
+      "name": "Watershed"
     },
     {
       "slug": "whatnot",
@@ -1240,120 +1356,8 @@
       "name": "Zapier"
     },
     {
-      "slug": "redis",
-      "name": "Redis"
-    },
-    {
-      "slug": "commure",
-      "name": "Commure"
-    },
-    {
-      "slug": "contoro",
-      "name": "Contoro Robotics"
-    },
-    {
-      "slug": "eventual",
-      "name": "Eventual"
-    },
-    {
-      "slug": "exegy",
-      "name": "Exegy"
-    },
-    {
-      "slug": "gimlet",
-      "name": "Gimlet Labs"
-    },
-    {
-      "slug": "glide",
-      "name": "Glide"
-    },
-    {
-      "slug": "mechanize",
-      "name": "Mechanize"
-    },
-    {
-      "slug": "method",
-      "name": "Method"
-    },
-    {
-      "slug": "promise",
-      "name": "Promise"
-    },
-    {
-      "slug": "sentra",
-      "name": "Sentra"
-    },
-    {
-      "slug": "sift",
-      "name": "Sift"
-    },
-    {
-      "slug": "watershed",
-      "name": "Watershed"
-    },
-    {
-      "slug": "Vultr",
-      "name": "Vultr"
-    },
-    {
-      "slug": "1password",
-      "name": "1Password"
-    },
-    {
-      "slug": "Replicant",
-      "name": "Replicant"
-    },
-    {
-      "slug": "genies",
-      "name": "Genies"
-    },
-    {
-      "slug": "radiant-industries",
-      "name": "Radiant Industries"
-    },
-    {
-      "slug": "anima",
-      "name": "Anima"
-    },
-    {
-      "slug": "baton",
-      "name": "Baton Corporation"
-    },
-    {
-      "slug": "blockhouse",
-      "name": "Blockhouse"
-    },
-    {
-      "slug": "casca",
-      "name": "Casca"
-    },
-    {
-      "slug": "cluely",
-      "name": "Cluely"
-    },
-    {
-      "slug": "creditgenie",
-      "name": "Credit Genie"
-    },
-    {
-      "slug": "empirical",
-      "name": "Empirical Security"
-    },
-    {
-      "slug": "kikoff",
-      "name": "Kikoff"
-    },
-    {
-      "slug": "maybern",
-      "name": "Maybern"
-    },
-    {
-      "slug": "cobot",
-      "name": "CoBot"
-    },
-    {
-      "slug": "talos-trading",
-      "name": "Talos Trading"
+      "slug": "zip",
+      "name": "Zip"
     }
   ],
   "workday": [
@@ -3327,6 +3331,10 @@
     {
       "name": "Lawrence Livermore National Laboratory",
       "companyIdentifier": "llnl"
+    },
+    {
+      "slug": "INFICON2",
+      "name": "INFICON"
     }
   ]
 }
