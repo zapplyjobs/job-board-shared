@@ -1,24 +1,23 @@
 {
-  "generated_at": "2026-03-17T19:55:00.000Z",
+  "generated_at": "2026-03-23T20:00:00.000Z",
   "coder": {
-    "current_task": "idle — S203 complete. DASH-QUALITY-1 dashboard functionally complete. Next: run duration trend or operator confirms satisfied.",
-    "status": "idle",
-    "last_session": "2026-03-17"
+    "current_task": "DASH-REDESIGN-1 Phase 1-3 + TAXONOMY-AUDIT-1 deployed",
+    "status": "active",
+    "last_session": "2026-03-23"
   },
   "auditor": {
     "status": "idle",
-    "last_verified": "2026-03-17",
-    "next_review": "2026-03-22 (weekly: PIPELINE-GIT-ID 5-run check, LOC-BUG-2, DISCORD-BUG-1/2 done-when)"
+    "last_verified": "2026-03-22",
+    "next_review": "2026-03-29 (RE-ENRICH-1 v1->0, DESC-MIGRATE-1, TAXONOMY-AUDIT-1 impact, JSEARCH Week 3)"
   },
   "strategist": {
-    "top_recommendation": "TAG-QUALITY-1 — 60% of pool tagged `general`. Strategist session needed to audit tag engine domain rules.",
-    "last_session": "2026-03-16"
+    "top_recommendation": "DEMAND-RESEARCH-1 — identify high-value job fields by user signal (stars, traffic, Discord engagement)",
+    "last_session": "2026-03-22"
   },
   "operator_decisions_pending": [
-    "DASHBOARD-GATE — blocks DASHBOARD-FIX-5b (top companies) and further intelligence work",
-    "MGMT-METHODOLOGY — bring team details, session pending",
-    "GH_PAT rotation — by May 1, 2026 (expires 2026-05-30)",
-    "ZJP_SNAPSHOT.json ATS exposure — public aggregator repo exposes company counts. Strip if unintentional."
+    "SUPPLY-FILTER-STRATEGY — restore 62 purged WD tenants or build output-layer filter first?",
+    "PER-TENANT-JOB-CAP — cap jobs/tenant/run to reduce runtime?",
+    "GH_PAT rotation — by May 1, 2026 (expires 2026-05-30)"
   ],
   "pipeline_alert": null
 }
