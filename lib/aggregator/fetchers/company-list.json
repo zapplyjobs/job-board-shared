@@ -746,6 +746,10 @@
     {
       "slug": "tailscale",
       "name": "Tailscale"
+    },
+    {
+      "slug": "abnormalsecurity",
+      "name": "Abnormal Security"
     }
   ],
   "lever": [
@@ -1354,6 +1358,14 @@
     {
       "slug": "drata",
       "name": "Drata"
+    },
+    {
+      "slug": "cursor",
+      "name": "Cursor"
+    },
+    {
+      "slug": "render",
+      "name": "Render"
     }
   ],
   "workday": [
