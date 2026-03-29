@@ -76,7 +76,7 @@ const category = shared.getJobCategory(job.title, job.description);
 
 | Function | Description |
 |----------|-------------|
-| `isJobOlderThanWeek(dateString)` | Check if job is >14 days old |
+| `isJobOlderThanWeek(dateString)` | Check if job is >7 days old |
 | `isUSOnlyJob(job)` | Check if job is US-only (filters international) |
 
 ### Classification
