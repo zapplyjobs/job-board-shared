@@ -778,6 +778,14 @@
     {
       "slug": "contentful",
       "name": "Contentful"
+    },
+    {
+      "slug": "headway",
+      "name": "Headway"
+    },
+    {
+      "slug": "cargurus",
+      "name": "CarGurus"
     }
   ],
   "lever": [
@@ -1028,6 +1036,10 @@
     {
       "slug": "includedhealth",
       "name": "Included Health"
+    },
+    {
+      "slug": "ro",
+      "name": "Ro"
     }
   ],
   "ashby": [
@@ -1410,6 +1422,18 @@
     {
       "slug": "modal",
       "name": "Modal"
+    },
+    {
+      "slug": "hinge-health",
+      "name": "Hinge Health"
+    },
+    {
+      "slug": "clickup",
+      "name": "ClickUp"
+    },
+    {
+      "slug": "nerdwallet",
+      "name": "Nerdwallet"
     }
   ],
   "workday": [
