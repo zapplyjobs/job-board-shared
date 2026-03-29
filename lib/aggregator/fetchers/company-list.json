@@ -726,6 +726,18 @@
     {
       "slug": "toast",
       "name": "Toast"
+    },
+    {
+      "slug": "aurorainnovation",
+      "name": "Aurora Innovation"
+    },
+    {
+      "slug": "postman",
+      "name": "Postman"
+    },
+    {
+      "slug": "launchdarkly",
+      "name": "LaunchDarkly"
     }
   ],
   "lever": [
