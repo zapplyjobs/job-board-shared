@@ -738,6 +738,14 @@
     {
       "slug": "launchdarkly",
       "name": "LaunchDarkly"
+    },
+    {
+      "slug": "webflow",
+      "name": "Webflow"
+    },
+    {
+      "slug": "tailscale",
+      "name": "Tailscale"
     }
   ],
   "lever": [
@@ -1338,6 +1346,14 @@
     {
       "slug": "zip",
       "name": "Zip"
+    },
+    {
+      "slug": "vanta",
+      "name": "Vanta"
+    },
+    {
+      "slug": "drata",
+      "name": "Drata"
     }
   ],
   "workday": [
