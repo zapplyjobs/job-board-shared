@@ -49,7 +49,7 @@ if (fs.existsSync(STATS_PATH)) {
 // ---------------------------------------------------------------------------
 // 2. Load pool data from all_jobs.json (per-company counts)
 // ---------------------------------------------------------------------------
-const poolMap = new Map(); // company_name.lower → { total, tech_us, intern }
+const poolMap = new Map(); // company_name.lower → { total, tech_us, intern, domainCounts }
 if (fs.existsSync(ALL_JOBS_PATH)) {
   const lines = fs.readFileSync(ALL_JOBS_PATH, 'utf8').trim().split('\n');
   for (const line of lines) {
@@ -59,13 +59,19 @@ if (fs.existsSync(ALL_JOBS_PATH)) {
       const company = (job.company_name || '').trim();
       if (!company) continue;
       const key = company.toLowerCase();
-      if (!poolMap.has(key)) poolMap.set(key, { total: 0, tech_us: 0, intern: 0, name: company });
+      if (!poolMap.has(key)) poolMap.set(key, { total: 0, tech_us: 0, intern: 0, name: company, domainCounts: {} });
       const d = poolMap.get(key);
       d.total++;
       const domains = job.tags?.domains || [];
       const locs = job.tags?.locations || [];
       if (domains.some(dom => TECH_DOMAINS.has(dom)) && locs.includes('us')) d.tech_us++;
       if (job.tags?.employment === 'internship') d.intern++;
+      // Per-domain US job counts
+      if (locs.includes('us')) {
+        for (const dom of domains) {
+          d.domainCounts[dom] = (d.domainCounts[dom] || 0) + 1;
+        }
+      }
     } catch (_) {}
   }
   console.log(`Pool data: ${poolMap.size} companies from all_jobs.json`);
@@ -117,6 +123,12 @@ if (fs.existsSync(ALL_JOBS_PATH)) {
 const csvContent = fs.readFileSync(CSV_PATH, 'utf8');
 const csvLines = csvContent.split('\n');
 const header = csvLines[0].trim().split(',');
+
+// Add domain_breakdown column if not present
+if (!header.includes('domain_breakdown')) {
+  header.push('domain_breakdown');
+  csvLines[0] = header.join(',');
+}
 
 const col = {};
 for (const name of header) col[name] = header.indexOf(name);
@@ -179,6 +191,18 @@ for (let i = 1; i < csvLines.length; i++) {
     fields[col.tech_us_jobs] = String(poolMatch.tech_us);
     fields[col.intern_count] = String(poolMatch.intern);
     if (oldTotal !== String(poolMatch.total)) changed = true;
+
+    // Domain breakdown: compact format "software:45|hardware:12|general:30"
+    // Only US jobs, sorted by count descending
+    const dc = poolMatch.domainCounts || {};
+    const breakdown = Object.entries(dc)
+      .filter(([, c]) => c > 0)
+      .sort((a, b) => b[1] - a[1])
+      .map(([d, c]) => d + ':' + c)
+      .join('|');
+    while (fields.length <= col.domain_breakdown) fields.push('');
+    if (fields[col.domain_breakdown] !== breakdown) changed = true;
+    fields[col.domain_breakdown] = breakdown;
   }
 
   // --- Description availability ---
