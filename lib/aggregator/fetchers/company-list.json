@@ -754,6 +754,30 @@
     {
       "slug": "hightouch",
       "name": "Hightouch"
+    },
+    {
+      "slug": "nextdoor",
+      "name": "Nextdoor"
+    },
+    {
+      "slug": "coupang",
+      "name": "Coupang"
+    },
+    {
+      "slug": "fivetran",
+      "name": "Fivetran"
+    },
+    {
+      "slug": "alchemy",
+      "name": "Alchemy"
+    },
+    {
+      "slug": "instabase",
+      "name": "Instabase"
+    },
+    {
+      "slug": "contentful",
+      "name": "Contentful"
     }
   ],
   "lever": [
@@ -1000,6 +1024,10 @@
     {
       "slug": "sunwatercapital",
       "name": "Sunwater Capital"
+    },
+    {
+      "slug": "includedhealth",
+      "name": "Included Health"
     }
   ],
   "ashby": [
@@ -1374,6 +1402,14 @@
     {
       "slug": "semgrep",
       "name": "Semgrep"
+    },
+    {
+      "slug": "neon",
+      "name": "Neon"
+    },
+    {
+      "slug": "modal",
+      "name": "Modal"
     }
   ],
   "workday": [
