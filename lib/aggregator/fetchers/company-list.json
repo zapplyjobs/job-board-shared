@@ -1888,7 +1888,8 @@
       "domains": [
         "software",
         "finance"
-      ]
+      ],
+      "default_domain": "finance"
     },
     {
       "url": "https://fis.wd5.myworkdayjobs.com",
@@ -2685,7 +2686,8 @@
       "verified_date": "2026-03-28",
       "domains": [
         "finance"
-      ]
+      ],
+      "default_domain": "finance"
     }
   ],
   "eightfold": [
