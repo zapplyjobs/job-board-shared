@@ -2547,7 +2547,8 @@
       "domains": [
         "healthcare",
         "software"
-      ]
+      ],
+      "default_domain": "healthcare"
     },
     {
       "url": "https://thehartford.wd5.myworkdayjobs.com",
