@@ -249,7 +249,15 @@ function checkKeyword(keyword, domain, jobs, descMap) {
     if (!titleMatch) continue;
 
     if (isGeneral) {
-      genMatches.push({ company: job.company_name, title: job.title, id: job.id });
+      // Extract ATS category if available
+      let atsCategory = null;
+      if (job.description) {
+        const cd = cleanDesc(job.description);
+        const catMatch = cd.match(/Job Category:\s*([A-Za-z &\/]+?)\s*(?:Time Type|$)/i)
+          || cd.match(/Job Family\s*:\s*([A-Za-z &\/()]+?)\s*(?:Travel Required|Clearance|$)/i);
+        if (catMatch) atsCategory = catMatch[1].trim();
+      }
+      genMatches.push({ company: job.company_name, title: job.title, id: job.id, atsCategory });
     } else if (!domains.includes(domain)) {
       fpMatches.push({ company: job.company_name, title: job.title, domains, id: job.id });
     }
@@ -258,7 +266,13 @@ function checkKeyword(keyword, domain, jobs, descMap) {
   console.log(`Checking: "${keyword}" → ${domain}\n`);
   console.log(`General pool matches: ${genMatches.length} jobs`);
   for (const m of genMatches.slice(0, 20)) {
-    console.log(`  ${m.company}: ${m.title}`);
+    const catStr = m.atsCategory ? ` [ATS: ${m.atsCategory}]` : '';
+    console.log(`  ${m.company}: ${m.title}${catStr}`);
+  }
+  // Warn if any ATS categories conflict with proposed domain
+  const catConflicts = genMatches.filter(m => m.atsCategory).length;
+  if (catConflicts > 0) {
+    console.log(`  (${catConflicts} jobs have ATS categories — verify alignment with "${domain}")`);
   }
   console.log(`\nClassified pool FPs (in other domains): ${fpMatches.length}`);
   for (const m of fpMatches.slice(0, 10)) {
