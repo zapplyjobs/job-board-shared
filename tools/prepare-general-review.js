@@ -550,6 +550,44 @@ function main() {
     const name = args[companyIdx + 1];
     if (!name) { console.error('Usage: --company "CompanyName"'); process.exit(1); }
     companyDeepDive(name, jobs, descMap);
+  } else if (args.includes('--verify')) {
+    // Verify reclassified jobs: show all jobs that pipeline tagged general
+    // but local engine now classifies, with descriptions for review
+    const byDomain = {};
+    let total = 0, withDesc = 0;
+    for (const job of jobs) {
+      const isUS = (job.tags?.locations || []).includes('us');
+      if (!isUS) continue;
+      const wasGeneral = job.tags?.domains?.length === 1 && job.tags.domains[0] === 'general';
+      if (!wasGeneral) continue;
+      const result = tagDomains(job, { debug: true });
+      if (result.domains.length === 1 && result.domains[0] === 'general') continue;
+      total++;
+      const domain = result.domains[0];
+      const keyword = result.matches[0]?.keyword || 'unknown';
+      const desc = job.description ? cleanDesc(job.description).slice(0, 200) : '[no description]';
+      let atsCategory = null;
+      if (job.description) {
+        const cd = cleanDesc(job.description);
+        const catMatch = cd.match(/Job Category:\s*([A-Za-z &\/]+?)\s*(?:Time Type|$)/i)
+          || cd.match(/Job Family\s*:\s*([A-Za-z &\/()]+?)\s*(?:Travel Required|Clearance|$)/i);
+        if (catMatch) atsCategory = catMatch[1].trim();
+      }
+      if (job.description && job.description.length > 100) withDesc++;
+      if (!byDomain[domain]) byDomain[domain] = [];
+      byDomain[domain].push({ company: job.company_name, title: job.title, keyword, desc, atsCategory });
+    }
+    console.log(`═══ RECLASSIFIED JOBS VERIFICATION ═══`);
+    console.log(`Total reclassified: ${total} | With descriptions: ${withDesc} | Without: ${total - withDesc}\n`);
+    for (const [domain, jobs2] of Object.entries(byDomain).sort((a, b) => b[1].length - a[1].length)) {
+      console.log(`── ${domain} (${jobs2.length} jobs) ──`);
+      for (const j of jobs2) {
+        const cat = j.atsCategory ? ` [ATS: ${j.atsCategory}]` : '';
+        console.log(`  ${j.company}: ${j.title} (kw: ${j.keyword})${cat}`);
+        console.log(`    ${j.desc}`);
+      }
+      console.log();
+    }
   } else if (sampleIdx !== -1) {
     const n = parseInt(args[sampleIdx + 1]) || 50;
     const { usGeneral } = analyzePool(jobs);
