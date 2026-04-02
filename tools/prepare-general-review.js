@@ -364,7 +364,15 @@ function companyDeepDive(companyName, jobs, descMap) {
   for (let i = 0; i < companyJobs.length; i++) {
     const j = companyJobs[i];
     const descLen = (j.description || '').length;
-    console.log(`  [${i + 1}] ${j.title} (${j.source}, desc: ${descLen > 0 ? descLen + ' chars' : 'none'})`);
+    // Extract ATS category if available
+    let catStr = '';
+    if (j.description) {
+      const cd = cleanDesc(j.description);
+      const catMatch = cd.match(/Job Category:\s*([A-Za-z &\/]+?)\s*(?:Time Type|$)/i)
+        || cd.match(/Job Family\s*:\s*([A-Za-z &\/()]+?)\s*(?:Travel Required|Clearance|$)/i);
+      if (catMatch) catStr = ` [ATS: ${catMatch[1].trim()}]`;
+    }
+    console.log(`  [${i + 1}] ${j.title} (${j.source}, desc: ${descLen > 0 ? descLen + ' chars' : 'none'})${catStr}`);
   }
 
   console.log(`\nDescription excerpts:`);
