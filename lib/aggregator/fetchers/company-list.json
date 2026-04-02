@@ -1615,7 +1615,8 @@
       "domains": [
         "software",
         "finance"
-      ]
+      ],
+      "default_domain": "finance"
     },
     {
       "url": "https://bloomberg.wd1.myworkdayjobs.com",
