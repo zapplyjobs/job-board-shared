@@ -2846,8 +2846,8 @@
       "verified_date": "2026-03-11"
     },
     {
-      "name": "Lawrence Livermore National Laboratory",
-      "companyIdentifier": "llnl"
+      "slug": "llnl",
+      "name": "Lawrence Livermore National Laboratory"
     },
     {
       "slug": "INFICON2",
