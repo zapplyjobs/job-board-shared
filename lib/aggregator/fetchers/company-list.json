@@ -220,10 +220,6 @@
       "name": "Grafana Labs"
     },
     {
-      "slug": "grammarly",
-      "name": "Grammarly"
-    },
-    {
       "slug": "gusto",
       "name": "Gusto"
     },
@@ -994,10 +990,6 @@
       "name": "Mercedes-Benz R&D North America"
     },
     {
-      "slug": "wolve",
-      "name": "Wolverine Trading"
-    },
-    {
       "slug": "life",
       "name": "Life.Church (YouVersion)"
     },
@@ -1078,10 +1070,6 @@
     {
       "slug": "benchling",
       "name": "Benchling"
-    },
-    {
-      "slug": "blockhouse",
-      "name": "Blockhouse"
     },
     {
       "slug": "candidhealth",
