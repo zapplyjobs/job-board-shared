@@ -2763,28 +2763,7 @@
       ]
     }
   ],
-  "eightfold": [
-    {
-      "slug": "aexp",
-      "name": "American Express",
-      "verified_jobs": 493,
-      "verified_date": "2026-03-11",
-      "domains": [
-        "general",
-        "software"
-      ]
-    },
-    {
-      "slug": "zebra",
-      "name": "Zebra Technologies",
-      "verified_jobs": 266,
-      "verified_date": "2026-03-11",
-      "domains": [
-        "hardware",
-        "software"
-      ]
-    }
-  ],
+  "eightfold": [],
   "smartrecruiters": [
     {
       "slug": "AbbVie",
