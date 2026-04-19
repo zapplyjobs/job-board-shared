@@ -2763,7 +2763,18 @@
       ]
     }
   ],
-  "eightfold": [],
+  "eightfold": [
+    {
+      "slug": "zebra",
+      "name": "Zebra Technologies",
+      "verified_jobs": 266,
+      "verified_date": "2026-03-11",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    }
+  ],
   "smartrecruiters": [
     {
       "slug": "AbbVie",
