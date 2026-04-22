@@ -94,6 +94,8 @@ function cleanDesc(desc) {
 
 // ─── Analysis ────────────────────────────────────────────────────────────────
 
+const TECH_DOMAINS = new Set(['software', 'data_science', 'hardware', 'ai']);
+
 function analyzePool(jobs) {
   const usJobs = [];
   const usGeneral = [];
@@ -410,6 +412,11 @@ function sampleGeneral(n, usGeneral) {
 // ─── Core Analysis (shared by text and JSON modes) ──────────────────────────
 
 function buildAnalysis(jobs, usJobs, usGeneral, usClassified) {
+  const usTech = usClassified.filter(j => {
+    const domains = j._localDomains || j.tags?.domains || [];
+    return domains.some(d => TECH_DOMAINS.has(d));
+  }).length;
+  const techPool = usTech + usGeneral.length;
   return {
     summary: {
       generated: new Date().toISOString(),
@@ -417,6 +424,8 @@ function buildAnalysis(jobs, usJobs, usGeneral, usClassified) {
       us_total: usJobs.length,
       us_general: usGeneral.length,
       us_general_rate: parseFloat((usGeneral.length / usJobs.length * 100).toFixed(1)),
+      tech_us_total: usTech,
+      tech_us_general_rate: techPool > 0 ? parseFloat((usGeneral.length / techPool * 100).toFixed(1)) : null,
     },
     companies: companyAnalysis(usGeneral, usClassified),
     ats: atsAnalysis(usGeneral, usJobs),
@@ -466,7 +475,7 @@ function fullReport(analysis) {
   const { summary, companies, ats, title_patterns, descriptions } = analysis;
 
   console.log('═══ GENERAL POOL REVIEW REPORT ═══');
-  console.log(`Generated: ${summary.generated.slice(0, 10)} | Pool: ${summary.pool_total.toLocaleString()} | US: ${summary.us_total.toLocaleString()} | US General: ${summary.us_general.toLocaleString()} (${summary.us_general_rate}%)\n`);
+  console.log(`Generated: ${summary.generated.slice(0, 10)} | Pool: ${summary.pool_total.toLocaleString()} | US: ${summary.us_total.toLocaleString()} | US General: ${summary.us_general.toLocaleString()} (${summary.us_general_rate}% all-US / ${summary.tech_us_general_rate ?? '?'}% tech-US)\n`);
 
   // By company
   console.log(`── BY COMPANY (top ${TOP_COMPANIES}) ──────────────────────────────────────────`);
