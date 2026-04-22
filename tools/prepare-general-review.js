@@ -104,6 +104,7 @@ function analyzePool(jobs) {
   for (const job of jobs) {
     const isUS = (job.tags?.locations || []).includes('us');
     if (!isUS) continue;
+    if (job.tags?.employment === 'senior') continue; // G1 measures entry-level audience only
     usJobs.push(job);
 
     // Re-tag with local engine (includes descriptions if injected)
