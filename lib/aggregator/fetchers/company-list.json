@@ -2763,29 +2763,6 @@
       ]
     }
   ],
-  "eightfold": [
-    {
-      "slug": "zebra",
-      "name": "Zebra Technologies",
-      "verified_jobs": 266,
-      "verified_date": "2026-03-11",
-      "domains": [
-        "hardware",
-        "software"
-      ]
-    },
-    {
-      "slug": "bcg",
-      "name": "Boston Consulting Group",
-      "verified_jobs": 144,
-      "verified_date": "2026-04-19",
-      "domains": [
-        "data_science",
-        "software",
-        "finance"
-      ]
-    }
-  ],
   "smartrecruiters": [
     {
       "slug": "AbbVie",
