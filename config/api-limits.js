@@ -9,7 +9,7 @@ module.exports = {
   jsearch: {
     quota: {
       jobsPerDay: 90,
-      requestsPerDay: 100
+      requestsPerDay: 320 // Hard cap — safety margin below RapidAPI 333/day plan limit
     },
     retry: {
       maxAttempts: 5,
