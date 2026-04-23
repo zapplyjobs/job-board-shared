@@ -10,6 +10,7 @@
 
 const utils = require('./lib/utils');
 const config = require('./config');
+const linkHealth = require('./lib/link-health-filter');
 
 // Minimal logger — lib/logger.js was removed in N-6 cleanup
 const _log = (level, msg, ctx) => {
@@ -37,6 +38,9 @@ module.exports = {
 
   // Logger
   logger: _logger,
+
+  // Link health
+  ...linkHealth,
 };
 
 // Export specific functions for convenience
