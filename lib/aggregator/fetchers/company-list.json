@@ -1810,6 +1810,15 @@
       "notes": "University-specific portal. Separate from Cadence External_Careers entry."
     },
     {
+      "name": "CAE",
+      "url": "https://cae.wd3.myworkdayjobs.com",
+      "site": "cae",
+      "domains": [
+        "hardware",
+        "software"
+      ]
+    },
+    {
       "name": "Capital One",
       "url": "https://capitalone.wd12.myworkdayjobs.com",
       "site": "Capital_One",
@@ -1852,6 +1861,18 @@
       ]
     },
     {
+      "name": "Cigna",
+      "url": "https://cigna.wd5.myworkdayjobs.com",
+      "site": "cignacareers",
+      "verified_jobs": 617,
+      "verified_date": "2026-04-23",
+      "domains": [
+        "healthcare",
+        "software",
+        "operations"
+      ]
+    },
+    {
       "name": "Cisco",
       "url": "https://cisco.wd5.myworkdayjobs.com",
       "site": "Cisco_Careers",
@@ -1863,9 +1884,30 @@
       ]
     },
     {
+      "name": "Citi",
+      "url": "https://citi.wd5.myworkdayjobs.com",
+      "site": "2",
+      "verified_jobs": 2000,
+      "verified_date": "2026-04-23",
+      "domains": [
+        "software",
+        "finance",
+        "operations"
+      ]
+    },
+    {
       "url": "https://cognex.wd1.myworkdayjobs.com",
       "site": "External_Career_Site",
       "name": "Cognex"
+    },
+    {
+      "name": "Comcast",
+      "url": "https://comcast.wd5.myworkdayjobs.com",
+      "site": "Comcast_Careers",
+      "domains": [
+        "software",
+        "general"
+      ]
     },
     {
       "url": "https://copart.wd12.myworkdayjobs.com",
@@ -2210,6 +2252,18 @@
       ]
     },
     {
+      "name": "KeyBank",
+      "url": "https://keybank.wd5.myworkdayjobs.com",
+      "site": "External_Career_Site",
+      "verified_jobs": 567,
+      "verified_date": "2026-04-23",
+      "domains": [
+        "software",
+        "finance",
+        "operations"
+      ]
+    },
+    {
       "name": "KLA",
       "url": "https://kla.wd1.myworkdayjobs.com",
       "site": "Search",
@@ -2311,6 +2365,16 @@
       ]
     },
     {
+      "name": "Merck & Co.",
+      "url": "https://msd.wd5.myworkdayjobs.com",
+      "site": "SearchJobs",
+      "verified_jobs": 682,
+      "verified_date": "2026-03-16",
+      "domains": [
+        "general"
+      ]
+    },
+    {
       "url": "https://microchiphr.wd5.myworkdayjobs.com",
       "site": "External",
       "name": "Microchip Technology"
@@ -2334,6 +2398,17 @@
       "domains": [
         "hardware"
       ]
+    },
+    {
+      "name": "Morgan Stanley",
+      "url": "https://ms.wd5.myworkdayjobs.com",
+      "site": "External",
+      "verified_jobs": 1495,
+      "verified_date": "2026-03-28",
+      "domains": [
+        "finance"
+      ],
+      "default_domain": "finance"
     },
     {
       "url": "https://morningstar.wd5.myworkdayjobs.com",
@@ -2616,6 +2691,15 @@
       "name": "Synchrony"
     },
     {
+      "name": "T-Mobile",
+      "url": "https://tmobile.wd1.myworkdayjobs.com",
+      "site": "External",
+      "domains": [
+        "software",
+        "general"
+      ]
+    },
+    {
       "name": "T. Rowe Price",
       "url": "https://troweprice.wd5.myworkdayjobs.com",
       "site": "TRowePrice",
@@ -2637,6 +2721,15 @@
         "software"
       ],
       "default_domain": "healthcare"
+    },
+    {
+      "name": "TD Bank",
+      "url": "https://td.wd3.myworkdayjobs.com",
+      "site": "TD_Bank_Careers",
+      "domains": [
+        "finance",
+        "software"
+      ]
     },
     {
       "url": "https://thehartford.wd5.myworkdayjobs.com",
@@ -2703,6 +2796,19 @@
       "name": "Vanguard"
     },
     {
+      "name": "Walmart",
+      "url": "https://walmart.wd5.myworkdayjobs.com",
+      "site": "WalmartExternal",
+      "verified_jobs": 2000,
+      "verified_date": "2026-04-23",
+      "domains": [
+        "retail",
+        "software",
+        "operations",
+        "logistics"
+      ]
+    },
+    {
       "url": "https://warnerbros.wd5.myworkdayjobs.com",
       "site": "global",
       "name": "Warner Bros. Discovery"
@@ -2755,63 +2861,6 @@
       "verified_date": "2026-03-01",
       "domains": [
         "software"
-      ]
-    },
-    {
-      "name": "Merck & Co.",
-      "url": "https://msd.wd5.myworkdayjobs.com",
-      "site": "SearchJobs",
-      "verified_jobs": 682,
-      "verified_date": "2026-03-16",
-      "domains": [
-        "general"
-      ]
-    },
-    {
-      "name": "Morgan Stanley",
-      "url": "https://ms.wd5.myworkdayjobs.com",
-      "site": "External",
-      "verified_jobs": 1495,
-      "verified_date": "2026-03-28",
-      "domains": [
-        "finance"
-      ],
-      "default_domain": "finance"
-    },
-    {
-      "name": "CAE",
-      "url": "https://cae.wd3.myworkdayjobs.com",
-      "site": "cae",
-      "domains": [
-        "hardware",
-        "software"
-      ]
-    },
-    {
-      "name": "TD Bank",
-      "url": "https://td.wd3.myworkdayjobs.com",
-      "site": "TD_Bank_Careers",
-      "domains": [
-        "finance",
-        "software"
-      ]
-    },
-    {
-      "name": "Comcast",
-      "url": "https://comcast.wd5.myworkdayjobs.com",
-      "site": "Comcast_Careers",
-      "domains": [
-        "software",
-        "general"
-      ]
-    },
-    {
-      "name": "T-Mobile",
-      "url": "https://tmobile.wd1.myworkdayjobs.com",
-      "site": "External",
-      "domains": [
-        "software",
-        "general"
       ]
     }
   ],
