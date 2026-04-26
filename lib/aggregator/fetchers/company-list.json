@@ -40,10 +40,6 @@
       "name": "Akuna Capital"
     },
     {
-      "slug": "alchemy",
-      "name": "Alchemy"
-    },
-    {
       "slug": "algolia",
       "name": "Algolia"
     },
@@ -474,10 +470,6 @@
     {
       "slug": "lgelectronics",
       "name": "LG Electronics"
-    },
-    {
-      "slug": "lightspeedhq",
-      "name": "Lightspeed"
     },
     {
       "slug": "loop",
@@ -1152,6 +1144,10 @@
       "name": "Abridge"
     },
     {
+      "slug": "alchemy",
+      "name": "Alchemy"
+    },
+    {
       "slug": "allium",
       "name": "Allium"
     },
@@ -1310,6 +1306,10 @@
     {
       "slug": "lambda",
       "name": "Lambda"
+    },
+    {
+      "slug": "lightspeedhq",
+      "name": "Lightspeed"
     },
     {
       "slug": "lightspark",
