@@ -2338,9 +2338,9 @@
       "titleOverrides": {
         "employment": [
           {
-            "pattern": "Team Lead|Full Time",
+            "pattern": "^(Team Lead|Department Supervisor|Store Associate|Full Time - (Team Lead|Department Supervisor|Store Associate))",
             "result": "entry_level",
-            "reason": "Lowe's retail floor supervisors, not senior roles"
+            "reason": "Lowe's retail floor supervisors and store associates, not senior roles"
           }
         ]
       }
