@@ -9,8 +9,10 @@
  *
  * Usage:
  *   node tools/enr-t0-classifier.js [path-to-enriched_jobs.json]
+ *   node tools/enr-t0-classifier.js --remote
  *
  * Default path: ../../jobs-data-2026/.github/data/enriched_jobs.json
+ * --remote: Fetches latest from zapplyjobs/jobs-data-2026 via gh API
  *
  * Output: JSON report to stdout with:
  *   - Summary: total records, tier distribution, version propagation
@@ -25,13 +27,33 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
+const REMOTE_REPO = 'zapplyjobs/jobs-data-2026';
+const REMOTE_PATH = '.github/data/enriched_jobs.json';
+
+function fetchRemote() {
+  const tmpFile = `/tmp/enriched_jobs_${Date.now()}.json`;
+  console.error(`Fetching from ${REMOTE_REPO}...`);
+  const blobSha = execSync(
+    `gh api repos/${REMOTE_REPO}/contents/${REMOTE_PATH} --jq '.sha'`,
+    { encoding: 'utf8' }
+  ).trim();
+  execSync(
+    `gh api repos/${REMOTE_REPO}/git/blobs/${blobSha} --jq '.content' | base64 -d > ${tmpFile}`,
+    { encoding: 'utf8' }
+  );
+  console.error(`Saved to ${tmpFile}`);
+  return tmpFile;
+}
+
+const useRemote = process.argv.includes('--remote');
 const defaultPath = path.resolve(__dirname, '..', '..', '..', '..', 'jobs-data-2026', '.github', 'data', 'enriched_jobs.json');
-const inputPath = process.argv[2] || defaultPath;
+const inputPath = useRemote ? fetchRemote() : (process.argv[2] || defaultPath);
 
 if (!fs.existsSync(inputPath)) {
   console.error(`File not found: ${inputPath}`);
-  console.error('Usage: node tools/enr-t0-classifier.js [path-to-enriched_jobs.json]');
+  console.error('Usage: node tools/enr-t0-classifier.js [path] [--remote]');
   process.exit(1);
 }
 
@@ -124,6 +146,7 @@ const report = {
   timestamp: new Date().toISOString(),
   total_records: records.length,
   parse_errors: parseErrors || undefined,
+  note: 'Per-record classification includes all enriched records. enrichment-stats.json filters by techUS and will show fewer records with higher T3%. Difference = tag-reclassified records (tech→non-tech after enrichment).',
   tier_distribution: {
     t0: tiers[0].length,
     t1: tiers[1].length,
