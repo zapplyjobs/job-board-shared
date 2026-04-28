@@ -75,7 +75,7 @@ function classifyTier(r) {
   if (!hasDesc) return 0;
   if (!r.required_skills || r.required_skills.length === 0) return 1;
   const hasDegree = r.min_degree !== null && r.min_degree !== undefined;
-  const hasVisa = r.sponsors_visa !== null || r.possible_sponsor !== null || r.visa_question_present !== null;
+  const hasVisa = r.sponsors_visa !== null || r.visa_question_present !== null;
   return (hasDegree && hasVisa) ? 3 : 2;
 }
 
@@ -116,15 +116,15 @@ const t1ByVersion = countBy(tiers[1], r => `v${r.enricher_version || 0}`);
 // T2 composition
 const t2missingDegree = tiers[2].filter(r => r.min_degree === null || r.min_degree === undefined);
 const t2missingVisa = tiers[2].filter(r =>
-  r.sponsors_visa === null && r.possible_sponsor === null && r.visa_question_present === null
+  r.sponsors_visa === null && r.visa_question_present === null
 );
 const t2missDegreeOnly = t2missingDegree.filter(r =>
-  r.sponsors_visa !== null || r.possible_sponsor !== null || r.visa_question_present !== null
+  r.sponsors_visa !== null || r.visa_question_present !== null
 );
 const t2missVisaOnly = t2missingVisa.filter(r => r.min_degree !== null && r.min_degree !== undefined);
 const t2missBoth = tiers[2].filter(r =>
   (r.min_degree === null || r.min_degree === undefined) &&
-  r.sponsors_visa === null && r.possible_sponsor === null && r.visa_question_present === null
+  r.sponsors_visa === null && r.visa_question_present === null
 );
 
 // Noise-only skills
@@ -138,7 +138,7 @@ const noiseOnly = records.filter(r => {
 
 // Visa zero-signal
 const zeroVisa = records.filter(r =>
-  r.sponsors_visa === null && r.possible_sponsor === null && r.visa_question_present === null
+  r.sponsors_visa === null && r.visa_question_present === null
 );
 const zeroVisaByCompany = countBy(zeroVisa, r => getCompany(r));
 
