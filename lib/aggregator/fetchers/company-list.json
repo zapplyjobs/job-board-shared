@@ -3,7 +3,7 @@
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, Workday, Eightfold, and SmartRecruiters ATS platforms",
     "last_updated": "2026-04-23",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial — all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume. S167: SUPPLY-NEW-COMPANIES — removed 9 WD duplicates (ASML/Broadcom/Northrop/Cisco/Disney/HP/Marvell/Proofpoint/Stryker). GH +19 (CoreWeave/Rubrik/OscarHealth/Canonical/Appian/Anaplan/SoFi/Nuro/Formlabs/Qualtrics/IXLLearning/AlphaSights/Figure/SamsungResearchAmerica/LatitudeAI/AlphaFMC/Oklo/UnderdogFantasy/Loop). WD +40 (Microsoft/Rivian/Deloitte/EA/Zipline/Qorvo/Keysight/PGE/Westinghouse/XDev/CadenceUniv/BlackRock/GM/HPEUniv/Abbott/Southwest/SBD/ResMed/Ciena/SiliconLabs/FLIR/Aptiv/BostonDynamics/Expedia/Lumentum/InterDigital/Rockwell/Moderna/ThomsonReuters/Elevance/TMobile/Allstate/Philips/Etsy/PNC/Travelers/USAA/Cox/FactSet/TransUnion). GH: 126→145. WD: 79→110. S192 Phase3b: +12 GH (CLEAR/Arcesium/SharkNinja/CZBiohub/Personalis/TeleTracking/ReachFinancial/Blueprint/Tudor/StevensCap/Freeform/ExtraHop) +6 Lever (AHEAD/MBRDNA/Wolverine/LifeChurch/BHGFinancial/Symmetry) +5 Ashby (Vultr/1Password/Replicant/Genies/Radiant). GH: 169 Lever: 58 Ashby: 80. S293F: +12 GH (Algolia/BeyondTrust/JFrog/KnowBe4/Lattice/NozomiNetworks/OrcaSecurity/PingIdentity/Planet/PlanetScale/RedwoodMaterials/Speechify) — all verified live with US entry-level tech roles. Discovered via systematic GH API scan.",
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) \u2014 WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) \u2014 verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) \u2014 new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial \u2014 all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume. S167: SUPPLY-NEW-COMPANIES \u2014 removed 9 WD duplicates (ASML/Broadcom/Northrop/Cisco/Disney/HP/Marvell/Proofpoint/Stryker). GH +19 (CoreWeave/Rubrik/OscarHealth/Canonical/Appian/Anaplan/SoFi/Nuro/Formlabs/Qualtrics/IXLLearning/AlphaSights/Figure/SamsungResearchAmerica/LatitudeAI/AlphaFMC/Oklo/UnderdogFantasy/Loop). WD +40 (Microsoft/Rivian/Deloitte/EA/Zipline/Qorvo/Keysight/PGE/Westinghouse/XDev/CadenceUniv/BlackRock/GM/HPEUniv/Abbott/Southwest/SBD/ResMed/Ciena/SiliconLabs/FLIR/Aptiv/BostonDynamics/Expedia/Lumentum/InterDigital/Rockwell/Moderna/ThomsonReuters/Elevance/TMobile/Allstate/Philips/Etsy/PNC/Travelers/USAA/Cox/FactSet/TransUnion). GH: 126\u2192145. WD: 79\u2192110. S192 Phase3b: +12 GH (CLEAR/Arcesium/SharkNinja/CZBiohub/Personalis/TeleTracking/ReachFinancial/Blueprint/Tudor/StevensCap/Freeform/ExtraHop) +6 Lever (AHEAD/MBRDNA/Wolverine/LifeChurch/BHGFinancial/Symmetry) +5 Ashby (Vultr/1Password/Replicant/Genies/Radiant). GH: 169 Lever: 58 Ashby: 80. S293F: +12 GH (Algolia/BeyondTrust/JFrog/KnowBe4/Lattice/NozomiNetworks/OrcaSecurity/PingIdentity/Planet/PlanetScale/RedwoodMaterials/Speechify) \u2014 all verified live with US entry-level tech roles. Discovered via systematic GH API scan.",
     "workday_count": 141
   },
   "greenhouse": [
@@ -13,7 +13,7 @@
     },
     {
       "slug": "8451",
-      "name": "84.51°"
+      "name": "84.51\u00b0"
     },
     {
       "slug": "abnormalsecurity",
@@ -1153,10 +1153,6 @@
       "name": "Abridge"
     },
     {
-      "slug": "alchemy",
-      "name": "Alchemy"
-    },
-    {
       "slug": "allium",
       "name": "Allium"
     },
@@ -1315,10 +1311,6 @@
     {
       "slug": "lambda",
       "name": "Lambda"
-    },
-    {
-      "slug": "lightspeedhq",
-      "name": "Lightspeed"
     },
     {
       "slug": "lightspark",
@@ -2709,7 +2701,7 @@
         "software",
         "general"
       ],
-      "notes": "myworkdaysite.com domain — tenant extracted from path, not hostname"
+      "notes": "myworkdaysite.com domain \u2014 tenant extracted from path, not hostname"
     },
     {
       "name": "Sonos",
