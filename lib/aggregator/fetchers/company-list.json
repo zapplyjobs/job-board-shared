@@ -1149,8 +1149,20 @@
       "name": "1Password"
     },
     {
+      "slug": "Replicant",
+      "name": "Replicant"
+    },
+    {
+      "slug": "Vultr",
+      "name": "Vultr"
+    },
+    {
       "slug": "abridge",
       "name": "Abridge"
+    },
+    {
+      "slug": "alchemy",
+      "name": "Alchemy"
     },
     {
       "slug": "allium",
@@ -1197,6 +1209,10 @@
       "name": "Casca"
     },
     {
+      "slug": "clickup",
+      "name": "ClickUp"
+    },
+    {
       "slug": "cluely",
       "name": "Cluely"
     },
@@ -1229,12 +1245,20 @@
       "name": "Crusoe"
     },
     {
+      "slug": "cursor",
+      "name": "Cursor"
+    },
+    {
       "slug": "dandy",
       "name": "Dandy"
     },
     {
       "slug": "decagon",
       "name": "Decagon"
+    },
+    {
+      "slug": "drata",
+      "name": "Drata"
     },
     {
       "slug": "eightsleep",
@@ -1293,6 +1317,10 @@
       "name": "Harvey"
     },
     {
+      "slug": "hinge-health",
+      "name": "Hinge Health"
+    },
+    {
       "slug": "ideogram",
       "name": "Ideogram"
     },
@@ -1305,6 +1333,10 @@
       "name": "Imprint"
     },
     {
+      "slug": "inductive-automation-llc",
+      "name": "Inductive Automation"
+    },
+    {
       "slug": "keyrock",
       "name": "Keyrock"
     },
@@ -1315,6 +1347,10 @@
     {
       "slug": "lightspark",
       "name": "Lightspark"
+    },
+    {
+      "slug": "lightspeedhq",
+      "name": "Lightspeed"
     },
     {
       "slug": "maybern",
@@ -1335,6 +1371,18 @@
     {
       "slug": "method",
       "name": "Method"
+    },
+    {
+      "slug": "modal",
+      "name": "Modal"
+    },
+    {
+      "slug": "neon",
+      "name": "Neon"
+    },
+    {
+      "slug": "nerdwallet",
+      "name": "Nerdwallet"
     },
     {
       "slug": "northwoodspace",
@@ -1401,8 +1449,8 @@
       "name": "Redis"
     },
     {
-      "slug": "Replicant",
-      "name": "Replicant"
+      "slug": "render",
+      "name": "Render"
     },
     {
       "slug": "replit",
@@ -1415,6 +1463,10 @@
     {
       "slug": "rilla",
       "name": "Rilla"
+    },
+    {
+      "slug": "semgrep",
+      "name": "Semgrep"
     },
     {
       "slug": "sentra",
@@ -1461,12 +1513,12 @@
       "name": "Unify"
     },
     {
-      "slug": "voyant-photonics",
-      "name": "Voyant Photonics"
+      "slug": "vanta",
+      "name": "Vanta"
     },
     {
-      "slug": "Vultr",
-      "name": "Vultr"
+      "slug": "voyant-photonics",
+      "name": "Voyant Photonics"
     },
     {
       "slug": "warp",
@@ -1487,50 +1539,6 @@
     {
       "slug": "zip",
       "name": "Zip"
-    },
-    {
-      "slug": "vanta",
-      "name": "Vanta"
-    },
-    {
-      "slug": "drata",
-      "name": "Drata"
-    },
-    {
-      "slug": "cursor",
-      "name": "Cursor"
-    },
-    {
-      "slug": "render",
-      "name": "Render"
-    },
-    {
-      "slug": "semgrep",
-      "name": "Semgrep"
-    },
-    {
-      "slug": "neon",
-      "name": "Neon"
-    },
-    {
-      "slug": "modal",
-      "name": "Modal"
-    },
-    {
-      "slug": "hinge-health",
-      "name": "Hinge Health"
-    },
-    {
-      "slug": "clickup",
-      "name": "ClickUp"
-    },
-    {
-      "slug": "nerdwallet",
-      "name": "Nerdwallet"
-    },
-    {
-      "slug": "inductive-automation-llc",
-      "name": "Inductive Automation"
     }
   ],
   "workday": [
