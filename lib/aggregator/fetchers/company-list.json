@@ -61,7 +61,16 @@
     },
     {
       "slug": "anaplan",
-      "name": "Anaplan"
+      "name": "Anaplan",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "Anaplan Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "andurilindustries",
@@ -213,7 +222,16 @@
     },
     {
       "slug": "contentful",
-      "name": "Contentful"
+      "name": "Contentful",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "Contentful Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "coreweave",
@@ -241,7 +259,16 @@
     },
     {
       "slug": "databricks",
-      "name": "Databricks"
+      "name": "Databricks",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "Databricks Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "datacamp",
@@ -277,7 +304,16 @@
     },
     {
       "slug": "elastic",
-      "name": "Elastic"
+      "name": "Elastic",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "Elastic Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "epicgames",
@@ -345,7 +381,16 @@
     },
     {
       "slug": "gitlab",
-      "name": "GitLab"
+      "name": "GitLab",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "GitLab Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "gleanwork",
@@ -522,7 +567,16 @@
     },
     {
       "slug": "mongodb",
-      "name": "MongoDB"
+      "name": "MongoDB",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "MongoDB Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "motional",
@@ -1222,7 +1276,16 @@
     },
     {
       "slug": "cohere",
-      "name": "Cohere"
+      "name": "Cohere",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "Cohere Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "commure",
@@ -1446,7 +1509,16 @@
     },
     {
       "slug": "redis",
-      "name": "Redis"
+      "name": "Redis",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "Redis Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "render",
@@ -1494,7 +1566,16 @@
     },
     {
       "slug": "supabase",
-      "name": "Supabase"
+      "name": "Supabase",
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "Supabase Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "slug": "talos-trading",
@@ -2519,7 +2600,16 @@
       "domains": [
         "hardware",
         "software"
-      ]
+      ],
+      "titleOverrides": {
+        "employment": [
+          {
+            "pattern": "(solution|solutions|business|sales|presales|pre-sales)\\s+architect|architect.*\\b(solution|solutions|business|sales|presales|pre-sales)\\b",
+            "result": "entry_level",
+            "reason": "NVIDIA Solutions/Business/Sales/Pre-sales Architect = pre-sales/consulting role, not senior IC engineering"
+          }
+        ]
+      }
     },
     {
       "name": "NXP",
