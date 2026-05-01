@@ -97,12 +97,12 @@
       "name": "Apptronik"
     },
     {
-      "slug": "arcinstitute",
-      "name": "Arc Institute"
-    },
-    {
       "slug": "arcesiumllc",
       "name": "Arcesium"
+    },
+    {
+      "slug": "arcinstitute",
+      "name": "Arc Institute"
     },
     {
       "slug": "asana",
@@ -145,6 +145,10 @@
       "name": "BeyondTrust"
     },
     {
+      "slug": "biohub",
+      "name": "Chan Zuckerberg Biohub"
+    },
+    {
       "slug": "block",
       "name": "Block"
     },
@@ -153,12 +157,12 @@
       "name": "Blockchain.com"
     },
     {
-      "slug": "bpcs",
-      "name": "Blueprint Technologies"
-    },
-    {
       "slug": "boxinc",
       "name": "Box"
+    },
+    {
+      "slug": "bpcs",
+      "name": "Blueprint Technologies"
     },
     {
       "slug": "bracebridgecapital",
@@ -191,10 +195,6 @@
     {
       "slug": "celonis",
       "name": "Celonis"
-    },
-    {
-      "slug": "biohub",
-      "name": "Chan Zuckerberg Biohub"
     },
     {
       "slug": "chime",
@@ -250,10 +250,6 @@
       "name": "Cribl"
     },
     {
-      "slug": "drweng",
-      "name": "D.E. Shaw"
-    },
-    {
       "slug": "dashlane",
       "name": "Dashlane"
     },
@@ -299,6 +295,10 @@
       "name": "Dropbox"
     },
     {
+      "slug": "drweng",
+      "name": "D.E. Shaw"
+    },
+    {
       "slug": "duolingo",
       "name": "Duolingo"
     },
@@ -326,6 +326,10 @@
     {
       "slug": "faire",
       "name": "Faire"
+    },
+    {
+      "slug": "fastly",
+      "name": "Fastly"
     },
     {
       "slug": "figma",
@@ -358,6 +362,14 @@
     {
       "slug": "flowtraders",
       "name": "Flow Traders"
+    },
+    {
+      "slug": "flyzipline",
+      "name": "Zipline",
+      "domains": [
+        "hardware",
+        "software"
+      ]
     },
     {
       "slug": "formlabs",
@@ -735,6 +747,10 @@
       "name": "Rubrik"
     },
     {
+      "slug": "runpod",
+      "name": "RunPod"
+    },
+    {
       "slug": "safariai",
       "name": "Safari AI"
     },
@@ -753,6 +769,10 @@
     {
       "slug": "scaleai",
       "name": "Scale AI"
+    },
+    {
+      "slug": "scm",
+      "name": "Stevens Capital Management"
     },
     {
       "slug": "sharkninjaoperatingllc",
@@ -799,10 +819,6 @@
       "name": "Starburst"
     },
     {
-      "slug": "scm",
-      "name": "Stevens Capital Management"
-    },
-    {
       "slug": "stripe",
       "name": "Stripe"
     },
@@ -821,6 +837,10 @@
     {
       "slug": "teletrackingtechnologiesinc",
       "name": "TeleTracking Technologies"
+    },
+    {
+      "slug": "tenableinc",
+      "name": "Tenable"
     },
     {
       "slug": "tenstorrent",
@@ -915,6 +935,10 @@
       "name": "Webflow"
     },
     {
+      "slug": "wizinc",
+      "name": "Wiz"
+    },
+    {
       "slug": "workato",
       "name": "Workato"
     },
@@ -939,20 +963,8 @@
       "name": "YugabyteDB"
     },
     {
-      "slug": "flyzipline",
-      "name": "Zipline",
-      "domains": [
-        "hardware",
-        "software"
-      ]
-    },
-    {
       "slug": "zscaler",
       "name": "Zscaler"
-    },
-    {
-      "slug": "runpod",
-      "name": "RunPod"
     }
   ],
   "lever": [
