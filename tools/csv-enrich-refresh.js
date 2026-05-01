@@ -23,8 +23,9 @@ const path = require('path');
 
 const dryRun = process.argv.includes('--dry-run');
 
-// Default paths: Job_Listings/ is 5 levels up from shared/tools/
-const JOB_LISTINGS = path.resolve(__dirname, '..', '..', '..', '..', '..');
+// Default paths: job-board-shared is at Job_Listings/job-board-shared/
+// __dirname = .../job-board-shared/tools/ → 2 levels up = Job_Listings/
+const JOB_LISTINGS = path.resolve(__dirname, '..', '..');
 const DATA_DIR = path.join(JOB_LISTINGS, 'jobs-data-2026', '.github', 'data');
 const STATS_PATH = path.join(DATA_DIR, 'enrichment-stats.json');
 const ALL_JOBS_PATH = path.join(DATA_DIR, 'all_jobs.json');
@@ -122,12 +123,28 @@ if (fs.existsSync(ALL_JOBS_PATH)) {
 // ---------------------------------------------------------------------------
 const csvContent = fs.readFileSync(CSV_PATH, 'utf8');
 const csvLines = csvContent.split('\n');
-const header = csvLines[0].trim().split(',');
+
+// Find header line (first non-comment, non-empty line)
+let headerIdx = 0;
+for (let i = 0; i < csvLines.length; i++) {
+  const trimmed = csvLines[i].trim();
+  if (trimmed && !trimmed.startsWith('#')) {
+    headerIdx = i;
+    break;
+  }
+}
+
+if (!csvLines[headerIdx] || !csvLines[headerIdx].includes('company')) {
+  console.error(`ERROR: CSV header not found. Line ${headerIdx}: "${csvLines[headerIdx]?.slice(0, 80)}". Expected column names like company,ats,status,...`);
+  process.exit(1);
+}
+
+const header = csvLines[headerIdx].trim().split(',');
 
 // Add domain_breakdown column if not present
 if (!header.includes('domain_breakdown')) {
   header.push('domain_breakdown');
-  csvLines[0] = header.join(',');
+  csvLines[headerIdx] = header.join(',');
 }
 
 const col = {};
@@ -136,9 +153,14 @@ for (const name of header) col[name] = header.indexOf(name);
 const today = new Date().toISOString().slice(0, 10);
 let updated = 0;
 let skipped = 0;
-const newLines = [csvLines[0].trim() + '\n'];
 
-for (let i = 1; i < csvLines.length; i++) {
+// Preserve comment lines and header as-is
+const newLines = [];
+for (let i = 0; i <= headerIdx; i++) {
+  newLines.push(csvLines[i] + (csvLines[i].endsWith('\n') ? '' : '\n'));
+}
+
+for (let i = headerIdx + 1; i < csvLines.length; i++) {
   const line = csvLines[i].trim();
   if (!line) { newLines.push(csvLines[i]); continue; }
 
