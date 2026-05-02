@@ -1,0 +1,94 @@
+name: CI Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Run tag-engine tests
+        run: node lib/__tests__/tag-engine.test.js
+
+      - name: Check critical files exist
+        run: |
+          ERRORS=0
+          # Core pipeline files that must never be deleted
+          for FILE in \
+            index.js \
+            lib/aggregator/tag-engine.js \
+            lib/aggregator/senior-filter.js \
+            lib/aggregator/processors/tag-engine.js \
+            lib/aggregator-consumer.js \
+            lib/readme-generator.js \
+            lib/jobs-data-scripts/pipeline-alert.js \
+            lib/jobs-data-scripts/collect-metrics.js \
+            lib/jobs-data-scripts/generate-zjp-metrics.js \
+            package.json
+          do
+            if [ ! -f "$FILE" ]; then
+              echo "::error file=$FILE::Critical file missing: $FILE"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "FAIL: $ERRORS critical file(s) missing"
+            exit 1
+          fi
+          echo "PASS: All critical files present"
+
+      - name: Syntax check all JS files
+        run: |
+          ERRORS=0
+          while IFS= read -r -d '' FILE; do
+            if ! node -c "$FILE" 2>/dev/null; then
+              echo "::error file=$FILE::Syntax error in $FILE"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done < <(find . -name '*.js' -not -path './node_modules/*' -print0)
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "FAIL: $ERRORS syntax error(s)"
+            exit 1
+          fi
+          echo "PASS: All JS files valid syntax"
+
+      - name: Check tag-engine exports
+        run: |
+          ERRORS=0
+          # Verify tag-engine.js exports expected functions
+          EXPORTS=$(node -e "
+            try {
+              const te = require('./lib/aggregator/processors/tag-engine');
+              const missing = ['tagEmployment', 'tagDomains', 'tagJob'].filter(n => typeof te[n] !== 'function');
+              if (missing.length) { console.log('MISSING:' + missing.join(',')); process.exit(1); }
+              console.log('OK');
+            } catch(e) { console.log('ERROR:' + e.message); process.exit(1); }
+          " 2>&1) || true
+          if [[ "$EXPORTS" != "OK" ]]; then
+            echo "::error::tag-engine exports check failed: $EXPORTS"
+            exit 1
+          fi
+          echo "PASS: tag-engine exports verified"
+
+      - name: Check for unexpected deletions
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            DELETED=$(gh api "repos/${{ github.repository }}/compare/${{ github.base_ref }}...${{ github.head_ref }}" \
+              --jq '.files[] | select(.status=="removed") | .filename' 2>/dev/null || true)
+            if [ -n "$DELETED" ]; then
+              echo "::warning::Files deleted in this PR:"
+              echo "$DELETED"
+            fi
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
