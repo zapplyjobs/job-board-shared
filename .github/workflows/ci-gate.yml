@@ -26,9 +26,10 @@ jobs:
           # Core pipeline files that must never be deleted
           for FILE in \
             index.js \
-            lib/aggregator/tag-engine.js \
-            lib/aggregator/senior-filter.js \
             lib/aggregator/processors/tag-engine.js \
+            lib/aggregator/processors/senior-filter.js \
+            lib/aggregator/processors/deduplicator.js \
+            lib/aggregator/processors/validator.js \
             lib/aggregator-consumer.js \
             lib/readme-generator.js \
             lib/jobs-data-scripts/pipeline-alert.js \
