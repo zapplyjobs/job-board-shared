@@ -2665,6 +2665,17 @@
       ]
     },
     {
+      "name": "Palo Alto Networks",
+      "url": "https://paloaltonetworks.wd5.myworkdayjobs.com",
+      "site": "panwexternalcareers",
+      "verified_jobs": 1307,
+      "verified_date": "2026-05-02",
+      "domains": [
+        "software",
+        "security"
+      ]
+    },
+    {
       "url": "https://pimco.wd1.myworkdayjobs.com",
       "site": "pimco-careers",
       "name": "PIMCO"
@@ -2865,6 +2876,18 @@
       ]
     },
     {
+      "name": "Target",
+      "url": "https://target.wd5.myworkdayjobs.com",
+      "site": "targetcareers",
+      "verified_jobs": 2000,
+      "verified_date": "2026-05-02",
+      "domains": [
+        "retail",
+        "software",
+        "operations"
+      ]
+    },
+    {
       "name": "T. Rowe Price",
       "url": "https://troweprice.wd5.myworkdayjobs.com",
       "site": "TRowePrice",
@@ -2959,6 +2982,17 @@
       "url": "https://vanguard.wd5.myworkdayjobs.com",
       "site": "vanguard_external",
       "name": "Vanguard"
+    },
+    {
+      "name": "Visa",
+      "url": "https://visa.wd5.myworkdayjobs.com",
+      "site": "Visa",
+      "verified_jobs": 900,
+      "verified_date": "2026-05-02",
+      "domains": [
+        "software",
+        "finance"
+      ]
     },
     {
       "name": "Walmart",
