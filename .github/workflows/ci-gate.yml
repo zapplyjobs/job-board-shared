@@ -48,6 +48,37 @@ jobs:
           fi
           echo "PASS: All critical files present"
 
+      - name: Verify critical files have content
+        run: |
+          ERRORS=0
+          # Files that must have >0 lines (catches accidental empty commits)
+          for FILE in \
+            index.js \
+            lib/aggregator/processors/tag-engine.js \
+            lib/aggregator/processors/senior-filter.js \
+            lib/aggregator-consumer.js \
+            lib/jobs-data-scripts/pipeline-alert.js
+          do
+            if [ -f "$FILE" ]; then
+              LINES=$(wc -l < "$FILE")
+              if [ "$LINES" -eq 0 ]; then
+                echo "::error file=$FILE::$FILE is empty (0 lines)"
+                ERRORS=$((ERRORS + 1))
+              fi
+            fi
+          done
+          # Verify tag-engine.js is importable (catches empty or broken exports)
+          IMPORT_CHECK=$(node -e "require('./lib/aggregator/processors/tag-engine')" 2>&1) || true
+          if [ $? -ne 0 ] || [ -n "$IMPORT_CHECK" ]; then
+            echo "::error::tag-engine.js failed to import: $IMPORT_CHECK"
+            ERRORS=$((ERRORS + 1))
+          fi
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "FAIL: $ERRORS content check(s) failed"
+            exit 1
+          fi
+          echo "PASS: Critical files have content"
+
       - name: Syntax check all JS files
         run: |
           ERRORS=0
