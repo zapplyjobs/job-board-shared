@@ -13,6 +13,19 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Tree completeness check
+        run: |
+          # Catches Git Data API pushes with incomplete trees (A44, D22 incidents)
+          # Normal tree has ~100 files. Threshold at 50 to allow legitimate removals.
+          FILE_COUNT=$(find . -not -path './.git/*' -not -path './node_modules/*' -type f | wc -l)
+          if [ "$FILE_COUNT" -lt 50 ]; then
+            echo "::error::Tree has only $FILE_COUNT files (minimum 50). Possible incomplete Git Data API push."
+            echo "File listing:"
+            find . -not -path './.git/*' -not -path './node_modules/*' -type f | head -20
+            exit 1
+          fi
+          echo "PASS: Tree has $FILE_COUNT files (threshold: 50)"
+
       - uses: actions/setup-node@v5
         with:
           node-version: '20'
