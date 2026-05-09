@@ -179,6 +179,13 @@ else:
 " 2>/dev/null)
   echo "$STAGE_TIMINGS"
 
+  # INF-LATENCY-2: Pipeline work vs git overhead breakdown
+  PUSH_OVERHEAD=$(echo "$METRICS" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('pipeline',{}).get('push_overhead_minutes',''))" 2>/dev/null)
+  PIPELINE_INTERNAL=$(echo "$METRICS" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('pipeline',{}).get('pipeline_internal_minutes',''))" 2>/dev/null)
+  if [ -n "$PUSH_OVERHEAD" ] && [ "$PUSH_OVERHEAD" != "None" ]; then
+    echo "  OVERHEAD: ${PIPELINE_INTERNAL}min pipeline work + ${PUSH_OVERHEAD}min git ops"
+  fi
+
 # GH_PAT expiry (Rule 18: only flag at ≤7 days)
 PAT_EXPIRY="2026-05-30"
 DAYS_LEFT=$(( ( $(date -d "$PAT_EXPIRY" +%s) - $(date +%s) ) / 86400 ))
