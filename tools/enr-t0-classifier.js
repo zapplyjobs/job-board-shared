@@ -71,7 +71,7 @@ for (const line of lines) {
 // Tier classification — mirrors enrich-jobs.js lines 1231-1239
 // T3 checks degree + visa (not experience). Experience covers 100% via tags (no-op).
 function classifyTier(r) {
-  const hasDesc = r.has_description !== undefined ? !!r.has_description : !!r.summary_line;
+  const hasDesc = !!r.has_description;
   if (!hasDesc) return 0;
   if (!r.required_skills || r.required_skills.length === 0) return 1;
   const hasDegree = r.min_degree !== null && r.min_degree !== undefined;
