@@ -186,6 +186,15 @@ else:
     echo "  OVERHEAD: ${PIPELINE_INTERNAL}min pipeline work + ${PUSH_OVERHEAD}min git ops"
   fi
 
+  # INF-SELF-2: R2 health from zjp-metrics.json
+  R2_STATUS=$(echo "$METRICS" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('r2',{}).get('status',''))" 2>/dev/null)
+  if [ -n "$R2_STATUS" ] && [ "$R2_STATUS" != "" ]; then
+    R2_AGE=$(echo "$METRICS" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('r2',{}).get('manifest_age_minutes','?'))" 2>/dev/null)
+    R2_FILES=$(echo "$METRICS" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('r2',{}).get('file_count','?'))" 2>/dev/null)
+    R2_SIZE=$(echo "$METRICS" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('r2',{}).get('total_size_mb','?'))" 2>/dev/null)
+    echo "  R2: ${R2_STATUS} (${R2_AGE} min old, ${R2_FILES} files, ${R2_SIZE} MB)"
+  fi
+
 # GH_PAT expiry (Rule 18: only flag at ≤7 days)
 PAT_EXPIRY="2026-05-30"
 DAYS_LEFT=$(( ( $(date -d "$PAT_EXPIRY" +%s) - $(date +%s) ) / 86400 ))
