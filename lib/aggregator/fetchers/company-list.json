@@ -1934,15 +1934,6 @@
       "notes": "University-specific portal. Separate from Cadence External_Careers entry."
     },
     {
-      "name": "CAE",
-      "url": "https://cae.wd3.myworkdayjobs.com",
-      "site": "cae",
-      "domains": [
-        "hardware",
-        "software"
-      ]
-    },
-    {
       "name": "Capital One",
       "url": "https://capitalone.wd12.myworkdayjobs.com",
       "site": "Capital_One",
@@ -2061,17 +2052,6 @@
       "url": "https://curtisswright.wd1.myworkdayjobs.com",
       "site": "CW_External_Career_Site",
       "name": "Curtiss-Wright"
-    },
-    {
-      "name": "Dell Technologies",
-      "url": "https://dell.wd1.myworkdayjobs.com",
-      "site": "External",
-      "verified_jobs": 562,
-      "verified_date": "2026-03-15",
-      "domains": [
-        "software",
-        "hardware"
-      ]
     },
     {
       "name": "Disney",
