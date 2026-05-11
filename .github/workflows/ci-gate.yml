@@ -39,18 +39,17 @@ jobs:
             lib/jobs-data-scripts/generate-zjp-metrics.js \
             package.json \
             lib/aggregator/fetchers/ats-fetcher.js \
-            lib/aggregator/fetchers/google-fetcher.js \
-            lib/aggregator/fetchers/apple-fetcher.js \
-            lib/aggregator/fetchers/amazon-fetcher.js \
-            lib/aggregator/fetchers/netflix-fetcher.js \
-            lib/aggregator/fetchers/uber-fetcher.js \
-            lib/aggregator/fetchers/twosigma-fetcher.js \
-            lib/aggregator/fetchers/simplify-fetcher.js \
-            lib/aggregator/fetchers/microsoft-fetcher.js \
-            lib/aggregator/fetchers/oracle-fetcher.js \
-            lib/aggregator/fetchers/amd-fetcher.js \
-            lib/aggregator/company-list.json \
-            config.js
+            lib/aggregator/fetchers/google.js \
+            lib/aggregator/fetchers/apple.js \
+            lib/aggregator/fetchers/amazon.js \
+            lib/aggregator/fetchers/netflix.js \
+            lib/aggregator/fetchers/uber.js \
+            lib/aggregator/fetchers/twosigma.js \
+            lib/aggregator/fetchers/simplify.js \
+            lib/aggregator/fetchers/microsoft.js \
+            lib/aggregator/fetchers/oracle.js \
+            lib/aggregator/fetchers/amd.js \
+            lib/aggregator/fetchers/company-list.json
           do
             if [ ! -f "$FILE" ]; then
               echo "::error file=$FILE::Critical file missing: $FILE"
