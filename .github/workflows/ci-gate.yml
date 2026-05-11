@@ -49,8 +49,7 @@ jobs:
             lib/aggregator/fetchers/microsoft.js \
             lib/aggregator/fetchers/oracle.js \
             lib/aggregator/fetchers/amd.js \
-            lib/aggregator/fetchers/company-list.json \
-            config.js
+            lib/aggregator/fetchers/company-list.json
           do
             if [ ! -f "$FILE" ]; then
               echo "::error file=$FILE::Critical file missing: $FILE"
