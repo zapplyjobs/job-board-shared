@@ -209,6 +209,10 @@
       "name": "CLEAR"
     },
     {
+      "slug": "clickhouse",
+      "name": "ClickHouse"
+    },
+    {
       "slug": "cloudflare",
       "name": "Cloudflare"
     },
@@ -219,6 +223,10 @@
     {
       "slug": "cognitiv",
       "name": "Cognitiv"
+    },
+    {
+      "slug": "collibra",
+      "name": "Collibra"
     },
     {
       "slug": "contentful",
@@ -492,6 +500,10 @@
     {
       "slug": "janestreet",
       "name": "Jane Street"
+    },
+    {
+      "slug": "jetbrains",
+      "name": "JetBrains"
     },
     {
       "slug": "jfrog",
