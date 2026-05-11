@@ -114,11 +114,106 @@ push_attempt() {
     return 2
   }
 
-  # 3. Create tree with new entries
+  # 2b. Preprocess nested paths — Git Data API replaces entire subtrees when
+  # given a nested path (e.g., scripts/foo.sh) against base_tree.
+  # Fix: for each entry with / in path, fetch the current subtree, merge the
+  # entry in, construct a new subtree, and emit a tree-type entry instead.
+  # Origin: A45 (99 files lost), C48 (99 files lost), E58 (1 file lost).
+  local processed_entries
+  processed_entries=$(python3 -c "
+import json, subprocess, sys
+
+entries = json.loads('''$TREE_ENTRIES''')
+repo = '$REPO'
+base_tree = '$base_tree'
+result_entries = []
+
+# Group nested entries by parent directory
+subtree_updates = {}  # dirname -> [entries]
+flat_entries = []
+
+for e in entries:
+    if '/' in e.get('path', ''):
+        dirname = e['path'].rsplit('/', 1)[0]
+        basename = e['path'].rsplit('/', 1)[1]
+        if dirname not in subtree_updates:
+            subtree_updates[dirname] = []
+        # Store with basename only for subtree construction
+        sub_entry = dict(e)
+        sub_entry['path'] = basename
+        subtree_updates[dirname].append(sub_entry)
+    else:
+        flat_entries.append(e)
+
+# For each directory with updates, fetch current subtree and merge
+for dirname, new_entries in subtree_updates.items():
+    # Find the subtree SHA in base tree
+    try:
+        tree_result = subprocess.run(
+            ['gh', 'api', f'repos/{repo}/git/trees/{base_tree}?recursive=1',
+             '--jq', f'[.tree[] | select(.path == \"{dirname}\") | .sha][0]'],
+            capture_output=True, text=True, timeout=30
+        )
+        subtree_sha = tree_result.stdout.strip().strip('\"')
+        if not subtree_sha or len(subtree_sha) < 10:
+            # Subdir doesn't exist yet — just pass through, base_tree will create it
+            for ne in new_entries:
+                ne['path'] = f'{dirname}/{ne[\"path\"]}'
+                flat_entries.append(ne)
+            continue
+
+        # Get current subtree entries
+        sub_result = subprocess.run(
+            ['gh', 'api', f'repos/{repo}/git/trees/{subtree_sha}'],
+            capture_output=True, text=True, timeout=30
+        )
+        current_entries = json.loads(sub_result.stdout)['tree']
+
+        # Build merged subtree: start with current, update/add new entries
+        merged = {}
+        for ce in current_entries:
+            merged[ce['path']] = {'path': ce['path'], 'mode': ce['mode'],
+                                  'type': ce['type'], 'sha': ce['sha']}
+        for ne in new_entries:
+            merged[ne['path']] = {'path': ne['path'], 'mode': ne.get('mode', '100644'),
+                                  'type': ne.get('type', 'blob'), 'sha': ne['sha']}
+
+        # Create new subtree
+        merged_list = list(merged.values())
+        create_result = subprocess.run(
+            ['gh', 'api', f'repos/{repo}/git/trees', '--method', 'POST', '--input', '-'],
+            input=json.dumps({'tree': merged_list}),
+            capture_output=True, text=True, timeout=30
+        )
+        new_subtree_sha = json.loads(create_result.stdout)['sha']
+        new_count = len(merged_list)
+
+        print(f'  Subtree fix: {dirname}/ reconstructed with {new_count} files', file=sys.stderr)
+
+        # Emit tree-type entry for the directory
+        flat_entries.append({
+            'path': dirname,
+            'mode': '040000',
+            'type': 'tree',
+            'sha': new_subtree_sha
+        })
+    except Exception as ex:
+        print(f'  WARNING: subtree fix failed for {dirname}: {ex}', file=sys.stderr)
+        # Fall through — the ratio check will catch any file loss
+        for ne in new_entries:
+            ne['path'] = f'{dirname}/{ne[\"path\"]}'
+            flat_entries.append(ne)
+
+print(json.dumps(flat_entries))
+" 2>&1)
+  # Extract just the JSON line (stderr has log messages)
+  processed_entries=$(echo "$processed_entries" | grep -v "^  " || echo "$processed_entries")
+
+  # 3. Create tree with processed entries
   local tree_payload
   tree_payload=$(python3 -c "
 import json, sys
-entries = json.loads('''$TREE_ENTRIES''')
+entries = json.loads('''$processed_entries''')
 print(json.dumps({'base_tree': '$base_tree', 'tree': entries}))
 ")
 
