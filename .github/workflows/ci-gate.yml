@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
 
       - uses: actions/setup-node@v5
         with:
@@ -35,7 +37,20 @@ jobs:
             lib/jobs-data-scripts/pipeline-alert.js \
             lib/jobs-data-scripts/collect-metrics.js \
             lib/jobs-data-scripts/generate-zjp-metrics.js \
-            package.json
+            package.json \
+            lib/aggregator/fetchers/ats-fetcher.js \
+            lib/aggregator/fetchers/google-fetcher.js \
+            lib/aggregator/fetchers/apple-fetcher.js \
+            lib/aggregator/fetchers/amazon-fetcher.js \
+            lib/aggregator/fetchers/netflix-fetcher.js \
+            lib/aggregator/fetchers/uber-fetcher.js \
+            lib/aggregator/fetchers/twosigma-fetcher.js \
+            lib/aggregator/fetchers/simplify-fetcher.js \
+            lib/aggregator/fetchers/microsoft-fetcher.js \
+            lib/aggregator/fetchers/oracle-fetcher.js \
+            lib/aggregator/fetchers/amd-fetcher.js \
+            lib/aggregator/company-list.json \
+            config.js
           do
             if [ ! -f "$FILE" ]; then
               echo "::error file=$FILE::Critical file missing: $FILE"
@@ -112,15 +127,35 @@ jobs:
           fi
           echo "PASS: tag-engine exports verified"
 
-      - name: Check for unexpected deletions
+      - name: Deletion threshold check
+        if: github.event_name == 'push'
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            DELETED=$(gh api "repos/${{ github.repository }}/compare/${{ github.base_ref }}...${{ github.head_ref }}" \
-              --jq '.files[] | select(.status=="removed") | .filename' 2>/dev/null || true)
-            if [ -n "$DELETED" ]; then
-              echo "::warning::Files deleted in this PR:"
-              echo "$DELETED"
-            fi
+          DELETION_THRESHOLD=5
+          # Compare this commit to its parent — count removed files
+          DELETED=$(git diff --name-only --diff-filter=D HEAD~1 HEAD 2>/dev/null || echo "")
+          COUNT=$(echo "$DELETED" | grep -c . || true)
+          if [ "$COUNT" -gt "$DELETION_THRESHOLD" ]; then
+            echo "::error::$COUNT files deleted in this commit (threshold: $DELETION_THRESHOLD). Possible mass-deletion."
+            echo "Deleted files:"
+            echo "$DELETED"
+            echo ""
+            echo "If intentional, split into smaller commits or adjust threshold."
+            exit 1
+          fi
+          if [ "$COUNT" -gt 0 ]; then
+            echo "WARNING: $COUNT file(s) deleted (within threshold):"
+            echo "$DELETED"
+          fi
+          echo "PASS: Deletion count ($COUNT) within threshold ($DELETION_THRESHOLD)"
+
+      - name: Check for unexpected deletions
+        if: github.event_name == 'pull_request'
+        run: |
+          DELETED=$(gh api "repos/${{ github.repository }}/compare/${{ github.base_ref }}...${{ github.head_ref }}" \
+            --jq '.files[] | select(.status=="removed") | .filename' 2>/dev/null || true)
+          if [ -n "$DELETED" ]; then
+            echo "::warning::Files deleted in this PR:"
+            echo "$DELETED"
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
