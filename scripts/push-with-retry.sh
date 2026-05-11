@@ -57,6 +57,43 @@ if [ -f "$SCRIPT_DIR/pre-push-check.sh" ]; then
   echo ""
 fi
 
+# Syntax validation for JS and YAML files in the tree
+# Origin: E9 (7 broken runs from literal newline in pipeline-alert.js), E45 (broken YAML)
+SYNTAX_ERRORS=0
+VALIDATE_TMPDIR=$(mktemp -d)
+trap 'rm -rf "$VALIDATE_TMPDIR"' EXIT
+
+while IFS= read -r entry; do
+  fpath=$(echo "$entry" | python3 -c "import json,sys; print(json.loads(sys.stdin.read())['path'])" 2>/dev/null)
+  sha=$(echo "$entry" | python3 -c "import json,sys; print(json.loads(sys.stdin.read())['sha'])" 2>/dev/null)
+  fname=$(basename "$fpath")
+
+  if [[ "$fpath" == *.js ]]; then
+    gh api "repos/$REPO/git/blobs/$sha" --jq '.content' 2>/dev/null | base64 -d > "$VALIDATE_TMPDIR/$fname" 2>/dev/null || continue
+    if ! node -c "$VALIDATE_TMPDIR/$fname" 2>/dev/null; then
+      echo "  ❌ SYNTAX ERROR: $fpath (JS)" >&2
+      node -c "$VALIDATE_TMPDIR/$fname" 2>&1 | head -3 | sed 's/^/     /' >&2
+      SYNTAX_ERRORS=$((SYNTAX_ERRORS + 1))
+    else
+      echo "  ✓ Syntax OK: $fpath (JS)"
+    fi
+  elif [[ "$fpath" == *.yml || "$fpath" == *.yaml ]]; then
+    gh api "repos/$REPO/git/blobs/$sha" --jq '.content' 2>/dev/null | base64 -d > "$VALIDATE_TMPDIR/$fname" 2>/dev/null || continue
+    if ! python3 -c "import yaml; yaml.safe_load(open('$VALIDATE_TMPDIR/$fname'))" 2>/dev/null; then
+      echo "  ❌ SYNTAX ERROR: $fpath (YAML)" >&2
+      python3 -c "import yaml; yaml.safe_load(open('$VALIDATE_TMPDIR/$fname'))" 2>&1 | head -3 | sed 's/^/     /' >&2
+      SYNTAX_ERRORS=$((SYNTAX_ERRORS + 1))
+    else
+      echo "  ✓ Syntax OK: $fpath (YAML)"
+    fi
+  fi
+done < <(python3 -c "import json,sys; [print(json.dumps(e)) for e in json.loads(sys.stdin.read())]" <<< "$TREE_ENTRIES")
+
+if [ "$SYNTAX_ERRORS" -gt 0 ]; then
+  echo "BLOCKED: $SYNTAX_ERRORS syntax error(s) found. Fix before pushing." >&2
+  exit 1
+fi
+
 push_attempt() {
   local attempt=$1
 
