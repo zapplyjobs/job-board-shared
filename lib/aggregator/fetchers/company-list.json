@@ -319,6 +319,10 @@
       "name": "Duolingo"
     },
     {
+      "slug": "earnin",
+      "name": "EarnIn"
+    },
+    {
       "slug": "elastic",
       "name": "Elastic",
       "titleOverrides": {
@@ -849,6 +853,10 @@
     {
       "slug": "squarespace",
       "name": "Squarespace"
+    },
+    {
+      "slug": "stabilityai",
+      "name": "Stability AI"
     },
     {
       "slug": "starburst",
