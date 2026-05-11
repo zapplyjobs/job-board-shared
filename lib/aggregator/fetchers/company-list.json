@@ -141,6 +141,10 @@
       "name": "Babel Street"
     },
     {
+      "slug": "backblaze",
+      "name": "Backblaze"
+    },
+    {
       "slug": "baselayer",
       "name": "BaseLayer"
     },
@@ -819,6 +823,10 @@
       "name": "SingleStore"
     },
     {
+      "slug": "smartsheet",
+      "name": "Smartsheet"
+    },
+    {
       "slug": "snorkelai",
       "name": "Snorkel AI"
     },
@@ -853,6 +861,10 @@
     {
       "slug": "stubhubinc",
       "name": "StubHub"
+    },
+    {
+      "slug": "sumologic",
+      "name": "Sumo Logic"
     },
     {
       "slug": "tailscale",
