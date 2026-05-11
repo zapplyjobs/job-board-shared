@@ -153,6 +153,10 @@
       "name": "Chan Zuckerberg Biohub"
     },
     {
+      "slug": "bitgo",
+      "name": "BitGo"
+    },
+    {
       "slug": "block",
       "name": "Block"
     },
@@ -853,6 +857,10 @@
     {
       "slug": "taketwo",
       "name": "Take-Two Interactive"
+    },
+    {
+      "slug": "tanium",
+      "name": "Tanium"
     },
     {
       "slug": "tatari",
