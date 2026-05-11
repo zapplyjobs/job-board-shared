@@ -40,6 +40,10 @@
       "name": "Akuna Capital"
     },
     {
+      "slug": "alarmcom",
+      "name": "Alarm.com"
+    },
+    {
       "slug": "algolia",
       "name": "Algolia"
     },
@@ -310,6 +314,10 @@
           }
         ]
       }
+    },
+    {
+      "slug": "energyhub",
+      "name": "EnergyHub"
     },
     {
       "slug": "epicgames",
@@ -833,6 +841,10 @@
     {
       "slug": "taketwo",
       "name": "Take-Two Interactive"
+    },
+    {
+      "slug": "tatari",
+      "name": "Tatari"
     },
     {
       "slug": "teletrackingtechnologiesinc",
