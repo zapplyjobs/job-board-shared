@@ -22,10 +22,12 @@ jobs:
       - name: Run tag-engine tests
         run: node lib/__tests__/tag-engine.test.js
 
-      - name: Check critical files exist
+      - name: Check critical files exist and have content
         run: |
           ERRORS=0
-          # Core pipeline files that must never be deleted
+          MIN_SIZE=100
+          # All critical pipeline files — must exist and be >100 bytes
+          # (catches Git Data API blob corruption: 1-byte or empty files)
           for FILE in \
             index.js \
             lib/aggregator/processors/tag-engine.js \
@@ -54,13 +56,25 @@ jobs:
             if [ ! -f "$FILE" ]; then
               echo "::error file=$FILE::Critical file missing: $FILE"
               ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            SIZE=$(wc -c < "$FILE")
+            if [ "$SIZE" -lt "$MIN_SIZE" ]; then
+              echo "::error file=$FILE::$FILE is ${SIZE} bytes (minimum: ${MIN_SIZE}). Possible blob corruption."
+              ERRORS=$((ERRORS + 1))
             fi
           done
+          # Verify tag-engine.js is importable
+          IMPORT_CHECK=$(node -e "require('./lib/aggregator/processors/tag-engine')" 2>&1) || true
+          if [ $? -ne 0 ] || [ -n "$IMPORT_CHECK" ]; then
+            echo "::error::tag-engine.js failed to import: $IMPORT_CHECK"
+            ERRORS=$((ERRORS + 1))
+          fi
           if [ "$ERRORS" -gt 0 ]; then
-            echo "FAIL: $ERRORS critical file(s) missing"
+            echo "FAIL: $ERRORS check(s) failed"
             exit 1
           fi
-          echo "PASS: All critical files present"
+          echo "PASS: All critical files present and non-trivial"
 
       - name: Validate JSON files are parseable
         run: |
@@ -90,37 +104,6 @@ jobs:
             exit 1
           fi
           echo "PASS: All JSON files valid"
-
-      - name: Verify critical files have content
-        run: |
-          ERRORS=0
-          # Files that must have >0 lines (catches accidental empty commits)
-          for FILE in \
-            index.js \
-            lib/aggregator/processors/tag-engine.js \
-            lib/aggregator/processors/senior-filter.js \
-            lib/aggregator-consumer.js \
-            lib/jobs-data-scripts/pipeline-alert.js
-          do
-            if [ -f "$FILE" ]; then
-              LINES=$(wc -l < "$FILE")
-              if [ "$LINES" -eq 0 ]; then
-                echo "::error file=$FILE::$FILE is empty (0 lines)"
-                ERRORS=$((ERRORS + 1))
-              fi
-            fi
-          done
-          # Verify tag-engine.js is importable (catches empty or broken exports)
-          IMPORT_CHECK=$(node -e "require('./lib/aggregator/processors/tag-engine')" 2>&1) || true
-          if [ $? -ne 0 ] || [ -n "$IMPORT_CHECK" ]; then
-            echo "::error::tag-engine.js failed to import: $IMPORT_CHECK"
-            ERRORS=$((ERRORS + 1))
-          fi
-          if [ "$ERRORS" -gt 0 ]; then
-            echo "FAIL: $ERRORS content check(s) failed"
-            exit 1
-          fi
-          echo "PASS: Critical files have content"
 
       - name: Syntax check all JS files
         run: |
