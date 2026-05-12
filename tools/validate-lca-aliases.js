@@ -52,19 +52,11 @@ function loadRemoteAliasSource() {
   const { execSync } = require('child_process');
   try {
     const content = execSync(
-      'gh api repos/zapplyjobs/job-board-shared/contents/lib/jobs-data-scripts/enrich-jobs.js --jq .content',
+      'gh api repos/zapplyjobs/job-board-shared/contents/lib/jobs-data-scripts/enrich/lca-aliases.json --jq .content',
       { encoding: 'utf8' }
     ).trim();
-    const source = Buffer.from(content, 'base64').toString('utf8');
-    // Extract LCA_COMPANY_ALIASES object
-    const match = source.match(/const LCA_COMPANY_ALIASES = \{([\s\S]*?)\};/);
-    if (!match) {
-      console.error('Could not extract LCA_COMPANY_ALIASES from remote source');
-      process.exit(1);
-    }
-    // Parse the alias map — it's a flat key-value object
-    const aliasStr = '{' + match[1] + '}';
-    return new Function('return ' + aliasStr)();
+    const decoded = Buffer.from(content, 'base64').toString('utf8');
+    return JSON.parse(decoded);
   } catch (e) {
     console.error('Failed to fetch remote alias source:', e.message);
     process.exit(1);
@@ -72,18 +64,12 @@ function loadRemoteAliasSource() {
 }
 
 function loadLocalAliases() {
-  // Extract from the loaded module
-  const source = fs.readFileSync(
-    path.join(__dirname, '..', 'lib', 'jobs-data-scripts', 'enrich-jobs.js'),
-    'utf8'
-  );
-  const match = source.match(/const LCA_COMPANY_ALIASES = \{([\s\S]*?)\};/);
-  if (!match) {
-    console.error('Could not extract LCA_COMPANY_ALIASES from source');
+  const aliasPath = path.join(__dirname, '..', 'lib', 'jobs-data-scripts', 'enrich', 'lca-aliases.json');
+  if (!fs.existsSync(aliasPath)) {
+    console.error('lca-aliases.json not found at', aliasPath);
     process.exit(1);
   }
-  const aliasStr = '{' + match[1] + '}';
-  return new Function('return ' + aliasStr)();
+  return JSON.parse(fs.readFileSync(aliasPath, 'utf8'));
 }
 
 function loadRemoteEnrichedJobs() {
