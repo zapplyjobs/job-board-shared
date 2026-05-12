@@ -624,7 +624,12 @@
     },
     {
       "slug": "motional",
-      "name": "Motional"
+      "name": "Motional",
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "keyword_gap",
+        "note": "B34: 14 gen (70%). 7 are Principal Engineer Team Lead (motion/trajectory planning, prediction/ML) — SW/AI keyword gaps. 4 are ops (correctly general). Future: add motion planning, trajectory planning keywords."
+      }
     },
     {
       "slug": "mozilla",
@@ -684,7 +689,13 @@
     },
     {
       "slug": "oscar",
-      "name": "Oscar Health"
+      "name": "Oscar Health",
+      "default_domain": "healthcare",
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "defaulted",
+        "note": "B34: 26 gen (25%). Member care specialists, escalation leads, quality management. Health insurance — all ambiguous jobs are healthcare. Added default_domain: healthcare."
+      }
     },
     {
       "slug": "pagerduty",
@@ -812,7 +823,12 @@
     },
     {
       "slug": "sharkninjaoperatingllc",
-      "name": "SharkNinja"
+      "name": "SharkNinja",
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "structural",
+        "note": "B34: 14 gen (24%). Demo chefs, marketing interns, tech co-ops. Mixed — no single domain."
+      }
     },
     {
       "slug": "showpad",
@@ -1700,7 +1716,12 @@
       "domains": [
         "hardware",
         "general"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "mixed",
+        "note": "B34: 24 gen (19%). Equipment operators, packaging, lab assistants, finance supervisor. Manufacturing/ops mix. Domains [HW,gen] — no safe default."
+      }
     },
     {
       "name": "Accuray",
@@ -2083,7 +2104,13 @@
         "software",
         "finance",
         "operations"
-      ]
+      ],
+      "default_domain": "finance",
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "defaulted",
+        "note": "B34: 9 gen (17%). Equity research, credit analyst, market risk — all finance. Added default_domain: finance."
+      }
     },
     {
       "url": "https://cognex.wd1.myworkdayjobs.com",
@@ -2236,7 +2263,13 @@
     {
       "url": "https://franklintempleton.wd5.myworkdayjobs.com",
       "site": "Primary-External-1",
-      "name": "Franklin Templeton"
+      "name": "Franklin Templeton",
+      "default_domain": "finance",
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "defaulted",
+        "note": "B34: 3 gen (100%). Trader, intern, exec assistant at investment management firm. Added default_domain: finance."
+      }
     },
     {
       "name": "Freddie Mac",
@@ -2284,7 +2317,12 @@
       "domains": [
         "hardware",
         "software"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "structural",
+        "note": "B34: 21 gen (29%). Plant managers, material flow, supervisors. Manufacturing/operations. Domains [HW,SW] — no safe default."
+      }
     },
     {
       "name": "GlobalFoundries",
@@ -2425,7 +2463,12 @@
       "domains": [
         "healthcare",
         "software"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "mixed",
+        "note": "B34: 28 gen (32%). Admin assistants, facilities, co-ops (finance, digital art, medtech). Multi-domain [HC,SW] — borderline for HC default but co-ops span domains."
+      }
     },
     {
       "name": "Johnson Controls",
@@ -2436,7 +2479,12 @@
       "domains": [
         "software",
         "hardware"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "structural",
+        "note": "B34: 61 gen (51% rate). HVAC/fire/security technicians and service roles. Trades/operations — no domain match. Structural general."
+      }
     },
     {
       "name": "KBR",
@@ -2576,7 +2624,12 @@
       "domains": [
         "healthcare",
         "software"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "mixed",
+        "note": "B34: 11 gen (16%). Financial analyst, design tech, safety specialist, sales rep, contract analyst. Mixed finance/ops/sales/QA — no single default."
+      }
     },
     {
       "name": "Merck & Co.",
@@ -2684,7 +2737,12 @@
         "hardware",
         "software",
         "general"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-12",
+        "decision": "mixed",
+        "note": "B34: 45 gen (21%). Mix: admin/ops/security (structural) + some SW keyword gaps (engineer software quality, emulator). Multi-domain [HW,SW,gen] — no safe default."
+      }
     },
     {
       "name": "NVIDIA",
