@@ -45,3 +45,12 @@ jobs:
       - run: node tools/validate-lca-aliases.js --remote
         env:
           GH_TOKEN: ${{ github.token }}
+
+  pipeline-checks-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - run: node lib/__tests__/pipeline-checks.test.js
