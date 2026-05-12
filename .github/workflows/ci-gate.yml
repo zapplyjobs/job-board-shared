@@ -62,6 +62,35 @@ jobs:
           fi
           echo "PASS: All critical files present"
 
+      - name: Validate JSON files are parseable
+        run: |
+          ERRORS=0
+          for FILE in \
+            package.json \
+            lib/aggregator/fetchers/company-list.json \
+            lib/aggregator/processors/onet-unified-lookup.json \
+            lib/jobs-data-scripts/companies.json \
+            lib/jobs-data-scripts/enrich/skills-taxonomy.json \
+            zjp-ops-state.json
+          do
+            if [ -f "$FILE" ]; then
+              if ! node -e "JSON.parse(require('fs').readFileSync('$FILE','utf8'))" 2>/dev/null; then
+                HEAD=$(head -c 100 "$FILE" | tr -d '\n')
+                if echo "$HEAD" | grep -qE '^[A-Za-z0-9+/=]+$'; then
+                  echo "::error file=$FILE::$FILE appears to be base64-encoded, not raw JSON. Git Data API encoding corruption (see INF-ENCODE-1)."
+                else
+                  echo "::error file=$FILE::$FILE is not valid JSON"
+                fi
+                ERRORS=$((ERRORS + 1))
+              fi
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "FAIL: $ERRORS JSON file(s) corrupted or invalid"
+            exit 1
+          fi
+          echo "PASS: All JSON files valid"
+
       - name: Verify critical files have content
         run: |
           ERRORS=0
