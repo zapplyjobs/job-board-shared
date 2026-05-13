@@ -511,7 +511,12 @@
     },
     {
       "slug": "ixllearning",
-      "name": "IXL Learning"
+      "name": "IXL Learning",
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 41 gens. Education \u2014 math curriculum designers, district partnership specialists, professional learning specialists. 100% structural education (domain not in taxonomy)."
+      }
     },
     {
       "slug": "janestreet",
@@ -669,7 +674,12 @@
     },
     {
       "slug": "olsson",
-      "name": "Olsson"
+      "name": "Olsson",
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 74 gens. Engineering consulting \u2014 surveyors, construction techs, environmental geologists, admin coordinators. Water Resources engineers correctly blocked by civil guard. 100% structural civil/consulting."
+      }
     },
     {
       "slug": "openeye",
@@ -860,7 +870,12 @@
     },
     {
       "slug": "spacex",
-      "name": "SpaceX"
+      "name": "SpaceX",
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 53 gens. Facilities (porters, cooks, HVAC techs), Starlink market access managers, construction PMs. 100% structural ops/facilities."
+      }
     },
     {
       "slug": "speechify",
@@ -2044,12 +2059,22 @@
       "domains": [
         "software",
         "finance"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 77 gens. Banking \u2014 product design managers, process managers, finance risk, marketing. 100% structural finance/ops."
+      }
     },
     {
       "url": "https://carrier.wd5.myworkdayjobs.com",
       "site": "jobs",
-      "name": "Carrier Global"
+      "name": "Carrier Global",
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 77 gens. HVAC service/rental techs and managers (4x Commercial HVAC Service Manager). Automated Logic project managers (building automation). 100% structural HVAC/building ops."
+      }
     },
     {
       "name": "Caterpillar",
@@ -2101,7 +2126,12 @@
         "healthcare",
         "software",
         "operations"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 38 gens. Healthcare \u2014 enrollment reps, sales ops analysts, workforce management, medical records. 100% structural healthcare/ops."
+      }
     },
     {
       "name": "Cisco",
@@ -2112,7 +2142,12 @@
       "domains": [
         "software",
         "hardware"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 51 gens. Project managers (7x), change management (5x), sales talent managers. 2x Component Engineer fixed by PRECISION-19. ~95% structural ops/sales."
+      }
     },
     {
       "name": "Citi",
@@ -2386,7 +2421,12 @@
         "hardware",
         "software",
         "general"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 35 gens. Maintenance techs, project managers, sales managers, admin support. 100% structural ops/sales."
+      }
     },
     {
       "name": "HP Inc",
@@ -2446,7 +2486,12 @@
       "domains": [
         "hardware",
         "software"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "mixed",
+        "note": "B38: 33 gens. IT support (3x), TEM techs, equipment techs, module engineers. Image Processing Engineer (1, C++/Linux) borderline SW keyword gap. ~95% structural, ~5% potentially classifiable."
+      }
     },
     {
       "name": "InterDigital",
@@ -2674,7 +2719,12 @@
       "verified_date": "2026-03-16",
       "domains": [
         "general"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 43 gens. Pharma \u2014 ops specialists, scientists (molecular/biology discovery), animal techs, IT AV support. 100% structural pharma/ops."
+      }
     },
     {
       "url": "https://microchiphr.wd5.myworkdayjobs.com",
@@ -2728,7 +2778,12 @@
       "domains": [
         "hardware",
         "software"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 41 gens. Technical support, ALPR techs, account managers. AI Application Specialist (1) borderline SW but too low volume. ~98% structural ops/support."
+      }
     },
     {
       "name": "nCino",
@@ -2985,7 +3040,12 @@
       "domains": [
         "hardware",
         "software"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "mixed",
+        "note": "B38: 45 gens. Engineering/manufacturing \u2014 Associate Engineers, Associate Project Engineers (automation/commissioning). Associate Trend Insight Analyst borderline DS. ~80% structural manufacturing, ~20% potentially HW."
+      }
     },
     {
       "url": "https://snc.wd1.myworkdayjobs.com",
@@ -3053,7 +3113,12 @@
       "domains": [
         "software",
         "finance"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 41 gens. Financial services \u2014 alternative investment ops, expense services, client analysts, compliance. 100% structural finance ops."
+      }
     },
     {
       "url": "https://synchronyfinancial.wd5.myworkdayjobs.com",
