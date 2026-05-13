@@ -3,7 +3,7 @@
     "description": "Curated list of tech companies using Greenhouse, Lever, Ashby, Workday, Eightfold, and SmartRecruiters ATS platforms",
     "last_updated": "2026-05-12",
     "verified": "All slugs verified live with entry-level job counts as of date noted in notes",
-    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) — WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) — verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) — new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial — all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume. S167: SUPPLY-NEW-COMPANIES — removed 9 WD duplicates (ASML/Broadcom/Northrop/Cisco/Disney/HP/Marvell/Proofpoint/Stryker). GH +19 (CoreWeave/Rubrik/OscarHealth/Canonical/Appian/Anaplan/SoFi/Nuro/Formlabs/Qualtrics/IXLLearning/AlphaSights/Figure/SamsungResearchAmerica/LatitudeAI/AlphaFMC/Oklo/UnderdogFantasy/Loop). WD +40 (Microsoft/Rivian/Deloitte/EA/Zipline/Qorvo/Keysight/PGE/Westinghouse/XDev/CadenceUniv/BlackRock/GM/HPEUniv/Abbott/Southwest/SBD/ResMed/Ciena/SiliconLabs/FLIR/Aptiv/BostonDynamics/Expedia/Lumentum/InterDigital/Rockwell/Moderna/ThomsonReuters/Elevance/TMobile/Allstate/Philips/Etsy/PNC/Travelers/USAA/Cox/FactSet/TransUnion). GH: 126→145. WD: 79→110. S192 Phase3b: +12 GH (CLEAR/Arcesium/SharkNinja/CZBiohub/Personalis/TeleTracking/ReachFinancial/Blueprint/Tudor/StevensCap/Freeform/ExtraHop) +6 Lever (AHEAD/MBRDNA/Wolverine/LifeChurch/BHGFinancial/Symmetry) +5 Ashby (Vultr/1Password/Replicant/Genies/Radiant). GH: 169 Lever: 58 Ashby: 80. S293F: +12 GH (Algolia/BeyondTrust/JFrog/KnowBe4/Lattice/NozomiNetworks/OrcaSecurity/PingIdentity/Planet/PlanetScale/RedwoodMaterials/Speechify) — all verified live with US entry-level tech roles. Discovered via systematic GH API scan. F45: Added AI Fund (Lever), Magna (WD), Tencent (WD). Removed Coinbase (GH board 404).",
+    "notes": "Session 57: Added 12 Greenhouse boards. Session 60: Added SpaceX/Anduril/Lucid/Palantir. Session 97: Added Workday section (21 tenants verified 2026-02-28). RTX confirmed on Workday (globalhr.wd5/rec_rtx_ext_gateway, 3745 jobs) \u2014 WD-1 research was wrong about Phenom. WD-4 (2026-02-28 S98): 9 hospital tenants added (CCF, VUMC, Intermountain, MGB, Geisinger, Ochsner, SaintLukes, Montefiore, Sharp). CCF+Montefiore have us_only=true (campus/address-only locations). Kaiser/HCA/Mayo not yet verified (JS-rendered career pages). S107: 4 quant/trading GH tenants added (Jane Street 229, IMC 149, Akuna Capital 33, Jump Trading 67). Finance domain tag added to tag-engine.js. S112 ATS-EXP: +62 GH, +42 Lever, +51 Ashby, +20 Workday (176 companies total, all verified 2026-03-01). S147: +7 GH (Klaviyo, Asana, Squarespace, DoorDash, Pinterest, CockroachLabs, Starburst) \u2014 verified entry-level eng roles exist. 10 others from research batch rejected. S147: +2 Workday (Snap/myworkdaysite.com, Morgan Stanley). +3 Eightfold section (AmEx 493, John Deere 184, Zebra 266) \u2014 new ATS platform. S148: +10 Workday (Fidelity, Analog Devices, Stryker, State Street, KLA, Moog, Entegris, Rolls-Royce, LPL Financial \u2014 all verified live 2026-03-11). Discovered via SimplifyJobs WD tenant analysis. Goldman Sachs/SBD/Comcast/Expedia/Amgen excluded (non-standard domain, wrong site, or non-tech noise). S154: SmartRecruiters section added (17 companies, 256 total interns verified 2026-03-11). Slugs discovered from speedyapply/pittcsc/cvrve competitor repos + API testing. Low-intern slugs (RaytheonTechnologies/EVERSANA1/WellmarkInc) kept for new-grad volume. S167: SUPPLY-NEW-COMPANIES \u2014 removed 9 WD duplicates (ASML/Broadcom/Northrop/Cisco/Disney/HP/Marvell/Proofpoint/Stryker). GH +19 (CoreWeave/Rubrik/OscarHealth/Canonical/Appian/Anaplan/SoFi/Nuro/Formlabs/Qualtrics/IXLLearning/AlphaSights/Figure/SamsungResearchAmerica/LatitudeAI/AlphaFMC/Oklo/UnderdogFantasy/Loop). WD +40 (Microsoft/Rivian/Deloitte/EA/Zipline/Qorvo/Keysight/PGE/Westinghouse/XDev/CadenceUniv/BlackRock/GM/HPEUniv/Abbott/Southwest/SBD/ResMed/Ciena/SiliconLabs/FLIR/Aptiv/BostonDynamics/Expedia/Lumentum/InterDigital/Rockwell/Moderna/ThomsonReuters/Elevance/TMobile/Allstate/Philips/Etsy/PNC/Travelers/USAA/Cox/FactSet/TransUnion). GH: 126\u2192145. WD: 79\u2192110. S192 Phase3b: +12 GH (CLEAR/Arcesium/SharkNinja/CZBiohub/Personalis/TeleTracking/ReachFinancial/Blueprint/Tudor/StevensCap/Freeform/ExtraHop) +6 Lever (AHEAD/MBRDNA/Wolverine/LifeChurch/BHGFinancial/Symmetry) +5 Ashby (Vultr/1Password/Replicant/Genies/Radiant). GH: 169 Lever: 58 Ashby: 80. S293F: +12 GH (Algolia/BeyondTrust/JFrog/KnowBe4/Lattice/NozomiNetworks/OrcaSecurity/PingIdentity/Planet/PlanetScale/RedwoodMaterials/Speechify) \u2014 all verified live with US entry-level tech roles. Discovered via systematic GH API scan. F45: Added AI Fund (Lever), Magna (WD), Tencent (WD). Removed Coinbase (GH board 404).",
     "workday_count": 148
   },
   "greenhouse": [
@@ -13,7 +13,7 @@
     },
     {
       "slug": "8451",
-      "name": "84.51°"
+      "name": "84.51\u00b0"
     },
     {
       "slug": "abnormalsecurity",
@@ -628,7 +628,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "keyword_gap",
-        "note": "B34: 14 gen (70%). 7 are Principal Engineer Team Lead (motion/trajectory planning, prediction/ML) — SW/AI keyword gaps. 4 are ops (correctly general). Future: add motion planning, trajectory planning keywords."
+        "note": "B34: 14 gen (70%). 7 are Principal Engineer Team Lead (motion/trajectory planning, prediction/ML) \u2014 SW/AI keyword gaps. 4 are ops (correctly general). Future: add motion planning, trajectory planning keywords."
       }
     },
     {
@@ -694,7 +694,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "defaulted",
-        "note": "B34: 26 gen (25%). Member care specialists, escalation leads, quality management. Health insurance — all ambiguous jobs are healthcare. Added default_domain: healthcare."
+        "note": "B34: 26 gen (25%). Member care specialists, escalation leads, quality management. Health insurance \u2014 all ambiguous jobs are healthcare. Added default_domain: healthcare."
       }
     },
     {
@@ -827,7 +827,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "structural",
-        "note": "B34: 14 gen (24%). Demo chefs, marketing interns, tech co-ops. Mixed — no single domain."
+        "note": "B34: 14 gen (24%). Demo chefs, marketing interns, tech co-ops. Mixed \u2014 no single domain."
       }
     },
     {
@@ -1720,7 +1720,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "mixed",
-        "note": "B34: 24 gen (19%). Equipment operators, packaging, lab assistants, finance supervisor. Manufacturing/ops mix. Domains [HW,gen] — no safe default."
+        "note": "B34: 24 gen (19%). Equipment operators, packaging, lab assistants, finance supervisor. Manufacturing/ops mix. Domains [HW,gen] \u2014 no safe default."
       }
     },
     {
@@ -1882,7 +1882,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "structural",
-        "note": "B34: Domains [hardware,general]. Oilfield services — ambiguous jobs are field operations, not hardware engineering."
+        "note": "B34: Domains [hardware,general]. Oilfield services \u2014 ambiguous jobs are field operations, not hardware engineering."
       }
     },
     {
@@ -1916,7 +1916,12 @@
       "domains": [
         "hardware",
         "defense"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "mixed",
+        "note": "B38: 91 gens. Aerospace \u2014 technicians, program managers, configurators. Notable: System Engineer III (3, borderline HW), Electrical Integration Tech (2, HW). ~85% structural, ~15% potentially HW."
+      }
     },
     {
       "name": "Boeing",
@@ -1941,6 +1946,11 @@
             "reason": "Boeing senior-associate/analyst roles are admin/support, not senior engineering"
           }
         ]
+      },
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 133 gens. Trades (NDT tech, HVAC tech, locksmith, tube bender), ops managers. 1x Research Electro-Mechanical Tech borderline HW. 98% structural."
       }
     },
     {
@@ -1952,7 +1962,12 @@
       "domains": [
         "software",
         "defense"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "mixed",
+        "note": "B38: 111 gens. Mostly defense ops (exercise planners, equipment specialists). Notable: Back-End Developer (fixed PRECISION-20), M&S System Engineer (borderline SW), UI and UX Strategist (borderline SW). ~95% structural, ~5% potentially classifiable."
+      }
     },
     {
       "name": "Boston Dynamics",
@@ -1990,7 +2005,12 @@
       "domains": [
         "software",
         "defense"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "mixed",
+        "note": "B38: 100 gens. Defense ops \u2014 planners, team leads, data validators. Notable: AWS Engineer (fixed PRECISION-20), BeyondTrust Engineer (fixed PRECISION-20), WordPress Full-Stack Developer (fixed PRECISION-20). ~90% structural, ~10% keyword gaps (now fixed)."
+      }
     },
     {
       "name": "Cadence",
@@ -2052,7 +2072,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "structural",
-        "note": "B34: Domains [hardware]. Heavy machinery. Ambiguous jobs may be manufacturing/ops, not hardware. Deferred — needs job sampling."
+        "note": "B34: Domains [hardware]. Heavy machinery. Ambiguous jobs may be manufacturing/ops, not hardware. Deferred \u2014 needs job sampling."
       }
     },
     {
@@ -2109,7 +2129,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "defaulted",
-        "note": "B34: 9 gen (17%). Equity research, credit analyst, market risk — all finance. Added default_domain: finance."
+        "note": "B34: 9 gen (17%). Equity research, credit analyst, market risk \u2014 all finance. Added default_domain: finance."
       }
     },
     {
@@ -2128,7 +2148,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "structural",
-        "note": "B33: 40+ gen. Mixed co-ops (marketing, finance, HR, some network eng). Domains [software,general]. Borderline — ambiguous co-ops are not reliably software."
+        "note": "B33: 40+ gen. Mixed co-ops (marketing, finance, HR, some network eng). Domains [software,general]. Borderline \u2014 ambiguous co-ops are not reliably software."
       }
     },
     {
@@ -2321,7 +2341,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "structural",
-        "note": "B34: 21 gen (29%). Plant managers, material flow, supervisors. Manufacturing/operations. Domains [HW,SW] — no safe default."
+        "note": "B34: 21 gen (29%). Plant managers, material flow, supervisors. Manufacturing/operations. Domains [HW,SW] \u2014 no safe default."
       }
     },
     {
@@ -2467,7 +2487,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "mixed",
-        "note": "B34: 28 gen (32%). Admin assistants, facilities, co-ops (finance, digital art, medtech). Multi-domain [HC,SW] — borderline for HC default but co-ops span domains."
+        "note": "B34: 28 gen (32%). Admin assistants, facilities, co-ops (finance, digital art, medtech). Multi-domain [HC,SW] \u2014 borderline for HC default but co-ops span domains."
       }
     },
     {
@@ -2483,7 +2503,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "structural",
-        "note": "B34: 61 gen (51% rate). HVAC/fire/security technicians and service roles. Trades/operations — no domain match. Structural general."
+        "note": "B34: 61 gen (51% rate). HVAC/fire/security technicians and service roles. Trades/operations \u2014 no domain match. Structural general."
       }
     },
     {
@@ -2495,7 +2515,12 @@
       "domains": [
         "software",
         "defense"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 92 gens. Defense ops \u2014 engineering SMEs, knowledge managers, admin. Civil/Structural Designer (2) borderline HW. 97% structural."
+      }
     },
     {
       "name": "KeyBank",
@@ -2529,7 +2554,12 @@
       "domains": [
         "software",
         "defense"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 126 gens. Defense ops \u2014 task order managers, capture managers, security specialists. Business Systems Analyst (2) blocked by BSA guard (correct). 100% structural."
+      }
     },
     {
       "name": "Logitech",
@@ -2554,6 +2584,11 @@
             "reason": "Lowe's retail floor supervisors and store associates, not senior roles"
           }
         ]
+      },
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 80 gens. Retail ops \u2014 operations managers, BDC support supervisors, MST ASM. 100% structural retail."
       }
     },
     {
@@ -2628,7 +2663,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "mixed",
-        "note": "B34: 11 gen (16%). Financial analyst, design tech, safety specialist, sales rep, contract analyst. Mixed finance/ops/sales/QA — no single default."
+        "note": "B34: 11 gen (16%). Financial analyst, design tech, safety specialist, sales rep, contract analyst. Mixed finance/ops/sales/QA \u2014 no single default."
       }
     },
     {
@@ -2741,7 +2776,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "mixed",
-        "note": "B34: 45 gen (21%). Mix: admin/ops/security (structural) + some SW keyword gaps (engineer software quality, emulator). Multi-domain [HW,SW,gen] — no safe default."
+        "note": "B34: 45 gen (21%). Mix: admin/ops/security (structural) + some SW keyword gaps (engineer software quality, emulator). Multi-domain [HW,SW,gen] \u2014 no safe default."
       }
     },
     {
@@ -2912,6 +2947,11 @@
             "reason": "RTX Team Lead = manufacturing/project coordination, not senior engineering"
           }
         ]
+      },
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 249 gens. Ops managers (6x Material Program Manager), contracts managers, admin. 2x Associate Engineer \u2014 ambiguous but volume too low for keyword. 95%+ structural general."
       }
     },
     {
@@ -2974,7 +3014,7 @@
         "software",
         "general"
       ],
-      "notes": "myworkdaysite.com domain — tenant extracted from path, not hostname",
+      "notes": "myworkdaysite.com domain \u2014 tenant extracted from path, not hostname",
       "default_domain": "software"
     },
     {
@@ -3001,7 +3041,7 @@
       "general_note": {
         "date": "2026-05-12",
         "decision": "structural",
-        "note": "B34: Domains [software,general]. Airline operations — ambiguous jobs are operations/admin, not software. No safe default."
+        "note": "B34: Domains [software,general]. Airline operations \u2014 ambiguous jobs are operations/admin, not software. No safe default."
       }
     },
     {
@@ -3039,7 +3079,12 @@
         "retail",
         "software",
         "operations"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 206 gens. 124x Security Specialist (retail), 50+ food/beverage/sales associates. 100% structural retail."
+      }
     },
     {
       "name": "T. Rowe Price",
@@ -3071,7 +3116,12 @@
       "domains": [
         "finance",
         "software"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 121 gens. Banking \u2014 assistant store managers, customer experience associates, marketing targeting. 100% structural retail/banking."
+      }
     },
     {
       "url": "https://thehartford.wd5.myworkdayjobs.com",
@@ -3087,7 +3137,12 @@
       "domains": [
         "healthcare",
         "software"
-      ]
+      ],
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 110 gens. Lab/manufacturing \u2014 operators, formulation techs, business dev, procurement. Assistant Scientist (25) borderline DS. 95% structural."
+      }
     },
     {
       "name": "TransUnion",
@@ -3252,7 +3307,12 @@
       "name": "AbbVie",
       "verified_us_jobs": 904,
       "verified_interns": 33,
-      "verified_date": "2026-03-11"
+      "verified_date": "2026-03-11",
+      "general_note": {
+        "date": "2026-05-13",
+        "decision": "structural",
+        "note": "B38: 123 gens (SmartRecruiters). Pharma \u2014 aesthetic sales reps, manufacturing techs, patient care coordinators, procurement managers. Analyst, Data Systems (1) borderline DS. 99% structural pharma/ops."
+      }
     },
     {
       "slug": "VeoliaEnvironnementSA",
