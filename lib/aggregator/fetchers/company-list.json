@@ -3236,12 +3236,12 @@
       "default_domain": "software"
     },
     {
-      "url": "magna.wd3.myworkdayjobs.com",
+      "url": "https://magna.wd3.myworkdayjobs.com",
       "site": "Magna",
       "name": "Magna"
     },
     {
-      "url": "tencent.wd1.myworkdayjobs.com",
+      "url": "https://tencent.wd1.myworkdayjobs.com",
       "site": "Tencent_Careers",
       "name": "Tencent"
     }
