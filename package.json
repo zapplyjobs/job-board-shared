@@ -1,0 +1,24 @@
+{
+  "name": "@zapply/job-board-shared",
+  "version": "1.0.0",
+  "description": "Shared utilities and functions for Zapply job board repositories",
+  "main": "index.js",
+  "scripts": {
+    "test": "node lib/__tests__/tag-engine.test.js && node lib/__tests__/inf-metrics.test.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.800.0",
+    "axios": "^1.13.2",
+    "he": "^1.2.0"
+  },
+  "author": "zapplyjobs",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "job-board",
+    "shared",
+    "utilities"
+  ]
+}

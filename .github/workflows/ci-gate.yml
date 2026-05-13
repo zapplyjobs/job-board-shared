@@ -1,0 +1,172 @@
+name: CI Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Run tag-engine tests
+        run: node lib/__tests__/tag-engine.test.js
+
+      - name: Check critical files exist and have content
+        run: |
+          ERRORS=0
+          MIN_SIZE=100
+          # All critical pipeline files — must exist and be >100 bytes
+          # (catches Git Data API blob corruption: 1-byte or empty files)
+          for FILE in \
+            index.js \
+            lib/aggregator/processors/tag-engine.js \
+            lib/aggregator/processors/senior-filter.js \
+            lib/aggregator/processors/deduplicator.js \
+            lib/aggregator/processors/validator.js \
+            lib/aggregator-consumer.js \
+            lib/readme-generator.js \
+            lib/jobs-data-scripts/pipeline-alert.js \
+            lib/jobs-data-scripts/collect-metrics.js \
+            lib/jobs-data-scripts/generate-zjp-metrics.js \
+            package.json \
+            lib/aggregator/fetchers/ats-fetcher.js \
+            lib/aggregator/fetchers/google.js \
+            lib/aggregator/fetchers/apple.js \
+            lib/aggregator/fetchers/amazon.js \
+            lib/aggregator/fetchers/netflix.js \
+            lib/aggregator/fetchers/uber.js \
+            lib/aggregator/fetchers/twosigma.js \
+            lib/aggregator/fetchers/simplify.js \
+            lib/aggregator/fetchers/microsoft.js \
+            lib/aggregator/fetchers/oracle.js \
+            lib/aggregator/fetchers/amd.js \
+            lib/aggregator/fetchers/company-list.json
+          do
+            if [ ! -f "$FILE" ]; then
+              echo "::error file=$FILE::Critical file missing: $FILE"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            SIZE=$(wc -c < "$FILE")
+            if [ "$SIZE" -lt "$MIN_SIZE" ]; then
+              echo "::error file=$FILE::$FILE is ${SIZE} bytes (minimum: ${MIN_SIZE}). Possible blob corruption."
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          # Verify tag-engine.js is importable
+          IMPORT_CHECK=$(node -e "require('./lib/aggregator/processors/tag-engine')" 2>&1) || true
+          if [ $? -ne 0 ] || [ -n "$IMPORT_CHECK" ]; then
+            echo "::error::tag-engine.js failed to import: $IMPORT_CHECK"
+            ERRORS=$((ERRORS + 1))
+          fi
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "FAIL: $ERRORS check(s) failed"
+            exit 1
+          fi
+          echo "PASS: All critical files present and non-trivial"
+
+      - name: Validate JSON files are parseable
+        run: |
+          ERRORS=0
+          for FILE in \
+            package.json \
+            lib/aggregator/fetchers/company-list.json \
+            lib/aggregator/processors/onet-unified-lookup.json \
+            lib/jobs-data-scripts/companies.json \
+            lib/jobs-data-scripts/enrich/skills-taxonomy.json \
+            zjp-ops-state.json
+          do
+            if [ -f "$FILE" ]; then
+              if ! node -e "JSON.parse(require('fs').readFileSync('$FILE','utf8'))" 2>/dev/null; then
+                HEAD=$(head -c 100 "$FILE" | tr -d '\n')
+                if echo "$HEAD" | grep -qE '^[A-Za-z0-9+/=]+$'; then
+                  echo "::error file=$FILE::$FILE appears to be base64-encoded, not raw JSON. Git Data API encoding corruption (see INF-ENCODE-1)."
+                else
+                  echo "::error file=$FILE::$FILE is not valid JSON"
+                fi
+                ERRORS=$((ERRORS + 1))
+              fi
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "FAIL: $ERRORS JSON file(s) corrupted or invalid"
+            exit 1
+          fi
+          echo "PASS: All JSON files valid"
+
+      - name: Syntax check all JS files
+        run: |
+          ERRORS=0
+          while IFS= read -r -d '' FILE; do
+            if ! node -c "$FILE" 2>/dev/null; then
+              echo "::error file=$FILE::Syntax error in $FILE"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done < <(find . -name '*.js' -not -path './node_modules/*' -print0)
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "FAIL: $ERRORS syntax error(s)"
+            exit 1
+          fi
+          echo "PASS: All JS files valid syntax"
+
+      - name: Check tag-engine exports
+        run: |
+          ERRORS=0
+          # Verify tag-engine.js exports expected functions
+          EXPORTS=$(node -e "
+            try {
+              const te = require('./lib/aggregator/processors/tag-engine');
+              const missing = ['tagEmployment', 'tagDomains', 'tagJob'].filter(n => typeof te[n] !== 'function');
+              if (missing.length) { console.log('MISSING:' + missing.join(',')); process.exit(1); }
+              console.log('OK');
+            } catch(e) { console.log('ERROR:' + e.message); process.exit(1); }
+          " 2>&1) || true
+          if [[ "$EXPORTS" != "OK" ]]; then
+            echo "::error::tag-engine exports check failed: $EXPORTS"
+            exit 1
+          fi
+          echo "PASS: tag-engine exports verified"
+
+      - name: Deletion threshold check
+        if: github.event_name == 'push'
+        run: |
+          DELETION_THRESHOLD=5
+          # Compare this commit to its parent — count removed files
+          DELETED=$(git diff --name-only --diff-filter=D HEAD~1 HEAD 2>/dev/null || echo "")
+          COUNT=$(echo "$DELETED" | grep -c . || true)
+          if [ "$COUNT" -gt "$DELETION_THRESHOLD" ]; then
+            echo "::error::$COUNT files deleted in this commit (threshold: $DELETION_THRESHOLD). Possible mass-deletion."
+            echo "Deleted files:"
+            echo "$DELETED"
+            echo ""
+            echo "If intentional, split into smaller commits or adjust threshold."
+            exit 1
+          fi
+          if [ "$COUNT" -gt 0 ]; then
+            echo "WARNING: $COUNT file(s) deleted (within threshold):"
+            echo "$DELETED"
+          fi
+          echo "PASS: Deletion count ($COUNT) within threshold ($DELETION_THRESHOLD)"
+
+      - name: Check for unexpected deletions
+        if: github.event_name == 'pull_request'
+        run: |
+          DELETED=$(gh api "repos/${{ github.repository }}/compare/${{ github.base_ref }}...${{ github.head_ref }}" \
+            --jq '.files[] | select(.status=="removed") | .filename' 2>/dev/null || true)
+          if [ -n "$DELETED" ]; then
+            echo "::warning::Files deleted in this PR:"
+            echo "$DELETED"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
