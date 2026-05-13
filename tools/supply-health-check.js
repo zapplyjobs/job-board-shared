@@ -104,8 +104,8 @@ function isInternship(job) {
 
 async function loadJobsFromRemote() {
   const urls = [
-    'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/all_jobs.json',
     'https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/all_jobs.json',
+    'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/all_jobs.json',
   ];
   for (const url of urls) {
     console.error(`Fetching from ${url.split('/').slice(-2).join('/')}...`);
@@ -194,10 +194,7 @@ async function main() {
   // 3. Classify all jobs
   const internJobs = jobs.filter(isInternship);
   const internUS = internJobs.filter(isUSJob);
-  const internTechUS = internUS.filter(j => {
-    const domains = (j.tags || {}).domains || [];
-    return domains.length > 0;
-  });
+  const internTechUS = internUS.filter(isTechUS);
 
   // 4. Source decomposition for internships
   const internBySource = {};
@@ -365,12 +362,15 @@ async function main() {
     // Console table format
     console.log('\n=== SUPPLY HEALTH CHECK ===');
     console.log(`Generated: ${result.generated_at}`);
+    console.log(`Data source: ${jobs.length} total pool jobs`);
     console.log(`\n--- Internship Summary ---`);
     console.log(`Total internships:     ${internJobs.length}`);
     console.log(`US internships:        ${internUS.length}`);
     console.log(`Tech-US internships:   ${internTechUS.length}`);
     console.log(`Target:                1,500`);
     console.log(`Gap:                   ${result.summary.gap}`);
+    console.log(`\n  Note: Counts are from POOL (all_jobs.json), not consumer output.`);
+    console.log(`  Consumer (Internships-2026) shows TTL-filtered subset.\n`);
 
     console.log(`\n--- Source Decomposition (tech-US internships) ---`);
     const sorted = Object.entries(internBySource).sort((a, b) => b[1] - a[1]);
