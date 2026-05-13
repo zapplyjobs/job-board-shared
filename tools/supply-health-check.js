@@ -329,7 +329,7 @@ async function main() {
         priority: 'HIGH',
         type: 'fetcher_tuning',
         source: fg.source,
-        action: `${fg.source} has ${fg.tech_us} tech-US jobs but only ${fg.intern_tech_us} tech-US internships (${fg.techus_intern_pct}). Potential +${fg.untapped} internships from query tuning.`,
+        action: `${fg.source} has ${fg.tech_us} tech-US jobs but only ${fg.intern_tech_us} tech-US internships (${fg.techus_intern_pct}). INFERENCE: ~${fg.untapped} untapped (verify with API — F56 showed projections can be 96% wrong).`,
       });
     }
   }
