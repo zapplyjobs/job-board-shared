@@ -13,7 +13,7 @@
  * Outputs console table + JSON to stdout.
  *
  * Usage:
- *   node tools/supply-health-check.js [--jobs /path/to/all_jobs.json] [--json]
+ *   node tools/supply-health-check.js [--jobs /path/to/all_jobs.json] [--company-list /path/to/company-list.json] [--simplify-js /path/to/simplify.js] [--json]
  */
 
 'use strict';
@@ -84,12 +84,13 @@ function isUSJob(job) {
   return locs.includes('us');
 }
 
+const TECH_DOMAINS = new Set(['software', 'hardware', 'data_science', 'ai']);
+
 function isTechUS(job) {
   const tags = job.tags || {};
   const domains = tags.domains || [];
   const locs = tags.locations || [];
-  const hasTech = domains.length > 0 && !domains.includes('general');
-  return hasTech && locs.includes('us');
+  return domains.some(d => TECH_DOMAINS.has(d)) && locs.includes('us');
 }
 
 function isEntryLevel(job) {
@@ -154,8 +155,11 @@ async function main() {
     process.exit(1);
   }
 
-  // 2. Load company-list.json
+  // 2. Load company-list.json — search post-split paths + CLI override
   const companyListFile = findFile([
+    getArg('--company-list'),
+    path.resolve(__dirname, '..', '..', '..', 'jobs-aggregator-private', '.github', 'scripts', 'aggregator', 'lib', 'fetchers', 'company-list.json'),
+    path.resolve(__dirname, '..', '..', '..', 'job-board-aggregator', 'lib', 'fetchers', 'company-list.json'),
     path.resolve(__dirname, '..', 'lib', 'aggregator', 'fetchers', 'company-list.json'),
   ]);
   const companyList = companyListFile ? JSON.parse(fs.readFileSync(companyListFile, 'utf8')) : {};
@@ -175,8 +179,11 @@ async function main() {
     }
   }
 
-  // 2b. Load SimplifyJs TARGET_COMPANIES from simplify.js
+  // 2b. Load SimplifyJs TARGET_COMPANIES from simplify.js — search post-split paths
   const simplifyJsFile = findFile([
+    getArg('--simplify-js'),
+    path.resolve(__dirname, '..', '..', '..', 'jobs-aggregator-private', '.github', 'scripts', 'aggregator', 'lib', 'fetchers', 'simplify.js'),
+    path.resolve(__dirname, '..', '..', '..', 'job-board-aggregator', 'lib', 'fetchers', 'simplify.js'),
     path.resolve(__dirname, '..', 'lib', 'aggregator', 'fetchers', 'simplify.js'),
   ]);
   const targetCompanies = new Set();
