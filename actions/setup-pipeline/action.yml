@@ -1,38 +1,15 @@
 name: 'Setup Pipeline Environment'
-description: 'Checkout with submodules, setup Node.js, and install dependencies'
+description: 'Setup Node.js and install dependencies (run AFTER actions/checkout)'
 
 inputs:
   node-version:
     description: 'Node.js version'
     required: false
     default: '22'
-  fetch-depth:
-    description: 'Git fetch depth'
-    required: false
-    default: '1'
-  token:
-    description: 'GitHub PAT for checkout'
-    required: true
-  ref:
-    description: 'Git ref to checkout'
-    required: false
-    default: ''
-  submodules:
-    description: 'Whether to checkout submodules (true/false/recursive)'
-    required: false
-    default: 'recursive'
 
 runs:
   using: 'composite'
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v5
-      with:
-        ref: ${{ inputs.ref || github.ref_name }}
-        fetch-depth: ${{ inputs.fetch-depth }}
-        submodules: ${{ inputs.submodules }}
-        token: ${{ inputs.token }}
-
     - name: Setup Node.js
       uses: actions/setup-node@v5
       with:
@@ -42,7 +19,7 @@ runs:
       shell: bash
       run: |
         npm install axios
-        if [ -d ".github/scripts/shared/package.json" ] || [ -f ".github/scripts/shared/package.json" ]; then
+        if [ -f ".github/scripts/shared/package.json" ]; then
           cd .github/scripts/shared && npm install && cd "$GITHUB_WORKSPACE"
         fi
         if [ -d ".github/scripts/consumer" ] && [ -f ".github/scripts/consumer/package.json" ]; then
