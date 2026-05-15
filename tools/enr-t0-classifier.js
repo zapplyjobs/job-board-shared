@@ -94,23 +94,26 @@ const hasVisa = r => r.sponsors_visa !== null || r.possible_sponsor !== null || 
 function classifyTier(r) {
   if (!r.has_description) return 0;
   if (!hasSkills(r)) return 1;
-  if (hasDegree(r) && hasVisa(r)) return 3;
+  if (hasDegree(r) && hasVisa(r)) return 4;
+  if (hasDegree(r)) return 3;
   return 2;
 }
 
 // --- Section 1: Tier distribution ---
-const tiers = { 0: 0, 1: 0, 2: 0, 3: 0 };
+const tiers = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 };
 const tiersBySource = {};
 for (const r of records) {
   const t = classifyTier(r);
   tiers[t]++;
   const src = r.source || 'unknown';
-  if (!tiersBySource[src]) tiersBySource[src] = { t0: 0, t1: 0, t2: 0, t3: 0, total: 0 };
+  if (!tiersBySource[src]) tiersBySource[src] = { t0: 0, t1: 0, t2: 0, t3: 0, t4: 0, total: 0 };
   tiersBySource[src][`t${t}`]++;
   tiersBySource[src].total++;
 }
-const total = tiers[0] + tiers[1] + tiers[2] + tiers[3];
+const total = tiers[0] + tiers[1] + tiers[2] + tiers[3] + tiers[4];
+const t3PlusPct = total > 0 ? ((tiers[3] + tiers[4]) / total * 100).toFixed(1) : '0.0';
 const t3Pct = total > 0 ? (tiers[3] / total * 100).toFixed(1) : '0.0';
+const t4Pct = total > 0 ? (tiers[4] / total * 100).toFixed(1) : '0.0';
 
 // --- Section 2: T1 decomposition ---
 const t1Records = records.filter(r => classifyTier(r) === 1);
@@ -187,7 +190,7 @@ if (descDir && fs.existsSync(descDir)) {
 const companyMap = {};
 for (const r of records) {
   const co = r.company_name || 'Unknown';
-  if (!companyMap[co]) companyMap[co] = { t0: 0, t1: 0, t2: 0, t3: 0, total: 0, source: r.source };
+  if (!companyMap[co]) companyMap[co] = { t0: 0, t1: 0, t2: 0, t3: 0, t4: 0, total: 0, source: r.source };
   const t = classifyTier(r);
   companyMap[co][`t${t}`]++;
   companyMap[co].total++;
@@ -201,7 +204,7 @@ const topT1Companies = Object.entries(companyMap)
 const result = {
   generated: new Date().toISOString(),
   totalRecords: records.length,
-  tiers: { ...tiers, total, t3_pct: parseFloat(t3Pct) },
+  tiers: { ...tiers, total, t3_pct: parseFloat(t3Pct), t4_pct: parseFloat(t4Pct), t3_plus_pct: parseFloat(t3PlusPct) },
   tiersBySource,
   t1Decomposition: {
     total: t1Records.length,
@@ -228,17 +231,17 @@ if (jsonOutput) {
 } else {
   // Human-readable output
   console.log(`\n=== ENR Tier Classifier Report ===\n`);
-  console.log(`Records: ${total}  |  T3: ${tiers[3]} (${t3Pct}%)  |  T2: ${tiers[2]}  |  T1: ${tiers[1]}  |  T0: ${tiers[0]}\n`);
+  console.log(`Records: ${total}  |  T3+T4: ${tiers[3]+tiers[4]} (${t3PlusPct}%)  |  T3: ${tiers[3]} (${t3Pct}%)  |  T4: ${tiers[4]} (${t4Pct}%)  |  T2: ${tiers[2]}  |  T1: ${tiers[1]}  |  T0: ${tiers[0]}\n`);
 
-  console.log(`--- Per-Source Tiers (sorted by T3%) ---`);
+  console.log(`--- Per-Source Tiers (sorted by T3+T4%) ---`);
   const srcSorted = Object.entries(tiersBySource).sort((a, b) => {
-    const pctA = a[1].t3 / a[1].total;
-    const pctB = b[1].t3 / b[1].total;
+    const pctA = (a[1].t3 + a[1].t4) / a[1].total;
+    const pctB = (b[1].t3 + b[1].t4) / b[1].total;
     return pctB - pctA;
   });
   for (const [src, t] of srcSorted) {
-    const pct = (t.t3 / t.total * 100).toFixed(1);
-    console.log(`  ${src.padEnd(16)} T3=${pct.padStart(5)}%  (${t.t3}/${t.total})  T0=${t.t0} T1=${t.t1} T2=${t.t2}`);
+    const pct = ((t.t3 + t.t4) / t.total * 100).toFixed(1);
+    console.log(`  ${src.padEnd(16)} T3+T4=${pct.padStart(5)}%  (${t.t3+t.t4}/${t.total})  T3=${t.t3} T4=${t.t4} T1=${t.t1} T2=${t.t2}`);
   }
 
   console.log(`\n--- T1 Decomposition (${t1Records.length} records) ---`);
@@ -246,8 +249,8 @@ if (jsonOutput) {
   console.log(`  Has degree only (missing visa+skills): ${t1WithDegree - t1WithBoth}`);
   console.log(`  Has visa only (missing degree+skills): ${t1WithVisa - t1WithBoth}`);
   console.log(`  Has neither:                          ${t1WithNeither}`);
-  console.log(`  → ${t1WithBoth} records would become T3 if descriptions had tech terms`);
-  console.log(`  → Projected T3 with T1→T3 conversion: ${tiers[3] + t1WithBoth}/${total} = ${((tiers[3] + t1WithBoth)/total*100).toFixed(1)}%`);
+  console.log(`  → ${t1WithBoth} records would become T3/T4 if descriptions had tech terms`);
+  console.log(`  → Projected T3+T4 with T1→T3 conversion: ${tiers[3]+tiers[4] + t1WithBoth}/${total} = ${((tiers[3]+tiers[4] + t1WithBoth)/total*100).toFixed(1)}%`);
 
   console.log(`\n  T1 by source:`);
   for (const [src, d] of Object.entries(t1BySource).sort((a, b) => b[1].total - a[1].total)) {
@@ -279,9 +282,10 @@ if (jsonOutput) {
 
   console.log(`\n--- Impact Projections ---`);
   const gaT1 = (t1BySource['google']?.total || 0) + (t1BySource['apple']?.total || 0);
-  console.log(`  Google+Apple T1→T3 (AGG-FETCH-10): ${tiers[3]} + ${gaT1} = ${tiers[3] + gaT1} → ${((tiers[3] + gaT1)/total*100).toFixed(1)}%`);
-  console.log(`  All T1→T3 (ideal):                  ${tiers[3]} + ${t1Records.length} = ${tiers[3] + t1Records.length} → ${((tiers[3] + t1Records.length)/total*100).toFixed(1)}%`);
-  const allT2toT3 = tiers[3] + t1Records.length + t2Records.length;
+  const t3t4 = tiers[3] + tiers[4];
+  console.log(`  Google+Apple T1→T3 (AGG-FETCH-10): ${t3t4} + ${gaT1} = ${t3t4 + gaT1} → ${((t3t4 + gaT1)/total*100).toFixed(1)}%`);
+  console.log(`  All T1→T3 (ideal):                  ${t3t4} + ${t1Records.length} = ${t3t4 + t1Records.length} → ${((t3t4 + t1Records.length)/total*100).toFixed(1)}%`);
+  const allT2toT3 = t3t4 + t1Records.length + t2Records.length;
   console.log(`  All T1+T2→T3 (unrealistic):         ${allT2toT3}/${total} → ${(allT2toT3/total*100).toFixed(1)}%`);
 
   console.log();
