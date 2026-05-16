@@ -167,10 +167,14 @@ function main() {
   let allJobsText;
   if (remoteMode) {
     const { execSync } = require('child_process');
-    // Data source priority (post-INF-BLOAT-5: data files no longer committed to git).
-    // 1. R2 public URL (live, no auth — if bucket is publicly accessible)
-    // 2. Private repo via gh token (live, requires gh auth)
-    // 3. Public repo raw.githubusercontent.com (STALE — last resort)
+    // Try r2-loader first (S3 client, live data when env vars set)
+    try {
+      const { loadJsonFromR2 } = require('./r2-loader');
+      const records = await loadJsonFromR2('all_jobs.json');
+      allJobsText = records.map(r => JSON.stringify(r)).join('\n');
+    } catch {}
+    if (!allJobsText) {
+    // Fallback: R2 public → private repo → public repo (stale)
     const sources = [
       ['R2 (live)', 'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/all_jobs.json', []],
       ['private repo (live)', 'https://raw.githubusercontent.com/zapplyjobs/jobs-aggregator-private/main/.github/data/all_jobs.json', ['-H', 'Authorization: token $(gh auth token)']],
@@ -188,6 +192,7 @@ function main() {
       } catch (e) { console.error(`  ✗ Failed: ${e.message.slice(0, 100)}`); }
     }
     if (!allJobsText) { console.error('FATAL: Could not fetch all_jobs.json from any source'); process.exit(1); }
+    } // end fallback block
   } else if (filePath) {
     allJobsText = fs.readFileSync(filePath, 'utf8');
   } else {
