@@ -49,9 +49,15 @@ function fetchText(url) {
 }
 
 async function loadFromRemote() {
+  // Try r2-loader first (S3 client, live data when env vars set)
+  try {
+    const { loadJsonFromR2 } = require('./r2-loader');
+    return await loadJsonFromR2('enriched_jobs.json');
+  } catch {}
+  // Fallback: public URLs
   const urls = [
-    'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/enriched_jobs.json',
-    'https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/enriched_jobs.json',
+    'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/data/enriched_jobs.json',
+    `https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/enriched_jobs.json?t=${Math.floor(Date.now()/1000)}`,
   ];
   for (const url of urls) {
     console.error(`Fetching from ${url.split('/').slice(-2).join('/')}...`);

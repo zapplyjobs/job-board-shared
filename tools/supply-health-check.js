@@ -104,13 +104,19 @@ function isInternship(job) {
 }
 
 async function loadJobsFromRemote() {
-  // Data source priority (post-INF-BLOAT-5: data files no longer committed to git).
-  // R2 public URL currently returns HTML (not configured). Private repo with gh auth is live.
+  // Try r2-loader first (S3 client, live data when env vars set)
+  try {
+    const { loadJsonFromR2 } = require('./r2-loader');
+    const records = await loadJsonFromR2('all_jobs.json');
+    if (records.length > 1000) return records;
+  } catch {}
+
+  // Fallback chain: public R2 → private repo (auth) → public repo (stale)
   const { execSync } = require('child_process');
   const sources = [
-    { label: 'R2 (live)', url: 'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/all_jobs.json', headers: {} },
+    { label: 'R2 (live)', url: 'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/data/all_jobs.json', headers: {} },
     { label: 'private repo (live)', url: 'https://raw.githubusercontent.com/zapplyjobs/jobs-aggregator-private/main/.github/data/all_jobs.json', needsAuth: true },
-    { label: 'public repo (stale)', url: 'https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/all_jobs.json', headers: {} },
+    { label: 'public repo (stale)', url: `https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/all_jobs.json?t=${Math.floor(Date.now()/1000)}`, headers: {} },
   ];
   for (const { label, url, needsAuth } of sources) {
     console.error(`Fetching from ${label}...`);
