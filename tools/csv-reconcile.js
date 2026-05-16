@@ -243,7 +243,7 @@ function printReport(issues) {
 }
 
 // Main
-const clPath = getArg('--company-list') || path.join(__dirname, 'company-list.json');
+const clPath = getArg('--company-list') || path.join(__dirname, '..', '..', 'job-board-aggregator', 'lib', 'fetchers', 'company-list.json');
 const csvPath = getArg('--csv') || path.join(__dirname, '..', '..', '..', 'projects', 'zjp', 'company-research-log.csv');
 
 if (!fs.existsSync(clPath)) {
