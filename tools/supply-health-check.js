@@ -53,10 +53,10 @@ function fetchJson(url) {
   });
 }
 
-function fetchText(url) {
+function fetchText(url, extraHeaders = {}) {
   return new Promise((resolve) => {
     const req = https.get(url, {
-      headers: { 'User-Agent': 'ZJP-SUP-Health-Check/1.0' }
+      headers: { 'User-Agent': 'ZJP-SUP-Health-Check/1.0', ...extraHeaders }
     }, (res) => {
       let d = '';
       res.on('data', chunk => d += chunk);
@@ -104,13 +104,24 @@ function isInternship(job) {
 }
 
 async function loadJobsFromRemote() {
-  const urls = [
-    'https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/all_jobs.json',
-    'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/all_jobs.json',
+  // Data source priority (post-INF-BLOAT-5: data files no longer committed to git).
+  // R2 public URL currently returns HTML (not configured). Private repo with gh auth is live.
+  const { execSync } = require('child_process');
+  const sources = [
+    { label: 'R2 (live)', url: 'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/all_jobs.json', headers: {} },
+    { label: 'private repo (live)', url: 'https://raw.githubusercontent.com/zapplyjobs/jobs-aggregator-private/main/.github/data/all_jobs.json', needsAuth: true },
+    { label: 'public repo (stale)', url: 'https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/all_jobs.json', headers: {} },
   ];
-  for (const url of urls) {
-    console.error(`Fetching from ${url.split('/').slice(-2).join('/')}...`);
-    const resp = await fetchText(url);
+  for (const { label, url, needsAuth } of sources) {
+    console.error(`Fetching from ${label}...`);
+    let hdrs = {};
+    if (needsAuth) {
+      try {
+        const token = execSync('gh auth token', { encoding: 'utf8' }).trim();
+        hdrs = { Authorization: `token ${token}` };
+      } catch { continue; }
+    }
+    const resp = await fetchText(url, hdrs);
     if (!resp.ok || !resp.text) continue;
     const jobs = [];
     for (const line of resp.text.split('\n')) {
@@ -119,6 +130,7 @@ async function loadJobsFromRemote() {
       catch (e) { /* skip */ }
     }
     if (jobs.length > 1000) return jobs;
+    console.error(`  Only ${jobs.length} jobs from ${label}, trying next source...`);
   }
   return null;
 }

@@ -167,11 +167,27 @@ function main() {
   let allJobsText;
   if (remoteMode) {
     const { execSync } = require('child_process');
-    console.error('Fetching all_jobs.json from jobs-data-2026...');
-    allJobsText = execSync(
-      'curl -sL "https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/all_jobs.json"',
-      { encoding: 'utf8', maxBuffer: 200 * 1024 * 1024 }
-    );
+    // Data source priority (post-INF-BLOAT-5: data files no longer committed to git).
+    // 1. R2 public URL (live, no auth — if bucket is publicly accessible)
+    // 2. Private repo via gh token (live, requires gh auth)
+    // 3. Public repo raw.githubusercontent.com (STALE — last resort)
+    const sources = [
+      ['R2 (live)', 'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/all_jobs.json', []],
+      ['private repo (live)', 'https://raw.githubusercontent.com/zapplyjobs/jobs-aggregator-private/main/.github/data/all_jobs.json', ['-H', 'Authorization: token $(gh auth token)']],
+      ['public repo (stale)', 'https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/all_jobs.json', []],
+    ];
+    for (const [label, url, headers] of sources) {
+      console.error(`Fetching all_jobs.json from ${label}...`);
+      try {
+        const headerArgs = headers.map(h => h.includes('$(') ? `-H 'Authorization: token ${execSync('gh auth token', { encoding: 'utf8' }).trim()}'` : `-H '${h}'`).join(' ');
+        allJobsText = execSync(`curl -sL ${headerArgs} "${url}"`, { encoding: 'utf8', maxBuffer: 200 * 1024 * 1024, timeout: 120000 });
+        const lineCount = allJobsText.split('\n').filter(l => l.trim()).length;
+        if (lineCount > 1000) { console.error(`  ✓ ${lineCount.toLocaleString()} jobs from ${label}`); break; }
+        console.error(`  ✗ Only ${lineCount} jobs from ${label}, trying next source...`);
+        allJobsText = null;
+      } catch (e) { console.error(`  ✗ Failed: ${e.message.slice(0, 100)}`); }
+    }
+    if (!allJobsText) { console.error('FATAL: Could not fetch all_jobs.json from any source'); process.exit(1); }
   } else if (filePath) {
     allJobsText = fs.readFileSync(filePath, 'utf8');
   } else {
