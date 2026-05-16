@@ -158,7 +158,7 @@ const DOMAIN_SIGNALS = [
 ];
 
 // --- Main ---
-function main() {
+async function main() {
   const args = process.argv.slice(2);
   const jsonMode = args.includes('--json');
   const remoteMode = args.includes('--remote');

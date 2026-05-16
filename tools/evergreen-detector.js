@@ -10,6 +10,7 @@
  * Usage:
  *   node evergreen-detector.js --data-dir .github/data
  *   node evergreen-detector.js --data-dir .github/data --json
+ *   node evergreen-detector.js --remote [--json]
  */
 
 'use strict';
@@ -17,17 +18,31 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = process.argv.includes('--data-dir')
-  ? process.argv[process.argv.indexOf('--data-dir') + 1]
+const args = process.argv.slice(2);
+const DATA_DIR = args.includes('--data-dir')
+  ? args[args.indexOf('--data-dir') + 1]
   : '.github/data';
-const JSON_OUTPUT = process.argv.includes('--json');
+const JSON_OUTPUT = args.includes('--json');
+const USE_REMOTE = args.includes('--remote');
 
 const TTL_DAYS = 14;
 const EVERGREEN_THRESHOLD_DAYS = 10;
 const CONCENTRATION_THRESHOLD = 0.3;
 const MIN_COMPANY_JOBS = 10;
 
-function loadJobs() {
+async function loadJobs() {
+  if (USE_REMOTE) {
+    try {
+      const { loadJsonFromR2 } = require('./r2-loader');
+      const records = await loadJsonFromR2('all_jobs.json');
+      console.error(`Loaded ${records.length} jobs from R2`);
+      return records;
+    } catch (e) {
+      console.error(`R2 load failed: ${e.message}`);
+      console.error('ERROR: Could not load all_jobs.json from R2. Check R2 env vars.');
+      process.exit(1);
+    }
+  }
   const p = path.join(DATA_DIR, 'all_jobs.json');
   if (!fs.existsSync(p)) { console.error('No all_jobs.json found'); process.exit(1); }
   return fs.readFileSync(p, 'utf8').trim().split('\n')
@@ -172,10 +187,12 @@ function printReport(result) {
   }
 }
 
-const jobs = loadJobs();
+(async () => {
+const jobs = await loadJobs();
 const result = analyze(jobs);
 if (JSON_OUTPUT) {
   console.log(JSON.stringify(result, null, 2));
 } else {
   printReport(result);
 }
+})();

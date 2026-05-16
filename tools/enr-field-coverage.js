@@ -55,22 +55,22 @@ async function loadData(filePath, useRemote) {
       const { loadJsonFromR2 } = require('./r2-loader');
       const records = await loadJsonFromR2('enriched_jobs.json');
       return records;
-    } catch {}
+    } catch (e) {
+      console.error(`R2 loader failed: ${e.message}, trying fallbacks...`);
+    }
     // Fallback: R2 public URL, then GitHub raw
     try {
-    try {
-      const raw = await fetchRemote('https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/enriched_jobs.json');
+      const raw = await fetchRemote('https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/data/enriched_jobs.json');
       try { return JSON.parse(raw); } catch { return raw.trim().split('\n').map(l => JSON.parse(l)); }
     } catch {
-      const raw = await fetchRemote('https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/enriched_jobs.json');
+      const raw = await fetchRemote(`https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/enriched_jobs.json?t=${Math.floor(Date.now()/1000)}`);
       try { return JSON.parse(raw); } catch { return raw.trim().split('\n').filter(l => l).map(l => JSON.parse(l)); }
     }
   }
   // Local fallback
   try {
     const fs = require('fs');
-    const path = require('path');
-    const p = path.join(__dirname, '..', 'enriched_jobs.json');
+    const p = require('path').join(__dirname, '..', 'enriched_jobs.json');
     const raw = fs.readFileSync(p, 'utf8');
     try { return JSON.parse(raw); } catch { return raw.trim().split('\n').filter(l => l).map(l => JSON.parse(l)); }
   } catch {
