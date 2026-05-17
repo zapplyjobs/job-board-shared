@@ -1,0 +1,74 @@
+# CI Gate — validates pushes to job-board-shared main.
+# Catches: syntax errors, empty files, file count drops, missing critical files.
+# Runs on push to main (direct pushes — this repo uses main-line development).
+
+name: CI Gate
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.github/workflows/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+
+      - name: Check file count (tree corruption guard)
+        run: |
+          COUNT=$(find . -type f -not -path './node_modules/*' -not -path './.git/*' | wc -l)
+          echo "File count: $COUNT"
+          if [ "$COUNT" -lt 5 ]; then
+            echo "::error::File count dropped to $COUNT (expected 10+). Possible tree corruption."
+            exit 1
+          fi
+
+      - name: Validate JS syntax
+        run: |
+          ERRORS=0
+          for f in $(find . -name '*.js' -not -path './node_modules/*'); do
+            if ! node --check "$f" 2>/dev/null; then
+              echo "::error file=$f::Syntax error in $f"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::$ERRORS JS file(s) have syntax errors"
+            exit 1
+          fi
+
+      - name: Validate JSON syntax
+        run: |
+          ERRORS=0
+          for f in $(find . -name '*.json' -not -path './node_modules/*' -not -name 'package-lock.json'); do
+            if ! node -e "JSON.parse(require('fs').readFileSync('$f'))" 2>/dev/null; then
+              echo "::error file=$f::Invalid JSON in $f"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::$ERRORS JSON file(s) are invalid"
+            exit 1
+          fi
+
+      - name: Check no empty files
+        run: |
+          EMPTY=$(find . -type f -not -path './node_modules/*' -not -path './.git/*' -empty)
+          if [ -n "$EMPTY" ]; then
+            echo "::warning::Empty files found: $EMPTY"
+          fi
+
+      - name: Verify critical files exist
+        run: |
+          CRITICAL="tools/r2-loader.js tools/supply-health-check.js"
+          for f in $CRITICAL; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Critical file missing: $f"
+              exit 1
+            fi
+          done
+          echo "All critical files present"
