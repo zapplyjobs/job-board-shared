@@ -12,11 +12,11 @@ const https = require('https');
 const zlib = require('zlib');
 
 const FIELDS = [
-  { key: 'skills', label: 'Skills', check: v => Array.isArray(v) && v.length > 0 },
-  { key: 'degree_level', label: 'Degree', check: v => v && v !== 'None' && v !== 'NONE' },
-  { key: 'possible_sponsor', label: 'Visa', check: v => v !== null && v !== undefined },
-  { key: 'has_description', label: 'Desc', check: v => v === true },
-  { key: 'summary_line', label: 'Summary', check: v => v && v.trim().length > 0 },
+  { key: 'skills', aliases: ['required_skills'], label: 'Skills', check: v => Array.isArray(v) && v.length > 0 },
+  { key: 'degree_level', aliases: ['min_degree'], label: 'Degree', check: v => v && v !== 'None' && v !== 'NONE' },
+  { key: 'possible_sponsor', aliases: [], label: 'Visa', check: v => v !== null && v !== undefined },
+  { key: 'has_description', aliases: [], label: 'Desc', check: v => v === true },
+  { key: 'summary_line', aliases: [], label: 'Summary', check: v => v && v.trim().length > 0 },
 ];
 
 async function fetchRemote(url) {
@@ -102,7 +102,8 @@ function analyzeCoverage(jobs, filterSource, filterField) {
         bySource[source].fields[field.key] = { present: 0, total: 0 };
       }
       bySource[source].fields[field.key].total++;
-      if (field.check(job[field.key])) {
+      const value = job[field.key] ?? field.aliases.map(a => job[a]).find(v => v !== undefined);
+      if (field.check(value)) {
         bySource[source].fields[field.key].present++;
       }
     }
@@ -176,8 +177,13 @@ const sourceIdx = args.indexOf('--source');
 const fieldIdx = args.indexOf('--field');
 const filterSource = sourceIdx >= 0 ? args[sourceIdx + 1] : null;
 const filterField = fieldIdx >= 0 ? args[fieldIdx + 1] : null;
-// First non-flag argument is the file path
-const filePath = args.find(a => !a.startsWith('-'));
+// Build set of positional args (flag values to skip)
+const skipIndices = new Set();
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === '--source' || args[i] === '--field') { skipIndices.add(i); skipIndices.add(i + 1); }
+}
+// First non-flag, non-value argument is the file path
+const filePath = args.find((a, i) => !a.startsWith('-') && !skipIndices.has(i));
 
 (async () => {
   try {
