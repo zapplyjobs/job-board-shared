@@ -1,6 +1,6 @@
-# CI Gate — validates pushes to job-board-shared main.
+# CI Gate — validates job-board-shared changes before they can propagate.
 # Catches: syntax errors, empty files, file count drops, missing critical files.
-# Runs on push to main (direct pushes — this repo uses main-line development).
+# Runs on push to main and pull requests targeting main for shipped shared-code paths.
 
 name: CI Gate
 
@@ -9,9 +9,10 @@ on:
     branches: [main]
     paths-ignore:
       - '.github/workflows/**'
-
+  pull_request:
+    branches: [main]
 jobs:
-  validate:
+  gate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -30,12 +31,12 @@ jobs:
       - name: Validate JS syntax
         run: |
           ERRORS=0
-          for f in $(find . -name '*.js' -not -path './node_modules/*'); do
+          while IFS= read -r -d '' f; do
             if ! node --check "$f" 2>/dev/null; then
               echo "::error file=$f::Syntax error in $f"
               ERRORS=$((ERRORS + 1))
             fi
-          done
+          done < <(find . -name '*.js' -not -path './node_modules/*' -print0)
           if [ "$ERRORS" -gt 0 ]; then
             echo "::error::$ERRORS JS file(s) have syntax errors"
             exit 1
@@ -44,12 +45,12 @@ jobs:
       - name: Validate JSON syntax
         run: |
           ERRORS=0
-          for f in $(find . -name '*.json' -not -path './node_modules/*' -not -name 'package-lock.json'); do
+          while IFS= read -r -d '' f; do
             if ! node -e "JSON.parse(require('fs').readFileSync('$f'))" 2>/dev/null; then
               echo "::error file=$f::Invalid JSON in $f"
               ERRORS=$((ERRORS + 1))
             fi
-          done
+          done < <(find . -name '*.json' -not -path './node_modules/*' -not -name 'package-lock.json' -print0)
           if [ "$ERRORS" -gt 0 ]; then
             echo "::error::$ERRORS JSON file(s) are invalid"
             exit 1

@@ -1,27 +1,27 @@
-# Auto Bump Submodule — fires on push to job-board-shared main.
-# Dispatches bump-submodule.yml in jobs-aggregator-private with the new SHA.
+# Auto Bump Submodule — fires only after CI Gate succeeds on job-board-shared main.
+# Dispatches bump-submodule.yml in jobs-aggregator-private with the exact tested SHA.
 #
 # Prerequisite: GH_PAT secret must be in job-board-shared repo settings.
-# Race safety: bump-submodule.yml has concurrency group (cancel-in-progress: false).
+# Why: bumping on raw push can propagate a bad shared commit before CI finishes.
 
 name: Auto Bump Submodule
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["CI Gate"]
+    types:
+      - completed
 
 jobs:
   auto-bump:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     steps:
-      - name: Get pushed SHA
+      - name: Record tested SHA
         id: sha
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          SHA=$(gh api repos/zapplyjobs/job-board-shared/commits?per_page=1 --jq '.[0].sha')
-          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
-          echo "Latest job-board-shared SHA: $SHA"
+          echo "sha=${{ github.event.workflow_run.head_sha }}" >> "$GITHUB_OUTPUT"
+          echo "Tested job-board-shared SHA: ${{ github.event.workflow_run.head_sha }}"
 
       - name: Dispatch bump-submodule
         env:
@@ -31,7 +31,7 @@ jobs:
             --repo zapplyjobs/jobs-aggregator-private \
             --field submodule_name=shared \
             --field target_sha="${{ steps.sha.outputs.sha }}"
-          echo "Dispatched bump-submodule.yml (shared) with SHA ${{ steps.sha.outputs.sha }}"
+          echo "Dispatched bump-submodule.yml (shared) with tested SHA ${{ steps.sha.outputs.sha }}"
 
       - name: Notify on failure
         if: failure()
