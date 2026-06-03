@@ -28,6 +28,7 @@ const getArg = (flag) => {
   return idx >= 0 && idx + 1 < args.length ? args[idx + 1] : null;
 };
 const jsonOutput = args.includes('--json');
+const remoteMode = args.includes('--remote');
 
 function findFile(candidates) {
   for (const p of candidates.filter(Boolean)) {
@@ -85,6 +86,7 @@ function isUSJob(job) {
 }
 
 const TECH_DOMAINS = new Set(['software', 'hardware', 'data_science', 'ai']);
+const INTERNSHIP_TARGET = 2000;
 
 function isTechUS(job) {
   const tags = job.tags || {};
@@ -144,13 +146,18 @@ async function loadJobsFromRemote() {
 async function main() {
   // 1. Load all_jobs.json — prefer local, fall back to remote
   let jobs = null;
-  const jobsFile = findFile([
+  const jobsFile = remoteMode ? null : findFile([
     getArg('--jobs'),
+    path.resolve(__dirname, '..', '..', 'jobs-data-2026', '.github', 'data', 'all_jobs.json'),
+    path.resolve(__dirname, '..', '..', 'jobs-aggregator-private', '.github', 'data', 'all_jobs.json'),
     path.resolve(__dirname, '..', '..', '..', 'jobs-data-2026', '.github', 'data', 'all_jobs.json'),
     path.resolve(__dirname, '..', '..', '..', 'jobs-aggregator-private', '.github', 'data', 'all_jobs.json'),
   ]);
 
-  if (jobsFile) {
+  if (remoteMode) {
+    console.error('Remote mode requested. Fetching live data...');
+    jobs = await loadJobsFromRemote();
+  } else if (jobsFile) {
     jobs = loadJobsFile(jobsFile);
     // Staleness check: if local has <40K jobs, remote likely has more
     if (jobs.length < 40000) {
@@ -176,6 +183,8 @@ async function main() {
   // 2. Load company-list.json — search post-split paths + CLI override
   const companyListFile = findFile([
     getArg('--company-list'),
+    path.resolve(__dirname, '..', '..', 'jobs-aggregator-private', '.github', 'scripts', 'aggregator', 'lib', 'fetchers', 'company-list.json'),
+    path.resolve(__dirname, '..', '..', 'job-board-aggregator', 'lib', 'fetchers', 'company-list.json'),
     path.resolve(__dirname, '..', '..', '..', 'jobs-aggregator-private', '.github', 'scripts', 'aggregator', 'lib', 'fetchers', 'company-list.json'),
     path.resolve(__dirname, '..', '..', '..', 'job-board-aggregator', 'lib', 'fetchers', 'company-list.json'),
     path.resolve(__dirname, '..', 'lib', 'aggregator', 'fetchers', 'company-list.json'),
@@ -200,6 +209,8 @@ async function main() {
   // 2b. Load SimplifyJs TARGET_COMPANIES from simplify.js — search post-split paths
   const simplifyJsFile = findFile([
     getArg('--simplify-js'),
+    path.resolve(__dirname, '..', '..', 'jobs-aggregator-private', '.github', 'scripts', 'aggregator', 'lib', 'fetchers', 'simplify.js'),
+    path.resolve(__dirname, '..', '..', 'job-board-aggregator', 'lib', 'fetchers', 'simplify.js'),
     path.resolve(__dirname, '..', '..', '..', 'jobs-aggregator-private', '.github', 'scripts', 'aggregator', 'lib', 'fetchers', 'simplify.js'),
     path.resolve(__dirname, '..', '..', '..', 'job-board-aggregator', 'lib', 'fetchers', 'simplify.js'),
     path.resolve(__dirname, '..', 'lib', 'aggregator', 'fetchers', 'simplify.js'),
@@ -328,8 +339,8 @@ async function main() {
       internships_total: internJobs.length,
       internships_us: internUS.length,
       internships_tech_us: internTechUS.length,
-      target: 1500,
-      gap: Math.max(0, 1500 - internTechUS.length),
+      target: INTERNSHIP_TARGET,
+      gap: Math.max(0, INTERNSHIP_TARGET - internTechUS.length),
     },
     source_decomposition: internBySource,
     ats_tenants: atsPlatforms,
@@ -347,14 +358,17 @@ async function main() {
   // 10. Generate priority actions
   const actions = [];
 
-  // Action: high-untapped custom fetchers
+  // Action: custom fetcher internship skew. This is an audit signal, not an
+  // automatic tuning task: SUP-INTERN-2 found Google/Amazon/Apple internship
+  // yields are often genuinely low, and projection-only "untapped" estimates
+  // can be badly wrong.
   for (const fg of fetcherGaps) {
     if (fg.untapped >= 10) {
       actions.push({
-        priority: 'HIGH',
-        type: 'fetcher_tuning',
+        priority: 'REVIEW',
+        type: 'fetcher_yield_audit',
         source: fg.source,
-        action: `${fg.source} has ${fg.tech_us} tech-US jobs but only ${fg.intern_tech_us} tech-US internships (${fg.techus_intern_pct}). INFERENCE: ~${fg.untapped} untapped (verify with API — F56 showed projections can be 96% wrong).`,
+        action: `${fg.source} has ${fg.tech_us} tech-US jobs but only ${fg.intern_tech_us} tech-US internships (${fg.techus_intern_pct}). Audit signal only: ~${fg.untapped} projected untapped internships must not be treated as actionable without source-specific API proof.`,
       });
     }
   }
@@ -392,7 +406,7 @@ async function main() {
     console.log(`Total internships:     ${internJobs.length}`);
     console.log(`US internships:        ${internUS.length}`);
     console.log(`Tech-US internships:   ${internTechUS.length}`);
-    console.log(`Target:                1,500`);
+    console.log(`Target:                ${INTERNSHIP_TARGET.toLocaleString()}`);
     console.log(`Gap:                   ${result.summary.gap}`);
     console.log(`\n  Note: Counts are from POOL (all_jobs.json), not consumer output.`);
     console.log(`  Consumer (Internships-2026) shows TTL-filtered subset.\n`);
