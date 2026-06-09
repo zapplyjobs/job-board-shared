@@ -2,7 +2,7 @@
 // r2-loader.js — Shared R2 data loader for local analysis tools
 //
 // When R2_ACCESS_KEY_ID is set in env, uses S3 client to read live data.
-// Falls back to public R2 URL, then raw GitHub (stale), then local file.
+// Public R2 and raw GitHub fallbacks are intentionally disabled.
 //
 // Usage:
 //   const { loadJsonFromR2 } = require('./r2-loader');
@@ -60,11 +60,11 @@ function fetchText(url) {
 }
 
 function parseRecords(text) {
-  // Try JSON array first
   try {
     const parsed = JSON.parse(text);
     if (Array.isArray(parsed)) return parsed;
     if (parsed.jobs) return parsed.jobs;
+    return parsed;
   } catch {}
   // Try JSONL
   const records = [];
@@ -74,19 +74,27 @@ function parseRecords(text) {
   return records.length ? records : null;
 }
 
+function hasParsedData(value) {
+  if (!value) return false;
+  if (Array.isArray(value)) return value.length > 0;
+  return typeof value === 'object' && Object.keys(value).length > 0;
+}
+
+function parsedSize(value) {
+  return Array.isArray(value) ? value.length : Object.keys(value || {}).length;
+}
+
 /**
- * Load a JSON file from R2 with fallback chain.
- * Priority: S3 (live) → public R2 URL → raw GitHub (stale)
- *
+ * Load a JSON file from private R2.
+ * Priority: S3 (live) only. Public R2 and raw GitHub fallback are intentionally disabled.
  * @param {string} filename - e.g. 'enriched_jobs.json'
  * @param {Object} [opts]
  * @param {string} [opts.prefix] - R2 key prefix, e.g. 'data/'
- * @param {string} [opts.ghRepo] - GitHub repo for raw fallback, e.g. 'jobs-data-2026'
- * @param {string} [opts.ghPath] - Path in repo, default '.github/data/{filename}'
- * @returns {Array} parsed records
+ * @param {boolean} [opts.quiet=false] - Suppress loader progress logs
+ * @returns {Array|Object} parsed JSON or JSONL records
  */
 async function loadJsonFromR2(filename, opts = {}) {
-  const { prefix = 'data/', ghRepo = 'jobs-data-2026', ghPath = `.github/data/${filename}` } = opts;
+  const { prefix = 'data/' } = opts;
   const r2Key = `${prefix}${filename}`;
 
   // 1. S3 client (live data, requires env vars)
@@ -95,44 +103,16 @@ async function loadJsonFromR2(filename, opts = {}) {
       console.error(`  Loading ${filename} from R2 (S3, live)...`);
       const text = await loadViaS3(r2Key);
       const records = parseRecords(text);
-      if (records && records.length > 0) {
-        console.error(`  Loaded ${records.length} records from R2`);
+      if (hasParsedData(records)) {
+        console.error(`  Loaded ${parsedSize(records)} records from R2`);
         return records;
       }
     } catch (e) {
-      console.error(`  R2 S3 failed: ${e.message}, trying fallbacks...`);
+      console.error(`  R2 S3 failed: ${e.message}`);
     }
   }
 
-  // 2. Public R2 URL (may 401 if not configured)
-  const pubUrl = `https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/${r2Key}`;
-  try {
-    console.error(`  Fetching ${r2Key} from public R2...`);
-    const resp = await fetchText(pubUrl);
-    if (resp.ok && resp.text) {
-      const records = parseRecords(resp.text);
-      if (records && records.length > 0) {
-        console.error(`  Loaded ${records.length} records (public R2)`);
-        return records;
-      }
-    }
-  } catch {}
-
-  // 3. Raw GitHub (stale but available)
-  const ghUrl = `https://raw.githubusercontent.com/zapplyjobs/${ghRepo}/main/${ghPath}?t=${Math.floor(Date.now() / 1000)}`;
-  try {
-    console.error(`  Fetching from GitHub (may be stale)...`);
-    const resp = await fetchText(ghUrl);
-    if (resp.ok && resp.text) {
-      const records = parseRecords(resp.text);
-      if (records && records.length > 0) {
-        console.error(`  Loaded ${records.length} records (GitHub, may be stale)`);
-        return records;
-      }
-    }
-  } catch {}
-
-  throw new Error(`Could not load ${filename} from any source`);
+  throw new Error(`Could not load ${filename} from private R2`);
 }
 
 /**

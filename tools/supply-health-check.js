@@ -37,16 +37,33 @@ function findFile(candidates) {
   return null;
 }
 
-function fetchJson(url) {
+function githubToken() {
+  return process.env.GH_TOKEN || process.env.GITHUB_TOKEN || process.env.GH_PAT || null;
+}
+
+function githubContentJson(owner, repo, filePath, ref = 'main') {
   return new Promise((resolve) => {
-    const req = https.get(url, {
-      headers: { 'User-Agent': 'ZJP-SUP-Health-Check/1.0', 'Accept': 'application/json' }
+    const token = githubToken();
+    if (!token) return resolve(null);
+    const apiPath = `/repos/${owner}/${repo}/contents/${encodeURIComponent(filePath).replace(/%2F/g, '/')}?ref=${encodeURIComponent(ref)}`;
+    const req = https.get({
+      host: 'api.github.com',
+      path: apiPath,
+      headers: {
+        'User-Agent': 'ZJP-SUP-Health-Check/1.0',
+        'Accept': 'application/vnd.github+json',
+        'Authorization': `Bearer ${token}`,
+      },
     }, (res) => {
       let d = '';
       res.on('data', chunk => d += chunk);
       res.on('end', () => {
-        try { resolve(JSON.parse(d)); }
-        catch (e) { resolve(null); }
+        try {
+          if (res.statusCode !== 200) return resolve(null);
+          const envelope = JSON.parse(d);
+          const raw = Buffer.from(envelope.content || '', 'base64').toString('utf8');
+          resolve(JSON.parse(raw));
+        } catch (e) { resolve(null); }
       });
     });
     req.setTimeout(30000, () => { req.destroy(); resolve(null); });
@@ -106,43 +123,11 @@ function isInternship(job) {
 }
 
 async function loadJobsFromRemote() {
-  // Try r2-loader first (S3 client, live data when env vars set)
-  try {
-    const { loadJsonFromR2 } = require('./r2-loader');
-    const records = await loadJsonFromR2('all_jobs.json');
-    if (records.length > 1000) return records;
-  } catch {}
-
-  // Fallback chain: public R2 → private repo (auth) → public repo (stale)
-  const { execSync } = require('child_process');
-  const sources = [
-    { label: 'R2 (live)', url: 'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/data/all_jobs.json', headers: {} },
-    { label: 'private repo (live)', url: 'https://raw.githubusercontent.com/zapplyjobs/jobs-aggregator-private/main/.github/data/all_jobs.json', needsAuth: true },
-    { label: 'public repo (stale)', url: `https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/all_jobs.json?t=${Math.floor(Date.now()/1000)}`, headers: {} },
-  ];
-  for (const { label, url, needsAuth } of sources) {
-    console.error(`Fetching from ${label}...`);
-    let hdrs = {};
-    if (needsAuth) {
-      try {
-        const token = execSync('gh auth token', { encoding: 'utf8' }).trim();
-        hdrs = { Authorization: `token ${token}` };
-      } catch { continue; }
-    }
-    const resp = await fetchText(url, hdrs);
-    if (!resp.ok || !resp.text) continue;
-    const jobs = [];
-    for (const line of resp.text.split('\n')) {
-      if (!line.trim()) continue;
-      try { jobs.push(JSON.parse(line)); }
-      catch (e) { /* skip */ }
-    }
-    if (jobs.length > 1000) return jobs;
-    console.error(`  Only ${jobs.length} jobs from ${label}, trying next source...`);
-  }
-  return null;
+  const { loadJsonFromR2 } = require('./r2-loader');
+  const records = await loadJsonFromR2('all_jobs.json');
+  if (records.length > 1000) return records;
+  throw new Error('Private R2 all_jobs.json returned too few records');
 }
-
 async function main() {
   // 1. Load all_jobs.json — prefer local, fall back to remote
   let jobs = null;
@@ -290,8 +275,8 @@ async function main() {
   let simplifyGap = null;
   try {
     const [newGrad, summer] = await Promise.all([
-      fetchJson('https://raw.githubusercontent.com/SimplifyJobs/New-Grad-Positions/dev/.github/scripts/listings.json'),
-      fetchJson('https://raw.githubusercontent.com/SimplifyJobs/Summer2026-Internships/dev/.github/scripts/listings.json'),
+      githubContentJson('SimplifyJobs', 'New-Grad-Positions', '.github/scripts/listings.json', 'dev'),
+      githubContentJson('SimplifyJobs', 'Summer2026-Internships', '.github/scripts/listings.json', 'dev'),
     ]);
 
     if (summer && Array.isArray(summer)) {

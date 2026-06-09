@@ -74,40 +74,8 @@ function fetchText(url) {
 
 async function loadEnrichedJobs() {
   if (useRemote) {
-    // Try r2-loader first (S3 client, live data when env vars set)
-    try {
-      const { loadJsonFromR2 } = require('./r2-loader');
-      const records = await loadJsonFromR2('enriched_jobs.json');
-      return records;
-    } catch {}
-
-    // Fall back to public R2 URL
-    const r2Url = 'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/data/enriched_jobs.json';
-    console.error(`Fetching from pub-...r2.dev/enriched_jobs.json...`);
-    const res = await fetchText(r2Url);
-    if (res.ok) {
-      try { return parseEnrichedContent(res.text); } catch {}
-    }
-
-    // Fall back to local data directory (same as enr-t0-classifier.js)
-    console.error(`Fetching from data/enriched_jobs.json...`);
-    const localPath = path.join(process.cwd(), 'data', 'enriched_jobs.json');
-    if (fs.existsSync(localPath)) {
-      console.error(`Loaded from ${localPath}`);
-      const content = fs.readFileSync(localPath, 'utf8');
-      return parseEnrichedContent(content);
-    }
-
-    // Also try .github/data (CI runner path)
-    const ciPath = path.join(process.cwd(), '.github', 'data', 'enriched_jobs.json');
-    if (fs.existsSync(ciPath)) {
-      console.error(`Loaded from ${ciPath}`);
-      const content = fs.readFileSync(ciPath, 'utf8');
-      return parseEnrichedContent(content);
-    }
-
-    console.error('ERROR: enriched_jobs.json not found (R2 401 + no local file)');
-    process.exit(1);
+    const { loadJsonFromR2 } = require('./r2-loader');
+    return loadJsonFromR2('enriched_jobs.json');
   }
 
   // Local path: look for enriched_jobs.json in standard locations
@@ -128,21 +96,13 @@ async function loadEnrichedJobs() {
 
 async function loadLcaSponsors() {
   if (useRemote) {
-    // LCA file is in the processing submodule on jobs-data-2026.
-    // Try R2 first, then fall back to GitHub raw.
-    const urls = [
-      'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/lca-sponsors.json',
-      'https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/lca-sponsors.json',
-    ];
-    for (const url of urls) {
-      console.error(`Fetching lca-sponsors.json from ${url.split('/')[2]}...`);
-      const res = await fetchText(url);
-      if (res.ok) {
-        try { return JSON.parse(res.text); } catch { continue; }
-      }
+    try {
+      const { loadJsonFromR2 } = require('./r2-loader');
+      return await loadJsonFromR2('lca-sponsors.json', { prefix: '' });
+    } catch (e) {
+      console.error(`WARN: Could not fetch lca-sponsors.json from private R2: ${e.message}`);
+      return { employers: [] };
     }
-    console.error('WARN: Could not fetch lca-sponsors.json');
-    return { employers: [] };
   }
 
   const localPaths = [
@@ -161,12 +121,22 @@ async function loadLcaSponsors() {
 
 async function loadLcaAliases() {
   if (useRemote) {
-    // Aliases are in the processing submodule, not typically on R2.
-    // Try the GitHub raw URL.
-    const url = 'https://raw.githubusercontent.com/zapplyjobs/job-board-processing/main/lib/enrich/lca-aliases.json';
-    const res = await fetchText(url);
-    if (!res.ok) return {};
-    try { return JSON.parse(res.text); } catch { return {}; }
+    // Aliases are in the processing submodule (private repo — raw URL returns 404).
+    // Use gh api to fetch from private repo.
+    try {
+      const { execSync } = require('child_process');
+      const b64 = execSync(
+        'gh api repos/zapplyjobs/job-board-processing/contents/lib/enrich/lca-aliases.json --jq \'.content\'',
+        { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] }
+      ).trim();
+      const json = Buffer.from(b64, 'base64').toString('utf8');
+      const parsed = JSON.parse(json);
+      console.error(`Loaded ${Object.keys(parsed).length} LCA aliases via gh api`);
+      return parsed;
+    } catch (e) {
+      console.error('WARN: gh api fallback failed for lca-aliases.json:', e.message?.split('\n')[0]);
+      return {};
+    }
   }
 
   const localPaths = [
