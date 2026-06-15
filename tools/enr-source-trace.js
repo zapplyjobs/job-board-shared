@@ -5,8 +5,8 @@
 // Stage 1: Fetcher — did the source produce jobs? (jobs-metadata.json)
 // Stage 2: Sidecar — do jobs have description entries? (enriched_jobs has_description)
 // Stage 3: Skills — were skills extracted? (enriched_jobs skills array)
-// Stage 4: Degree — was degree inferred/extracted? (enriched_jobs degree_level)
-// Stage 5: Visa — was visa signal found? (enriched_jobs possible_sponsor)
+// Stage 4: Degree — was degree inferred/extracted? (enriched_jobs min_degree)
+// Stage 5: Visa — was any visa signal found? (sponsors_visa, possible_sponsor, or visa_question_present)
 //
 // Usage:
 //   node projects/zjp/scripts/enr-source-trace.js google
@@ -18,8 +18,6 @@
 
 'use strict';
 
-const https = require('https');
-const zlib = require('zlib');
 const fs = require('fs');
 
 const args = process.argv.slice(2);
@@ -34,30 +32,6 @@ if (!sourceName && !listSources) {
   process.exit(1);
 }
 
-function fetchText(url) {
-  return new Promise((resolve) => {
-    const req = https.get(url, {
-      headers: { 'Accept-Encoding': 'gzip', 'User-Agent': 'ZJP-SourceTrace/1.0' },
-      timeout: 120000,
-    }, (res) => {
-      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return fetchText(res.headers.location).then(resolve);
-      }
-      const chunks = [];
-      const stream = res.headers['content-encoding'] === 'gzip'
-        ? res.pipe(zlib.createGunzip())
-        : res;
-      stream.on('data', chunk => chunks.push(chunk));
-      stream.on('end', () => resolve({
-        ok: res.statusCode === 200,
-        text: Buffer.concat(chunks).toString('utf-8'),
-      }));
-      stream.on('error', () => resolve({ ok: false, text: '' }));
-    });
-    req.setTimeout(120000, () => { req.destroy(); resolve({ ok: false, text: '' }); });
-    req.on('error', () => resolve({ ok: false, text: '' }));
-  });
-}
 
 async function fetchGhApi(path) {
   const { execSync } = require('child_process');
@@ -75,43 +49,13 @@ async function fetchGhApi(path) {
 
 async function loadEnrichedJobs() {
   if (useRemote) {
-    // Try r2-loader first (S3 client, live data when env vars set)
     try {
       const { loadJsonFromR2 } = require('./r2-loader');
-      return await loadJsonFromR2('enriched_jobs.json');
-    } catch {}
-    // Fallback: gh api, then R2 public, then raw GitHub (stale)
-    const data = await fetchGhApi('jobs-data-2026/contents/.github/data/enriched_jobs.json');
-    if (data) {
-      console.error('  Loaded enriched_jobs.json via gh api (fresh)');
-      return Array.isArray(data) ? data : Object.values(data);
+      return await loadJsonFromR2('enriched_jobs.json', { allowGitHubFallback: false });
+    } catch (e) {
+      console.error(`ERROR: Could not load live enriched_jobs.json from R2: ${e.message}`);
+      process.exit(1);
     }
-
-    for (const url of [
-      'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/enriched_jobs.json',
-      `https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/enriched_jobs.json?t=${Math.floor(Date.now()/1000)}`,
-    ]) {
-      console.error(`  Fetching ${url.split('/').slice(-2).join('/')}...`);
-      const resp = await fetchText(url);
-      if (!resp.ok || !resp.text) continue;
-      try {
-        const records = [];
-        let parsed;
-        try {
-          parsed = JSON.parse(resp.text);
-        } catch {
-          for (const line of resp.text.trim().split('\n')) {
-            if (line.trim()) try { records.push(JSON.parse(line)); } catch {}
-          }
-          if (records.length) { console.error(`  Loaded ${records.length} records (JSONL)`); return records; }
-          continue;
-        }
-        if (Array.isArray(parsed)) { console.error(`  Loaded ${parsed.length} records`); return parsed; }
-        if (parsed.jobs) { console.error(`  Loaded ${parsed.jobs.length} records`); return parsed.jobs; }
-      } catch { continue; }
-    }
-    console.error('ERROR: Could not load enriched_jobs.json from any source');
-    process.exit(1);
   }
 
   // Local file
@@ -153,17 +97,25 @@ function getDegree(job) {
 }
 
 function hasVisa(job) {
-  return job.possible_sponsor !== null && job.possible_sponsor !== undefined;
+  return job.sponsors_visa !== null && job.sponsors_visa !== undefined
+    || job.possible_sponsor !== null && job.possible_sponsor !== undefined
+    || job.visa_question_present !== null && job.visa_question_present !== undefined;
+}
+
+function hasDegree(job) {
+  const degree = getDegree(job);
+  return degree && degree !== 'none' && degree !== 'None' && degree !== 'NONE';
 }
 
 function classifyTier(job) {
   const sk = hasSkills(job);
-  const deg = getDegree(job) && getDegree(job) !== 'None' && getDegree(job) !== 'NONE';
+  const deg = hasDegree(job);
   const visa = hasVisa(job);
 
+  if (!job.has_description) return 'T0';
   if (sk && deg && visa) return 'T4';
   if (sk && deg) return 'T3';
-  if (sk || deg) return 'T2';
+  if (sk) return 'T2';
   return 'T1';
 }
 
@@ -183,13 +135,11 @@ async function main() {
   if (listSources) {
     const rows = Object.entries(bySource)
       .map(([src, srcJobs]) => {
-        const usJobs = srcJobs.filter(j => j.is_us || j.location_tags?.includes('US') || j.job_country === 'US');
         const enriched = srcJobs.filter(j => (j.enriched_version || j.enricher_version || 0) > 0);
         const t3t4 = srcJobs.filter(j => ['T3', 'T4'].includes(classifyTier(j)));
         return {
           source: src,
           total: srcJobs.length,
-          us: usJobs.length,
           enriched: enriched.length,
           t3t4: t3t4.length,
           t3t4_pct: srcJobs.length ? (t3t4.length / srcJobs.length * 100).toFixed(1) : '0.0',
@@ -201,14 +151,13 @@ async function main() {
       console.log(JSON.stringify(rows, null, 2));
     } else {
       console.log('\n=== Source Overview ===\n');
-      console.log('Source'.padEnd(25) + 'Total'.padStart(7) + 'US'.padStart(7) + 'Enr%'.padStart(7) + 'T3+T4%'.padStart(8));
-      console.log('-'.repeat(54));
+      console.log('Source'.padEnd(25) + 'Total'.padStart(7) + 'Enr%'.padStart(7) + 'T3+T4%'.padStart(8));
+      console.log('-'.repeat(47));
       for (const r of rows) {
         const enrPct = r.total ? (r.enriched / r.total * 100).toFixed(1) : '0.0';
         console.log(
           r.source.padEnd(25) +
           String(r.total).padStart(7) +
-          String(r.us).padStart(7) +
           `${enrPct}%`.padStart(7) +
           `${r.t3t4_pct}%`.padStart(8)
         );
@@ -258,10 +207,7 @@ async function main() {
   };
 
   // Stage 4: Degree inference
-  const withDegree = sourceJobs.filter(j => {
-    const d = getDegree(j);
-    return d && d !== 'None' && d !== 'NONE';
-  });
+  const withDegree = sourceJobs.filter(j => hasDegree(j));
   const stage4 = {
     name: 'Degree Inference',
     pass: withDegree.length > 0,
@@ -272,7 +218,7 @@ async function main() {
   };
 
   // Stage 5: Visa signal
-  const withVisa = sourceJobs.filter(j => j.possible_sponsor !== null && j.possible_sponsor !== undefined);
+  const withVisa = sourceJobs.filter(j => hasVisa(j));
   const stage5 = {
     name: 'Visa Signal',
     pass: withVisa.length > 0,
@@ -283,7 +229,7 @@ async function main() {
   };
 
   // Tier breakdown
-  const tiers = { T1: 0, T2: 0, T3: 0, T4: 0 };
+  const tiers = { T0: 0, T1: 0, T2: 0, T3: 0, T4: 0 };
   for (const j of sourceJobs) tiers[classifyTier(j)]++;
   const t3t4 = tiers.T3 + tiers.T4;
   const t3t4Pct = sourceJobs.length ? (t3t4 / sourceJobs.length * 100).toFixed(1) : '0.0';
@@ -338,7 +284,7 @@ async function main() {
         has_description: j.has_description,
         skills: (j.skills || j.required_skills || []).length,
         degree: j.degree_level || j.min_degree,
-        visa: j.possible_sponsor,
+        visa: hasVisa(j),
         url: j.url || j.job_url,
       })),
     }, null, 2));
@@ -348,7 +294,7 @@ async function main() {
   // Human-readable output
   console.log(`\n=== Source Trace: ${sourceName} ===\n`);
 
-  console.log(`Total jobs: ${sourceJobs.length} | T1: ${tiers.T1} | T2: ${tiers.T2} | T3: ${tiers.T3} | T4: ${tiers.T4} | T3+T4: ${t3t4Pct}%`);
+  console.log(`Total jobs: ${sourceJobs.length} | T0: ${tiers.T0} | T1: ${tiers.T1} | T2: ${tiers.T2} | T3: ${tiers.T3} | T4: ${tiers.T4} | T3+T4: ${t3t4Pct}%`);
   console.log(`Versions: ${Object.entries(versions).sort((a,b) => b[1]-a[1]).map(([v,c]) => `v${v}=${c}`).join(', ')}`);
   console.log();
 
