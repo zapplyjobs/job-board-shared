@@ -409,7 +409,7 @@ async function main() {
     console.log(`Target:                ${INTERNSHIP_TARGET.toLocaleString()}`);
     console.log(`Gap:                   ${result.summary.gap}`);
     console.log(`\n  Note: Counts are from POOL (all_jobs.json), not consumer output.`);
-    console.log(`  Consumer (Internships-2026) shows TTL-filtered subset.\n`);
+    console.log(`  Consumer (Internships-2027) shows TTL-filtered subset.\n`);
 
     console.log(`\n--- Source Decomposition (tech-US internships) ---`);
     const sorted = Object.entries(internBySource).sort((a, b) => b[1] - a[1]);
