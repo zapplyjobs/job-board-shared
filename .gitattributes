@@ -1,0 +1,5 @@
+# ZJP transcrypt — encrypt all source files
+# Pattern: all .js files encrypted; .yml/.md/.sh stay readable
+*.js filter=transcrypt diff=transcrypt
+*.json filter=transcrypt diff=transcrypt
+*.jsonl filter=transcrypt diff=transcrypt
