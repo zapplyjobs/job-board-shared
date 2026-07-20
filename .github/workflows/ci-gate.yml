@@ -27,7 +27,7 @@ jobs:
 
       - name: Unlock encrypted files
         run: |
-          transcrypt --cipher aes-256-cbc --password "$TRANSCRYPT_PASSWORD" --force
+          echo "Y" | transcrypt --cipher aes-256-cbc --password "$TRANSCRYPT_PASSWORD" --force
           git checkout -- .
         env:
           TRANSCRYPT_PASSWORD: ${{ secrets.TRANSCRYPT_PASSWORD }}
