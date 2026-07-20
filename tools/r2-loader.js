@@ -1,179 +1,134 @@
-#!/usr/bin/env node
-// r2-loader.js — Shared R2 data loader for local analysis tools
-//
-// When R2_ACCESS_KEY_ID is set in env, uses S3 client to read live data.
-// Falls back to public R2 URL, then raw GitHub (stale), then local file.
-//
-// Usage:
-//   const { loadJsonFromR2 } = require('./r2-loader');
-//   const data = await loadJsonFromR2('enriched_jobs.json', { prefix: 'data/' });
-//
-// Environment variables (set by setup-r2-local.sh):
-//   R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_ENDPOINT, R2_BUCKET_NAME
-
-'use strict';
-
-const https = require('https');
-const zlib = require('zlib');
-
-function hasS3Credentials() {
-  return !!(process.env.R2_ACCESS_KEY_ID && process.env.R2_SECRET_ACCESS_KEY && process.env.R2_ENDPOINT && process.env.R2_BUCKET_NAME);
-}
-
-async function loadViaS3(key) {
-  const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
-  const client = new S3Client({
-    region: 'auto',
-    endpoint: process.env.R2_ENDPOINT,
-    credentials: {
-      accessKeyId: process.env.R2_ACCESS_KEY_ID,
-      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
-    },
-    maxAttempts: 2,
-  });
-  const resp = await client.send(new GetObjectCommand({
-    Bucket: process.env.R2_BUCKET_NAME,
-    Key: key,
-  }));
-  const body = await resp.Body.transformToString();
-  return body;
-}
-
-function fetchText(url) {
-  return new Promise((resolve) => {
-    const req = https.get(url, {
-      headers: { 'Accept-Encoding': 'gzip', 'User-Agent': 'ZJP-Tools/1.0' },
-      timeout: 120000,
-    }, (res) => {
-      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return fetchText(res.headers.location).then(resolve);
-      }
-      const chunks = [];
-      const stream = res.headers['content-encoding'] === 'gzip' ? res.pipe(zlib.createGunzip()) : res;
-      stream.on('data', chunk => chunks.push(chunk));
-      stream.on('end', () => resolve({ ok: res.statusCode === 200, text: Buffer.concat(chunks).toString('utf-8') }));
-      stream.on('error', () => resolve({ ok: false, text: '' }));
-    });
-    req.setTimeout(120000, () => { req.destroy(); resolve({ ok: false, text: '' }); });
-    req.on('error', () => resolve({ ok: false, text: '' }));
-  });
-}
-
-function parseRecords(text) {
-  try {
-    const parsed = JSON.parse(text);
-    if (Array.isArray(parsed)) return parsed;
-    if (parsed.jobs) return parsed.jobs;
-    return parsed;
-  } catch {}
-  // Try JSONL
-  const records = [];
-  for (const line of text.trim().split('\n')) {
-    if (line.trim()) try { records.push(JSON.parse(line)); } catch {}
-  }
-  return records.length ? records : null;
-}
-
-function hasParsedData(value) {
-  if (!value) return false;
-  if (Array.isArray(value)) return value.length > 0;
-  return typeof value === 'object' && Object.keys(value).length > 0;
-}
-
-function parsedSize(value) {
-  return Array.isArray(value) ? value.length : Object.keys(value || {}).length;
-}
-
-/**
- * Load a JSON file from R2 with fallback chain.
- * Priority: S3 (live) → public R2 URL → raw GitHub (optional stale fallback)
- *
- * @param {string} filename - e.g. 'enriched_jobs.json'
- * @param {Object} [opts]
- * @param {string} [opts.prefix] - R2 key prefix, e.g. 'data/'
- * @param {boolean} [opts.allowGitHubFallback=true] - Allow stale GitHub fallback when R2 is unavailable
- * @param {string} [opts.ghRepo] - GitHub repo for raw fallback, e.g. 'jobs-data-2026'
- * @param {string} [opts.ghPath] - Path in repo, default '.github/data/{filename}'
- * @returns {Array|Object} parsed JSON or JSONL records
- */
-async function loadJsonFromR2(filename, opts = {}) {
-  const { prefix = 'data/', allowGitHubFallback = true, ghRepo = 'jobs-data-2026', ghPath = `.github/data/${filename}` } = opts;
-  const r2Key = `${prefix}${filename}`;
-
-  // 1. S3 client (live data, requires env vars)
-  if (hasS3Credentials()) {
-    try {
-      console.error(`  Loading ${filename} from R2 (S3, live)...`);
-      const text = await loadViaS3(r2Key);
-      const records = parseRecords(text);
-      if (hasParsedData(records)) {
-        console.error(`  Loaded ${parsedSize(records)} records from R2`);
-        return records;
-      }
-    } catch (e) {
-      console.error(`  R2 S3 failed: ${e.message}, trying fallbacks...`);
-    }
-  }
-
-  // 2. Public R2 URL (may 401 if not configured)
-  const pubUrl = `https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/${r2Key}`;
-  try {
-    console.error(`  Fetching ${r2Key} from public R2...`);
-    const resp = await fetchText(pubUrl);
-    if (resp.ok && resp.text) {
-      const records = parseRecords(resp.text);
-      if (hasParsedData(records)) {
-        console.error(`  Loaded ${parsedSize(records)} records (public R2)`);
-        return records;
-      }
-    }
-  } catch {}
-
-  // 3. Raw GitHub (stale but available, only when explicitly allowed)
-  if (!allowGitHubFallback) {
-    throw new Error(`Could not load ${filename} from live R2 sources`);
-  }
-  const ghUrl = `https://raw.githubusercontent.com/zapplyjobs/${ghRepo}/main/${ghPath}?t=${Math.floor(Date.now() / 1000)}`;
-  try {
-    console.error(`  Fetching from GitHub (may be stale)...`);
-    const resp = await fetchText(ghUrl);
-    if (resp.ok && resp.text) {
-      const records = parseRecords(resp.text);
-      if (hasParsedData(records)) {
-        console.error(`  Loaded ${parsedSize(records)} records (GitHub, may be stale)`);
-        return records;
-      }
-    }
-  } catch {}
-
-  throw new Error(`Could not load ${filename} from any source`);
-}
-
-/**
- * Check R2 connectivity and return bucket stats.
- */
-async function checkR2Connection() {
-  if (!hasS3Credentials()) {
-    return { connected: false, error: 'R2 env vars not set. Run setup-r2-local.sh.' };
-  }
-  try {
-    const { S3Client, ListObjectsV2Command } = require('@aws-sdk/client-s3');
-    const client = new S3Client({
-      region: 'auto',
-      endpoint: process.env.R2_ENDPOINT,
-      credentials: {
-        accessKeyId: process.env.R2_ACCESS_KEY_ID,
-        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
-      },
-    });
-    const resp = await client.send(new ListObjectsV2Command({
-      Bucket: process.env.R2_BUCKET_NAME,
-      MaxKeys: 1,
-    }));
-    return { connected: true, objectCount: resp.KeyCount, bucket: process.env.R2_BUCKET_NAME };
-  } catch (e) {
-    return { connected: false, error: e.message };
-  }
-}
-
-module.exports = { loadJsonFromR2, checkR2Connection, hasS3Credentials };
+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
+PJvIZ1ndAiwaAjoQldbmtA==

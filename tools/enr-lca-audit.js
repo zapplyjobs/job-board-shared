@@ -1,417 +1,342 @@
-#!/usr/bin/env node
-
-/**
- * ENR LCA Audit (INF-TOOL-2)
- *
- * Traces LCA sponsor matching for a given company (or all companies with no visa signal).
- * Shows: normalization trace, alias resolution, LCA set membership, actual visa signal coverage,
- * and prefix-match FP risk analysis.
- *
- * Replaces inline python blocks for LCA debugging (C63 used 5+ blocks / ~30K tokens).
- *
- * Usage:
- *   node tools/enr-lca-audit.js --company "Google"
- *   node tools/enr-lca-audit.js --company "Google" --remote --json
- *   node tools/enr-lca-audit.js --gaps          # companies with null visa signal
- *   node tools/enr-lca-audit.js --aliases        # show alias map coverage
- *
- * Output sections:
- *   1. Company normalization trace (input → normalized → LCA lookup)
- *   2. Alias resolution (if applicable)
- *   3. Visa signal breakdown for that company's jobs
- *   4. Per-source visa coverage
- *   5. (--gaps) Companies with null possible_sponsor, ranked by job count
- *   6. (--aliases) Alias coverage: how many companies benefit from each alias
- */
-
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-
-const args = process.argv.slice(2);
-const jsonOutput = args.includes('--json');
-const useRemote = args.includes('--remote');
-const companyArg = args.indexOf('--company') >= 0 ? args[args.indexOf('--company') + 1] : null;
-const showGaps = args.includes('--gaps');
-const showAliases = args.includes('--aliases');
-
-if (!companyArg && !showGaps && !showAliases) {
-  console.error('Usage: node enr-lca-audit.js --company "Name" [--remote] [--json]');
-  console.error('       node enr-lca-audit.js --gaps [--remote]');
-  console.error('       node enr-lca-audit.js --aliases [--remote]');
-  process.exit(1);
-}
-
-function normalizeLcaName(name) {
-  return name.toLowerCase().trim().replace(/[.,]/g, '').replace(/&/g, 'and').replace(/-/g, ' ');
-}
-
-function parseEnrichedContent(content) {
-  // enriched_jobs.json may be JSON array or JSONL (one object per line)
-  content = content.trim();
-  if (content.startsWith('[')) {
-    return JSON.parse(content);
-  }
-  // JSONL: parse each line
-  return content.split('\n').filter(l => l.trim()).map(line => {
-    try { return JSON.parse(line); } catch { return null; }
-  }).filter(Boolean);
-}
-
-function fetchText(url) {
-  return new Promise((resolve) => {
-    const req = https.get(url, { headers: { 'User-Agent': 'ZJP-LCA-Audit/1.0' } }, (res) => {
-      let d = '';
-      res.on('data', chunk => d += chunk);
-      res.on('end', () => resolve({ ok: res.statusCode === 200, text: d }));
-    });
-    req.setTimeout(60000, () => { req.destroy(); resolve({ ok: false, text: '' }); });
-    req.on('error', () => resolve({ ok: false, text: '' }));
-  });
-}
-
-async function loadEnrichedJobs() {
-  if (useRemote) {
-    const { loadJsonFromR2 } = require('./r2-loader');
-    return loadJsonFromR2('enriched_jobs.json');
-  }
-
-  // Local path: look for enriched_jobs.json in standard locations
-  const localPaths = [
-    path.join(process.cwd(), 'data', 'enriched_jobs.json'),
-    path.join(process.cwd(), '.github', 'data', 'enriched_jobs.json'),
-    path.join(process.cwd(), 'enriched_jobs.json'),
-  ];
-  for (const p of localPaths) {
-    if (fs.existsSync(p)) {
-      console.error(`Reading ${p}`);
-      return parseEnrichedContent(fs.readFileSync(p, 'utf8'));
-    }
-  }
-  console.error('ERROR: enriched_jobs.json not found locally. Use --remote to fetch from R2.');
-  process.exit(1);
-}
-
-function assertLcaSponsors(data, source) {
-  const employers = data.employers || [];
-  if (!Array.isArray(employers) || employers.length === 0) {
-    throw new Error(`${source} contains no employers; refusing to emit LCA audit with empty sponsor set`);
-  }
-  return data;
-}
-
-async function loadLcaSponsors() {
-  if (useRemote) {
-    const { loadJsonFromR2 } = require('./r2-loader');
-    try {
-      const data = await loadJsonFromR2('lca-sponsors.json', { prefix: 'data/' });
-      return assertLcaSponsors(data, 'R2 data/lca-sponsors.json');
-    } catch (e) {
-      console.error(`WARN: R2 lca-sponsors.json unavailable: ${e.message}`);
-    }
-
-    try {
-      const { execSync } = require('child_process');
-      const json = execSync(
-        'gh api repos/zapplyjobs/jobs-data-2026/contents/.github/data/lca-sponsors.json -H "Accept: application/vnd.github.raw"',
-        { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'], maxBuffer: 4 * 1024 * 1024 }
-      );
-      const data = JSON.parse(json);
-      console.error(`Loaded ${(data.employers || []).length} LCA sponsors via gh api`);
-      return assertLcaSponsors(data, 'jobs-data-2026/.github/data/lca-sponsors.json');
-    } catch (e) {
-      throw new Error(`Could not fetch lca-sponsors.json from R2 or gh api: ${e.message?.split('\n')[0] || e.message}`);
-    }
-  }
-
-  const localPaths = [
-    path.join(process.cwd(), '.github', 'data', 'lca-sponsors.json'),
-    path.join(process.cwd(), 'lca-sponsors.json'),
-  ];
-  for (const p of localPaths) {
-    if (fs.existsSync(p)) {
-      console.error(`Reading ${p}`);
-      return assertLcaSponsors(JSON.parse(fs.readFileSync(p, 'utf8')), p);
-    }
-  }
-  throw new Error('lca-sponsors.json not found locally. Use --remote to fetch from R2 or gh api.');
-}
-
-async function loadLcaAliases() {
-  if (useRemote) {
-    // Aliases are in the processing submodule (private repo — raw URL returns 404).
-    // Use gh api to fetch from private repo.
-    try {
-      const { execSync } = require('child_process');
-      const b64 = execSync(
-        'gh api repos/zapplyjobs/job-board-processing/contents/lib/enrich/lca-aliases.json --jq \'.content\'',
-        { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] }
-      ).trim();
-      const json = Buffer.from(b64, 'base64').toString('utf8');
-      const parsed = JSON.parse(json);
-      console.error(`Loaded ${Object.keys(parsed).length} LCA aliases via gh api`);
-      return parsed;
-    } catch (e) {
-      console.error('WARN: gh api fallback failed for lca-aliases.json:', e.message?.split('\n')[0]);
-      return {};
-    }
-  }
-
-  const localPaths = [
-    path.join(process.cwd(), '.github', 'scripts', 'processing', 'lib', 'enrich', 'lca-aliases.json'),
-    path.join(process.cwd(), 'lib', 'enrich', 'lca-aliases.json'),
-  ];
-  for (const p of localPaths) {
-    if (fs.existsSync(p)) return JSON.parse(fs.readFileSync(p, 'utf8'));
-  }
-  return {};
-}
-
-function auditCompany(companyName, enrichedJobs, lcaSet, lcaAliases) {
-  const norm = normalizeLcaName(companyName);
-  const alias = lcaAliases[companyName];
-  const normAlias = alias ? normalizeLcaName(alias) : null;
-
-  const inLcaDirect = lcaSet.has(norm);
-  const inLcaViaAlias = normAlias && lcaSet.has(normAlias);
-  const matchType = inLcaDirect ? 'exact' : (inLcaViaAlias ? 'alias' : 'none');
-
-  // Find all jobs for this company
-  const companyJobs = enrichedJobs.filter(j =>
-    j.company_name === companyName ||
-    normalizeLcaName(j.company_name) === norm
-  );
-
-  const visaBreakdown = {
-    sponsors_visa_true: 0,
-    sponsors_visa_false: 0,
-    visa_question_present_true: 0,
-    possible_sponsor_true: 0,
-    possible_sponsor_null: 0,
-    any_visa_signal: 0,
-    total: companyJobs.length,
-  };
-
-  const bySource = {};
-
-  for (const job of companyJobs) {
-    if (job.sponsors_visa === true) visaBreakdown.sponsors_visa_true++;
-    if (job.sponsors_visa === false) visaBreakdown.sponsors_visa_false++;
-    if (job.visa_question_present === true) visaBreakdown.visa_question_present_true++;
-    if (job.possible_sponsor === true) visaBreakdown.possible_sponsor_true++;
-    if (job.possible_sponsor === null || job.possible_sponsor === undefined) visaBreakdown.possible_sponsor_null++;
-
-    const hasAny = job.sponsors_visa === true || job.visa_question_present === true || job.possible_sponsor === true;
-    if (hasAny) visaBreakdown.any_visa_signal++;
-
-    const src = job.source || 'unknown';
-    if (!bySource[src]) bySource[src] = { total: 0, any_signal: 0, possible_sponsor_true: 0, sponsors_visa_true: 0 };
-    bySource[src].total++;
-    if (hasAny) bySource[src].any_signal++;
-    if (job.possible_sponsor === true) bySource[src].possible_sponsor_true++;
-    if (job.sponsors_visa === true) bySource[src].sponsors_visa_true++;
-  }
-
-  // Find LCA entries that contain the normalized name (for prefix-match risk analysis)
-  const prefixMatches = [];
-  for (const entry of lcaSet) {
-    if (entry !== norm && (entry.startsWith(norm) || norm.startsWith(entry))) {
-      prefixMatches.push(entry);
-    }
-  }
-
-  return {
-    company: companyName,
-    normalized: norm,
-    alias: alias || null,
-    normalized_alias: normAlias,
-    lca_match: matchType,
-    lca_direct: inLcaDirect,
-    lca_via_alias: inLcaViaAlias || false,
-    prefix_match_risk: prefixMatches.length > 0 ? prefixMatches : null,
-    visa_breakdown: visaBreakdown,
-    by_source: bySource,
-  };
-}
-
-function findGapCompanies(enrichedJobs, lcaSet, lcaAliases) {
-  // Group by company_name, count jobs with null possible_sponsor
-  const companies = {};
-
-  for (const job of enrichedJobs) {
-    const name = job.company_name || 'unknown';
-    if (!companies[name]) {
-      companies[name] = { total: 0, null_sponsor: 0, any_signal: 0, sources: new Set() };
-    }
-    companies[name].total++;
-    companies[name].sources.add(job.source || 'unknown');
-
-    if (job.possible_sponsor === null || job.possible_sponsor === undefined) {
-      companies[name].null_sponsor++;
-    }
-    if (job.sponsors_visa === true || job.visa_question_present === true || job.possible_sponsor === true) {
-      companies[name].any_signal++;
-    }
-  }
-
-  // Filter to companies with >0 null_sponsor and rank by count
-  return Object.entries(companies)
-    .filter(([_, d]) => d.null_sponsor > 0)
-    .map(([name, d]) => {
-      const norm = normalizeLcaName(name);
-      const alias = lcaAliases[name];
-      const normAlias = alias ? normalizeLcaName(alias) : null;
-      const inLca = lcaSet.has(norm) || (normAlias && lcaSet.has(normAlias));
-
-      return {
-        company: name,
-        normalized: norm,
-        alias: alias || null,
-        in_lca: inLca,
-        total_jobs: d.total,
-        null_sponsor_jobs: d.null_sponsor,
-        any_signal_jobs: d.any_signal,
-        sources: [...d.sources],
-        signal_gap_pct: Math.round((1 - d.any_signal / d.total) * 100),
-      };
-    })
-    .sort((a, b) => b.null_sponsor_jobs - a.null_sponsor_jobs);
-}
-
-function analyzeAliases(lcaAliases, enrichedJobs, lcaSet) {
-  const results = [];
-
-  for (const [companyName, aliasTarget] of Object.entries(lcaAliases)) {
-    const normAlias = normalizeLcaName(aliasTarget);
-    const aliasMatchesLca = lcaSet.has(normAlias);
-
-    // Count how many jobs benefit from this alias
-    const norm = normalizeLcaName(companyName);
-    const directMatch = lcaSet.has(norm);
-    const jobsUsingAlias = enrichedJobs.filter(j => j.company_name === companyName).length;
-
-    results.push({
-      company: companyName,
-      alias: aliasTarget,
-      direct_match: directMatch,
-      alias_matches_lca: aliasMatchesLca,
-      jobs_benefiting: jobsUsingAlias,
-      effective: !directMatch && aliasMatchesLca && jobsUsingAlias > 0,
-    });
-  }
-
-  return results.sort((a, b) => b.jobs_benefiting - a.jobs_benefiting);
-}
-
-async function main() {
-  const [enrichedJobs, lcaRaw, lcaAliases] = await Promise.all([
-    loadEnrichedJobs(),
-    loadLcaSponsors(),
-    loadLcaAliases(),
-  ]);
-
-  const lcaSet = new Set((lcaRaw.employers || []).map(e => normalizeLcaName(e)));
-  console.error(`LCA sponsors: ${lcaSet.size} employers loaded`);
-  console.error(`Enriched jobs: ${enrichedJobs.length} records`);
-  console.error(`LCA aliases: ${Object.keys(lcaAliases).length} mappings`);
-  console.error('');
-
-  if (jsonOutput) {
-    const result = {};
-    if (companyArg) result.audit = auditCompany(companyArg, enrichedJobs, lcaSet, lcaAliases);
-    if (showGaps) result.gaps = findGapCompanies(enrichedJobs, lcaSet, lcaAliases);
-    if (showAliases) result.aliases = analyzeAliases(lcaAliases, enrichedJobs, lcaSet);
-    console.log(JSON.stringify(result, null, 2));
-    return;
-  }
-
-  if (companyArg) {
-    const audit = auditCompany(companyArg, enrichedJobs, lcaSet, lcaAliases);
-
-    console.log(`=== LCA Audit: ${audit.company} ===`);
-    console.log('');
-    console.log(`Normalization trace:`);
-    console.log(`  Input:      "${audit.company}"`);
-    console.log(`  Normalized: "${audit.normalized}"`);
-    if (audit.alias) {
-      console.log(`  Alias:      "${audit.company}" → "${audit.alias}"`);
-      console.log(`  Norm alias: "${audit.normalized_alias}"`);
-    } else {
-      console.log(`  Alias:      none`);
-    }
-    console.log(`  LCA match:  ${audit.lca_match}${audit.lca_direct ? ' (direct)' : audit.lca_via_alias ? ` (via "${audit.alias}")` : ''}`);
-    console.log('');
-
-    if (audit.prefix_match_risk) {
-      console.log(`Prefix-match risk (${audit.prefix_match_risk.length} similar LCA entries):`);
-      for (const pm of audit.prefix_match_risk.slice(0, 10)) {
-        console.log(`  "${pm}"`);
-      }
-      console.log('');
-    }
-
-    console.log(`Visa signal coverage (${audit.visa_breakdown.total} jobs):`);
-    console.log(`  Any visa signal:    ${audit.visa_breakdown.any_visa_signal}/${audit.visa_breakdown.total} (${Math.round(audit.visa_breakdown.any_visa_signal / Math.max(audit.visa_breakdown.total, 1) * 100)}%)`);
-    console.log(`  sponsors_visa=true: ${audit.visa_breakdown.sponsors_visa_true}`);
-    console.log(`  visa_question=true: ${audit.visa_breakdown.visa_question_present_true}`);
-    console.log(`  possible_sponsor:   ${audit.visa_breakdown.possible_sponsor_true} (null: ${audit.visa_breakdown.possible_sponsor_null})`);
-    console.log('');
-
-    if (Object.keys(audit.by_source).length > 0) {
-      console.log('Per-source breakdown:');
-      for (const [src, d] of Object.entries(audit.by_source).sort((a, b) => b[1].total - a[1].total)) {
-        const pct = Math.round(d.any_signal / Math.max(d.total, 1) * 100);
-        console.log(`  ${src.padEnd(20)} ${String(d.total).padStart(5)} jobs | any_signal ${pct}% | ps=${d.possible_sponsor_true} sv=${d.sponsors_visa_true}`);
-      }
-      console.log('');
-    }
-  }
-
-  if (showGaps) {
-    const gaps = findGapCompanies(enrichedJobs, lcaSet, lcaAliases);
-    console.log(`=== Companies with null possible_sponsor (${gaps.length} companies) ===`);
-    console.log('');
-    console.log('Top 20 by null-sponsor job count:');
-    console.log(`${'Company'.padEnd(40)} ${'Jobs'.padStart(5)} ${'Null'.padStart(5)} ${'Gap%'.padStart(5)} LCA  Alias`);
-    for (const g of gaps.slice(0, 20)) {
-      const lcaFlag = g.in_lca ? 'YES' : 'NO ';
-      const aliasFlag = g.alias ? g.alias.substring(0, 15) : 'none';
-      console.log(`  ${g.company.padEnd(38)} ${String(g.total_jobs).padStart(5)} ${String(g.null_sponsor_jobs).padStart(5)} ${String(g.signal_gap_pct).padStart(4)}% ${lcaFlag}  ${aliasFlag}`);
-    }
-
-    const inLcaCount = gaps.filter(g => g.in_lca).length;
-    const notInLcaCount = gaps.length - inLcaCount;
-    console.log('');
-    console.log(`Summary: ${gaps.length} companies with gaps. ${inLcaCount} in LCA (alias mismatch?), ${notInLcaCount} not in LCA.`);
-    console.log('');
-  }
-
-  if (showAliases) {
-    const aliasAnalysis = analyzeAliases(lcaAliases, enrichedJobs, lcaSet);
-    console.log(`=== LCA Alias Coverage (${aliasAnalysis.length} aliases) ===`);
-    console.log('');
-    const effective = aliasAnalysis.filter(a => a.effective);
-    const ineffective = aliasAnalysis.filter(a => !a.effective);
-    console.log(`Effective (alias provides LCA match that direct name doesn't): ${effective.length}`);
-    for (const a of effective) {
-      console.log(`  "${a.company}" → "${a.alias}": ${a.jobs_benefiting} jobs`);
-    }
-    console.log('');
-    if (ineffective.length > 0) {
-      console.log(`Ineffective (direct match exists, or alias doesn't match LCA): ${ineffective.length}`);
-      for (const a of ineffective.slice(0, 10)) {
-        const reason = a.direct_match ? 'direct match exists' : 'alias not in LCA';
-        console.log(`  "${a.company}" → "${a.alias}": ${reason} (${a.jobs_benefiting} jobs)`);
-      }
-      if (ineffective.length > 10) console.log(`  ... and ${ineffective.length - 10} more`);
-    }
-    console.log('');
-  }
-}
-
-main().catch(err => {
-  console.error('ERROR:', err.message);
-  process.exit(1);
-});
+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

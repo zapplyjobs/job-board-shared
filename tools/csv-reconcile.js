@@ -1,260 +1,170 @@
-#!/usr/bin/env node
-/**
- * CSV ↔ Company-List Reconciliation Tool (SUP-3)
- *
- * Quarterly reconciliation between company-research-log.csv and company-list.json.
- * Flags drift: missing CSV rows, stale statuses, naming variants, domain separator issues.
- *
- * Usage:
- *   node tools/csv-reconcile.js [--company-list /path/to/company-list.json] [--csv /path/to/company-research-log.csv] [--json]
- *
- * Exit code: 0 = clean, 1 = drift found
- */
-
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-
-const args = process.argv.slice(2);
-const getArg = (flag) => {
-  const idx = args.indexOf(flag);
-  return idx >= 0 && idx + 1 < args.length ? args[idx + 1] : null;
-};
-const jsonOutput = args.includes('--json');
-
-// ATS naming normalization map
-const ATS_ALIASES = {
-  'simplifyjs': 'simplify',
-  'simplify_jobs': 'simplify',
-  'simplify.js': 'simplify',
-  'oracle_hcm': 'oracle',
-  'oracle-hcm': 'oracle',
-};
-
-function normalizeAts(ats) {
-  const lower = (ats || '').toLowerCase().trim();
-  return ATS_ALIASES[lower] || lower;
-}
-
-function normalizeName(name) {
-  return (name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
-function parseCsv(filePath) {
-  const raw = fs.readFileSync(filePath, 'utf8');
-  const lines = raw.split('\n').filter(l => l.trim() && !l.startsWith('#'));
-  if (lines.length < 2) return [];
-
-  const headers = lines[0].split(',').map(h => h.trim());
-  const rows = [];
-  for (let i = 1; i < lines.length; i++) {
-    // Simple CSV parse (handles quoted fields)
-    const values = [];
-    let current = '';
-    let inQuotes = false;
-    for (const ch of lines[i]) {
-      if (ch === '"') { inQuotes = !inQuotes; }
-      else if (ch === ',' && !inQuotes) { values.push(current.trim()); current = ''; }
-      else { current += ch; }
-    }
-    values.push(current.trim());
-
-    const row = {};
-    headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
-    if (row.company) rows.push(row);
-  }
-  return rows;
-}
-
-function loadCompanyList(filePath) {
-  const raw = fs.readFileSync(filePath, 'utf8');
-  return JSON.parse(raw);
-}
-
-function reconcile(companyListPath, csvPath) {
-  const companyList = loadCompanyList(companyListPath);
-  const csvRows = parseCsv(csvPath);
-
-  const issues = {
-    missing_csv_rows: [],      // In company-list but not in CSV
-    stale_statuses: [],        // CSV says accepted but not in company-list (wrong ATS)
-    ats_naming_variants: [],   // Non-canonical ATS names in CSV
-    domain_separator_issues: [], // Domains using # or , instead of |
-    summary: { total_cl: 0, total_csv: csvRows.length, clean: 0 },
-  };
-
-  // Build CSV lookup: normalized name -> row
-  const csvByName = new Map();
-  for (const row of csvRows) {
-    const key = normalizeName(row.company);
-    csvByName.set(key, row);
-  }
-
-  // Check 1: Every company-list entry should have a CSV row
-  for (const [ats, entries] of Object.entries(companyList)) {
-    if (ats === '_meta') continue;
-    issues.summary.total_cl += entries.length;
-
-    for (const entry of entries) {
-      const name = entry.name || entry.slug || '';
-      const key = normalizeName(name);
-      const csvRow = csvByName.get(key);
-
-      if (!csvRow) {
-        // Try partial match
-        const partial = [...csvByName.keys()].find(k => k.includes(key) || key.includes(k));
-        if (!partial) {
-          issues.missing_csv_rows.push({
-            company: name,
-            ats,
-            slug: entry.slug || entry.url || '',
-          });
-        }
-      } else {
-        // Cross-check ATS platform
-        const csvAts = normalizeAts(csvRow.ats);
-        const clAts = ats;
-        if (csvAts !== clAts && csvRow.status === 'accepted') {
-          issues.stale_statuses.push({
-            company: name,
-            csv_ats: csvRow.ats,
-            cl_ats: clAts,
-            csv_status: csvRow.status,
-          });
-        }
-        issues.summary.clean++;
-      }
-    }
-  }
-
-  // Check 2: CSV accepted entries not in company-list (wrong ATS or missing)
-  for (const row of csvRows) {
-    if (row.status !== 'accepted') continue;
-    const csvAts = normalizeAts(row.ats);
-    const standardAts = ['greenhouse', 'lever', 'ashby', 'workday', 'smartrecruiters'];
-    if (!standardAts.includes(csvAts)) continue; // Skip non-standard ATS (simplify, etc.)
-
-    const key = normalizeName(row.company);
-    // Check if this company exists in company-list under ANY ATS
-    let found = false;
-    for (const [ats, entries] of Object.entries(companyList)) {
-      if (ats === '_meta') continue;
-      for (const entry of entries) {
-        if (normalizeName(entry.name || '') === key) {
-          found = true;
-          break;
-        }
-      }
-      if (found) break;
-    }
-    if (!found) {
-      issues.stale_statuses.push({
-        company: row.company,
-        csv_ats: row.ats,
-        cl_ats: 'NOT IN company-list',
-        csv_status: row.status,
-        note: 'Accepted in CSV but absent from company-list.json',
-      });
-    }
-  }
-
-  // Check 3: ATS naming variants in CSV
-  for (const row of csvRows) {
-    const original = (row.ats || '').toLowerCase().trim();
-    if (ATS_ALIASES[original]) {
-      issues.ats_naming_variants.push({
-        company: row.company,
-        original: row.ats,
-        canonical: ATS_ALIASES[original],
-      });
-    }
-  }
-
-  // Check 4: Domain separator issues
-  for (const row of csvRows) {
-    const domains = row.domains || '';
-    if (domains.includes('#') || domains.includes(', ')) {
-      issues.domain_separator_issues.push({
-        company: row.company,
-        domains: domains,
-        issue: domains.includes('#') ? 'Uses # instead of |' : 'Uses , instead of |',
-      });
-    }
-  }
-
-  return issues;
-}
-
-function printReport(issues) {
-  const total = issues.summary.total_cl;
-  const missing = issues.missing_csv_rows.length;
-  const stale = issues.stale_statuses.length;
-  const variants = issues.ats_naming_variants.length;
-  const separators = issues.domain_separator_issues.length;
-
-  console.log('=== CSV ↔ Company-List Reconciliation ===');
-  console.log(`Company-list entries: ${total}`);
-  console.log(`CSV rows: ${issues.summary.total_csv}`);
-  console.log(`Clean: ${issues.summary.clean}/${total}`);
-  console.log();
-
-  if (missing > 0) {
-    console.log(`--- Missing CSV Rows (${missing}) ---`);
-    for (const item of issues.missing_csv_rows) {
-      console.log(`  ${item.company} [${item.ats}] slug=${item.slug}`);
-    }
-    console.log();
-  }
-
-  if (stale > 0) {
-    console.log(`--- Stale/Wrong ATS (${stale}) ---`);
-    for (const item of issues.stale_statuses) {
-      console.log(`  ${item.company}: CSV=${item.csv_ats}/${item.csv_status}, CL=${item.cl_ats}${item.note ? ' — ' + item.note : ''}`);
-    }
-    console.log();
-  }
-
-  if (variants > 0) {
-    console.log(`--- ATS Naming Variants (${variants}) ---`);
-    for (const item of issues.ats_naming_variants) {
-      console.log(`  ${item.company}: "${item.original}" → should be "${item.canonical}"`);
-    }
-    console.log();
-  }
-
-  if (separators > 0) {
-    console.log(`--- Domain Separator Issues (${separators}) ---`);
-    for (const item of issues.domain_separator_issues) {
-      console.log(`  ${item.company}: ${item.issue} (${item.domains})`);
-    }
-    console.log();
-  }
-
-  const totalIssues = missing + stale + variants + separators;
-  console.log(`=== Summary: ${totalIssues} issues found ===`);
-
-  if (jsonOutput) {
-    console.log('\n--- JSON Output ---');
-    console.log(JSON.stringify(issues, null, 2));
-  }
-
-  return totalIssues > 0 ? 1 : 0;
-}
-
-// Main
-const clPath = getArg('--company-list') || path.join(__dirname, '..', '..', 'job-board-aggregator', 'lib', 'fetchers', 'company-list.json');
-const csvPath = getArg('--csv') || path.join(__dirname, '..', '..', '..', 'projects', 'zjp', 'company-research-log.csv');
-
-if (!fs.existsSync(clPath)) {
-  console.error(`ERROR: company-list.json not found at ${clPath}`);
-  process.exit(1);
-}
-if (!fs.existsSync(csvPath)) {
-  console.error(`ERROR: CSV not found at ${csvPath}`);
-  process.exit(1);
-}
-
-const issues = reconcile(clPath, csvPath);
-const exitCode = printReport(issues);
-process.exit(exitCode);
+U2FsdGVkX1+TNaThyXYvOJ2Zyy3Y69y3Py4W801XNgjwmvPS2pZZE3F3XF4RV/hy
+QbcabNy/kqw0GQU/9cjjQceYe0+Tm3b1HPRTxceGaHMjGdBTy2jaPLGpvS/cNyZi
+gG/pSO/8Q7RW0ZUvwucoDUyWpNR0mj8312LX7+E00VsSqTVc7undYlegXMU9eREE
+y4sr7lV1K1vuh28Q/OQbxbzUneMgPUAqJTeAOaqDeIdY/kmt7G5FzJZb5AO5hxAU
+uTNnC3w74AJ/WUNDtILkSoCp9vvef79aLnLfmzA71pbkZS2FizFTvwyuixEZyyI6
+PutJJCq8OExnwijPi+5d/jpMwrT/MsM79kYkxb5xoUxNFSxgnVZ89l78Htskbcz5
+Fs1tQSPDIFDGZWA1jOdtYMqlgTFp91F2h5h83zMDnANd+2PQEsHgQdKGCugxiy+J
+uYRqQ+a0z7oWjV/WCWrAjNq46u7I1M+Mn4+Lafe2VtPL6PiAY2Q+af0KW3CzE0r9
+n57KXOh9v0pq6xi50377HrV2yF95Zv6qGb8FpYTk4pLpBqRgZsfvO94k0z5H1Pgu
+qfBU0oU+fLUjYfuaxl6XHlyD2TYBFfmB8F/swUvwreu4gXzj42SFihh/DE5vpoZZ
+gU0QfgOHjNrmUPEiBmJwFg7J4zgRzBZV8HEgGBqcf5Rny7Phlejhj6KRwDzBEvj4
++0sPeO7TGsCvYO/cqYzUtUQEjKHjl9zfOrzTAuBw8edipv5kS0inTCBPgJ5bw71l
+dhQar+14FPbMhDS4mumOpLZxnM/gbtBPywoq/FfLVTvFoR7RH1KcN1MyfX/ejIep
+RQlnANS+Aj4pnN1+jkYHLIN9LyMsH+lDOIcKiaTe6ms401hCEYaquMD4+mu09DgN
+yCM40QYWP6mbOB1rICbeCcReBV8hEF25bgnqHEuIRUiYbYAnFY7F1bdddqlF/fWT
+ptu1kn0JbxAlzrU+rc1oaQkEI08P8AEZNCkNOfeiGwW1Y+zNv9+80szOr6EH+Kuk
+cgiOxFDeE/pvnyJWZ+vXbDxap5Er5SduxVviBv/hu+SAFmvOmSqBNWmv6ns9DH5T
+4+QK4U3BhscBqdv1l99F9hN3B2q8ydq8VfTu0og/4yuHiu8DQs8Hdc7YdmTgtfuQ
+Ltew6ytHn0gt6f/Ju7ltNHvsMpNlyy116Kh1gY5kkN6u33FHK4xlwl8zFXIiXsOW
+MSgA0TC/jyGLMvr7M1O/zYTvkCXmIfEtkYelRM6WPcruu4EPb7AB21JP2IVi7jDs
+DDpxiRGiufJpVHO0eJ2sxSy9kxg3XolER9r5Lqe7V99JzP2liY5cWouI3I1OUq18
+RIHswhkyMoa6DykXrajYBbYonekVntvYemM0aRoG/wefEDAA8QoXNtt9UZR3bIdz
+gv0TaauI8FOlgF+4ExuadY1K+gAe4tB+v+ZizdcVJ4iwES374ubzPoGiAFKyROi/
+5mbJtFMTAzuqM7UvSM92cwVGMMsVQ9gJ9qGhdysNqQufF9W5hwRfRF172tedvkbK
+O6FsAHF9+nCeQL4aSRuI3Yp+kwoVtHGbG5j+J5o0qLoWC8EISX5mCicxN7t06ZGo
+1ryg26W/GMa1Pe5wGlZGQAaYG5UGxQNtiJadQiFtSC+RTr6qqNFPyDXaaE58Hi59
+HfnJwdGMZeOlJ+GjjMqrpW53RlfKeM7ubVbKmpI1FAhyAW7xgEheuQ7Xrk+lVFoB
+q/ueh9alv7wrkGY5oUmlmhJbo1fKLE1lzm0oYslEefE9lz7UKEzIFcaU5uItZrpr
+hY5CEZ8bI7Hy8SEgNOAPdkyEgL+xz3IXuPH1qdXjFM60xDvTmA3rT/yfeAunq9jH
+/XtAU7X+wDIgdPLkdsUFUjT43wNoVHCNxvKFnXb5QEvfwRFY+jZwqtrTOqWG9J3N
+tGssPh4iFxtRSSt+CWjgxc4zdaMstdxSzRfLk4a0O886EqIuLHbnSTUtKNcfRX/E
+TkoKhy2yOHo8Jl7vqTBX57MBp+PjFYfsFVkspmiDH0JHqRMH5uj6GVC6J5V+ZUpx
+9+YxMLo3wYdvpCrlNm8ZH2TVR/QCNvJiHaQpQw7XbTFPRMHlOxsxwmpOAsw8brR5
+qzWA8CAaeg6bBjX0Vy5Ye3U5EaZVV014u3Xq+whEGkXoBpZQLZ85zZ4BNoWiItfN
+jqmQ3NpZqXd6ocg4o5+98B5PAecsO4kBKQqepyvCpYDJsFfwoHDUx6TD+/aYZkPE
+YbvjA938JccNl65bTdgn+aqCR4VKUFimu5zbMSG3jqQ/OrEkSwsWopQm0qAfpeVw
+JXTkvmlj9eDdCowR/sS/Hrkz0L56Ua/1rOH9wAtO2pzD5A8dtOfQ2CC+XUsuaqTZ
+Jh1Tii1WD0c50zk6axMkhBwjdbm6yd9TpSrBCtQDhgDoINpf/fQbTwaGI9NC0SP/
+e0/cb1eyBFVcS3S2/J/hHXrnWvjyz5W+V393I2toxy76i0qs3ejcwQYrmv3OQypq
+2kg2ApFJHcxQGjlnfiEuy1TQELGVfzLI09rXBk8wQDPkGso4QFPqhaVkw95ej5jH
+FlDGISUpZymAz2G7jKhHK3qE3gAg4+mfoVqB8vJ41Scnm2A58swXjebejIKYW/9l
+GVnFLFYPuG1UJlfgzTNQ2FoC+xf6kXuVgLa+Kfjt/gYLochHAS4JqidAhKNAZVsX
+XFwdEPgom4Cvv4vXxwCLBJXlYT9/h9U44QeVkHJ/d60Ff32F02pEdavzT3BAG0OM
+hBplmk/8a67Ti+3rSJMsEGI4JkkSnQVUJ3U3etHjwTGDJaaiuPO9tw4I/QBlCtES
+LyZNGcqtjUvIbyBl2iA/Vjl8piklusiaLlJrQC3BosbhIvERDw2f8s6FwzM0Pn8U
+opmwbVLeKUdijMfjWoSIStgGJ/pkE3HyJMth0c2GYszmZ6meOzf95ej7gre19cpr
+jskB22gxMjLO/ov4zjZIamTQ7Mhnm1Xhp9ZLzEPrM0rGYRPTehH9keHPSSZ/h/9I
+rxvSrmAyR6w5hn/SKSfsMn/KWdzeSBiSPIDvKkNZ3YTmbyAWgFBoUl+8qDm4q08O
+Jt1aguppnY/etawmjbNPNjgsdh3pi0jERH2+p9sEmZZcNLnJOEGxg6hJIoWqeEFu
+2hf2DwkkD4xh3hLdeLkUnREr+KRk2uUoKr9AgGH95N5oZVyB6N8c0OcY+8xY2CPO
+leN/NzPAkAT0JpeiV6iQWWEp2aAKOcljNzVBMYoH0mgKTacIIheHYA7gCV4YJJ9v
+C2WGdj8sPwVA1EHZB9VK1qHmkzIiuZL7pE789CRWSudStMQo5NOswnzfk8u+WXyu
+AyV5ms+tlL5OjXKrQWkAj/K5ntlfLuCJeLim0NpDhnZeiZUtrsxRs7yNenBAX9w8
+u/4F+7ZXDFV4I1WDrSTa2XoWSWGroYOvVLV3CxaqSxdi56EujV94Y/u0IJsI904q
+nV350+sHqxv31xLvUh5VKqqDe/MeumAtiGRqr93boA/per+DLhFjCoBIhPgsN0E9
+fFU5NP/hmrnP2KOtSLlUjSUpEraT3od+SJw91dBtdZPdkH1RCRZzIsgnrfwUN4Rb
+xCZ9HcNrKEwEDbn7d4CpqIsJ5xxm98p50ApqpYHEO7RMGlb+uaFMqXoBEVaYryIq
+4dWWV3+dCREumaRRPrg5iW4Mb+y3mmUYbkwcfUgrX0qgmvD6y4I7LVPr6ShCbnmp
+7JS9syrKSKHvVdj4vD48Vv57B/LBqqw4J+zTeenT9OTmfO5a2VNcNBSfzXlTEPee
+RP2dby6s0D6LFOCI1fc49VJAI724U2+j6d7gNjk03e9F1xICfmHpZlFODrNksl/k
+/c0zIaQnYNPGzH2Ft3aJDpf7B8qWyeVupC22SVEwaLDQYNVCuDYG1yk+gpbtf/Yc
+YHhxGtfwl1LrfZyWi8sJ5/odmIKU5/cSfx32EgMklrZU9cOesW7TpGUGw76YYu2v
+gswRXJ2QlzLGaAABxmBu9BB4ZbcIhfWa0eC2pYg8QIQJ6nkPLHqRovP4GN07RJE9
+pMgqpm5Nt8AGufABj+rsyZmDna9vtvPo4MJVB1V+Vv9LzYBFv2NCTok2X6fLNLnk
+1jnf1Ul3R9DeJkO1Xq+ZPJPLbS1BrEwb+4D3CtaPI44D46Xip9H0LyCIXqpyxHDD
+qo9Z167pNOXxlIfDQb9imbXNnFcn9tXImA53qYdbVRxOqXNe2/61+HBjWs69YyJO
+xFFYcLSkMdXf0f73eT+U1Suw1T/IxzfGgSyQYcLegnalxDB0D+mwcodIT+sXJqvO
+MH77KCN161kJLQ6Q5jGL1uOUiMvoQmBnIn0/VYFqc0hEPfJmkDQUPZhJZPaHVPup
+9UU22eDd7enJmSm4KdnAy+YtcGEpN2RPgZDmNRYi3hhwSXDn8yGarbI33EG1IG8b
+RadRzBIoCLTy4AI8V4XMUVbiDVUCe0DMs1j56NQ0h/rDbBy5mmJ1eEDuwX0ED7lo
+Li3Qu0yr5ljiNmgtirgrD66RYT0K8eKsM+XZ+RKyj4CsVy5g7ggcNb/q89hpJehm
+BdwmAxN5m9NOU0i/pl8eAfYdZ5I4wSehY5cimNAPEWnO/ugXJZuwboThlcJJL1rH
+o/bJ/wnItD+7Ky+eCvtkHJQBmccOaiORGKArSO9vLhUhKL5IbBZ98qapg376Hbtd
+TdLHG0kXge0I5SQ8xuR1SBGJLZPfNT6UsPYGot6zlZWH3NldQAU0rFHyRX1uDShg
+QBLSEeChd8T430unULJol0W1VpwFHuFFmkQLjmfSLeXSWlcSQAMFeQKVnkl4Tb4m
+uffZWWurfg01L5StasRoaDAw/39HBS2jrMkVYX+2P4Bh9eQNWZJjSH6YK4vqDo9j
+4isOlRzZxgpy3TI9rU256lhF8m24f/LzIOKU9S2ax3K+JoIXVuf3NwM4FGuvGgOs
+RozTZlaB+EbKWz0kGv+K+YtSVnFgXi7S+MwZuozDc/u47KyfxS39uvx8fqfAVjPU
+kpYn5Dj2XXeIQEexqFQ0FLwYp3/3wPJOyDETaSQmKdHIA8oeNj70yQL+ha8iYzD8
+veHGA0R1nXGEbhQFp95Equ53Nz4+5ep+l+wEm08Opfsin2l5OZ0bsTDuKdgs8hCA
+/do5PpmhZKcVXBRDOuOgESnbG+npk7JEs8wbEaLsN9JCTsaehYTPecjaxFJH4pzf
++UGb79WuM7XqxlHKPJlzgfpUX75xLECrfr+He7F/sxT7ETFyvMSq/aPMl6ZFzlxM
+jcWdtDyJlymBI+YHs/5k0e+IflFxPgllrYjm3swxQv09/g66KG0pEqha4pLP3m0E
+SSyTobgV6IC/ir2jb0D7HQejfFJnrhkLfQi5z1xOmWAmudizO32kQ43p+Y+nXL+U
+Mg2fcdt2BL5wD/JFvImmKzOe/1d07Vw9g7UBmr9zFRxJz9nud3qTbvXDlLkTxf55
+1mnGmu9PRDXrJDZ4UKng4X4vxOInJTaoe/oNEdeiLIgcKYXk4CEFL9I634gMMN4V
+wsHfjvvjwJGr0PDVeaJNze51/MNnjq3BynsykInUvyxUsCf+kVAXls0V60w5Bzz6
+OwhA22aJ4k4qDXfZlph7RqaVdXzHBwBfwsByx7wGXACrWsedEydxRtXe9nm54ii4
+VbsNLOLZYTwEt24ywdvIbeTmA4ugBjeu6eXqAzjoMOxrH2II1sCgZYag0x2vFMhr
+zKD2P1h/x0DHOQfu7D2QeDTDmVlT+R3ERI6kSo82cOU7xA6fVZZ5ypZaWq0drH/H
+Felzjs0GNkYsr0tKepcugVlU5KDaEz0Jkow1ijXUvT54zHjffFIEYDR62vWvNws+
+443ZyVi4C96FKAXMyj+MS3uoWklN9n8rrThSuoe9oZgw1nFzmtrxXo2CpjFkJl2W
+nKeDcFyBqquYQWKLE6xlFsUwohlz12yZljEyCIiZrhixAIDXPByM8YGRTXR4+CEg
+Vx7gFzndEYE0ykm1Y5Qc6wRpEXHEqTT24Y3RWVVcR9+hh/JQGAASGx/ymLAg5i04
+yWmb75FdsX3/qe7iry+I381eXfMRDrZKE8FKdJORTxI/XYl8NRpO7+u3ieOqA5U4
+6jqoi1WcCkXLQTj5bkS4JTBAegAvuSZwS5ekUBtNTs0VTiOd9rsiwK/rxherpvih
+qPbT2ZoObZnDcSNf/TR3yyrwxGpxOrEbFTrHnqGkPohN0yvCVra3NprKPSpbP1KG
+cQ4AklkodU1HfKNN1dL3AKk4xfNyjmNsGL47g4QR1CutG9Y3YiHW5YJ0xnLfe1bo
+gNPArIQmgQcAlpPz2CyuPQWcbOcunI1oLiaJ5rZsfnoeSWDgc9CpJH9x290Gh+E1
+d73tFy54CS2MgFyo7FolMsC4qW4nYBUSjUJOdgMegQrrkHhMqmy6bdfKlMdJ06gY
+UWf7fUM9uvX/WYpDwz+ZEx7LcdaX3oYWsF0uKoWtiGhtfh/9+pEUKYNVpiLZ9MJz
+M8pUJXvE0szIjYIbgcd0/rgFo/AvVKio2i5Wde1AnZMAs0QZKFxdcqqm9GyUoalp
+2gWXSFdyvbqb7Yo+EH23R+M0vWHjGlyOtDIWTJwUOZTxuEwqpmEhio8IlDzpdA4V
+yA2jvunF4XAg/QWHdKxsqvhoOoOg5rQIegVexpX0s1vc4RGVKh5Wlo9UjwhKa4l9
+dGJL6Exi2QblrUurA1R4xiZmaysp9Mzq/4T57z+QF+BYX/qWWu4FzRByxPJmx0NY
+Uxny5HKWhYkH7I5E0TG8PaYrxQQAqrJkaxSkf6cwyGYisf0zW2rd8dJMDa7D4tyd
+STHahRHwVDh3kALEfr6HoxQEdFLGqHkAzVJj91so4JouMQKMts8ZwaaYfCVKaKzo
+XL8xEoQ8n1KYotGLCTB5sIigGdXUhQdkFHZeynsfrqJ/Upuu6V7ji2Y7M0nrvq/O
+Yh57I7CIWpTlWSbW4/uvyDAxn6LN46YKXBvK6DEGsUQtalMDNsbv1Wal90pZFcdO
+O1CrS+Ty5jMhlyL5Hqvip1wvgJFXwWGKqmBCNK0j+3bQ2/oAhapHIrGsfTW5wqI2
+MRc4U/JzyYshWWyqEXtLq70a6pWF3PWo174+6clMjwsuBgU5VvhxH4gDuwbZbi6e
+v1u5Agqwx/DExQvwUIqbknjBjCxioBWmXaDMHoel8tXoaoyVprjL6NsLznR3qgmc
+V8lDB+BBPNQG9C3EdB2brdBNJfIkJc3wVmuSkTz6MzMzqWsvfc0Cuk0WUx7YYZ28
+z4a5STfe61O1jp/b2AkGK+rTpd3I6Qko0isY2slKZzqOKgNwdsISrsUbYsojltY7
+aHlMG8qBwF4FlLUHeEH0UlEdzi1b+QbNggIgDU1haq7565ytXPdLRsiU0D4JXTDE
+QmJrmT1xBqA9juml8qgdA8i4PyaS/I2qej+4BI2+3dp2yDYYMvvsqE/7nSms4blm
+o2wpfqn2LzCsac1sXifDgPZ9iHkrWoZWh8LpJsMl7aFhCyZ3D/gC7kuDHz2d/4nX
+XHQc1blXIi/hGuhWAu9FgMXaRoEzkmVQsgI+JetDHApe/eClc0+lxZTOW8xr5muL
+yRfwtyEXBFcBxgOL9i/UmJWNS7A1f8K3SIo7hZPRUnwDHk1QEY5IIjbHek7ODoDK
+XqEDQEJAthG/RVGI7ouC16ogynrjmspc3tl7+iPHJGuaL3dLdKODPegKa7YqRnTV
+23ySBwbg/6pk4oh+XxPRJayvt6C9z1i8CKND/N+WDZFMpOuV7InfbpvwRkAFWUFJ
+kqr7FdUcgFukBUWz9PegXTZ1uMAP3tcPhBUbnebrFn2yq493TOZymDNSeybHh1UX
+4V+HaxlJNZ+MjqagWX/tLuw+LCLFonhyHNAtkPDfvqN5g91zUB2RnGleAw/J8a7u
+t770dKAc0w+uGgi0S7NvDBmn2DszDW6nJm33wumcwgEMyeOgJNBDHTSCy+wVTL8x
+cNzf6karl2Td0Reib2XksPBwmnKuH1CxQPS8mLglo7HR/xcKjS3nnogLjagY0iRg
+MHtcnd+baRhJRes1ACty2iTxSqKuC/mRAFcOLx6oalGWjnwo2CSpghxrda9dM06g
+D1O4mimUcKJZInfnxNU/I3kU3BIkIixvXEUW8umvNHu7c48MSNSgSFem1/1rL1nQ
+08REa/zTxWxGO7W4VhoxaGTDCNOB0xi0e+tg5BD0upS4tU3O1JCyZAn+ubjohBjh
+ugmAtJ0sun6zTC58tVG2iEW00pqvC+RfcfHgVx/SOR7uvyMl7ygujF/O8CzZNs4m
+h57KsfpOlkVMUIkkhM0R7sHEEv/t1vNWVxIdQY4fkUir07ef9sXpVzgQXDFzCxdQ
+pgxrp1q0uRxUnvnr1m58ER7QPrT6pbG1Jpq6OY7CTcpttX/wJJYX76xcsRj0iY7H
+mCW1XusrQLwVjwUft8hD/nAnQ4ltoggHQ0dxNsttpXviLRfb9Wh71nzMmHmgp1Io
+vvQEdV+dKhZkcshGN3lqNg7qZRNlPrIHsaqBRmR63IxirQ1Q+JEcMKYa3SIhZF9P
+G1QipbsPv9Hs8lzogyyLRHaNGFhjN2/r+uxww7+XnE6MZzxzzHVEiDMCK0hObBit
+DK4KvD5F/0uikp9LnEUba5EaA1z/9HkZg0OEOaO1aUt3gq18EjsyCyJ1sygKIoam
+Xh9KW680ho3sWMpKQJMXLNISDeXcAx406ZVgRyuk9cOLnzU0jfzhLGVQxTqGw/gX
+uXWRwfBV5V9oBCccV1FRdFlQivmzem/C1Hes5hLJpgSbPV/xB6YT/jEnyZPPEOR/
+nRCcR7LJAw1DoucdqZgB1ZX8I1jaw7wFxUJVsSChJ1AAv2px62p4ih8cc85ZZCsw
+zL4OYVI4SpA7pnw7SB9hzuah8U1av9DknT9skjv6QXppbovIBU4TdQVxjb6AkCIc
+u4xU6YCFKr+djlnplMX06CGinbYQvI71GBgUX66AzxS+DHHpT+6rovr25c+oqhIs
+bfMS14B0g0+eCv49kc/w+XFFgpVG0N7WwvO7Gj49lCNJFOHplZFabOL3U4wJijpt
+piqC1/uxxZmKd8rtBYbGzOWQOok/TVdr3RZrUN0HTnUpVwfRLQ43sWFzjcEdE/hm
+GNjAFd24MZ9Ca8aUnxgfeiz65ZbzW7BRIQ2TnVmFSjRKnC8PmZgK+i98vWR/7YWm
+6GWKhuKkvyHTm3BjMlkJP4WYXVEZ9PM7/HNuRALYggaKm9zY21QNAr/6HcZdVJNz
+xlipIB5UT8/daTduMVZRcaiA3xL2+JrSBD2ghcKo3NTQKtk4lwSGq3lo6H7N+0FO
+mRNp7s/z7AVj+5tQOD0/LXPYUIWUnnrH5rcw7EdjWKHbZVloepg36ETw8dGVumd+
+lA10Lu0m89uf1U3YQrbcasbUlCSkJa4dCP4oZ9LYy06LBSulQFUYe7gkDLHuhQKJ
+uW6yummMSYjvd3vx93MsSn3sHRER0w0u90+YYrTwnshV3isVimatkW2PhmDIQhhk
+7mR4voQ1s7JCgnGbsM7XIVD2ngY+oJVKpHmmAJ+6GKzEX9vFVAvkEi51d7o/qS/Z
+Acao6oxkno/PFryVNJcT67rQ1G6DtGcPhzPmWnAT/rQDdIAOxaeWw2W6vylGc/gU
+/N5GH5LFxorCZlzksG5WocW9jmi7524dYhdbRZG035FhL1pBA1JVzQCN+pkbdcaj
+tGBVSjYN1XtXO+EnbHGfbh4Pcw4jbsWvdMAMpEcztEK5YJCZftkilc9QlDu3w9Fs
+PNrJz6aSdq7kmHLWb17vXqIj8akyxmi57NTqrjshD7x9OwtmGwkO8xkoYsg6+uzR
+MF3+mbXkthtipSAjB2+r19flslcwhZsRone67mZQSV+C6DTdPVqy8pmOZrcRiw8R
+hZYReZINWuXUDqGhC3T/jo0HZWRgkMX3YosjLe8pzJWCxIovX4iJgTfkz/ZHFXTM
+mQwztMaQdz4htwgfP66vi3i3j0fXZaTtuIM3huEE0vYrojeB5WP4GaWtaJxe9hBh
+MFV4TcU5Igl6ROYVDesYkR3n2cJKlAojf89kgCZNsPeW9yO6M6lVQEmp8tuySrGU
+UYCwSPpQpVwkZ8Zt3QN13p/YEcpzQfayBtSIH8GuzGt5Q8DsX840YmHGyjX9CrR5
+9Ap1htSz3dIhxxVl9GjD2qqSJDjzZmkeBeJbLZBSP+38Q9BlZ6azmI6tW02GAD6X
+oYH34VV32CQI89HuA44fn0XVe3qsmD2d2dIFbGGalIwDK9wfah1MP+bmVDidgBh0
+Spg4Rs+ccxxpqd+q2LN3J/shSH1lllrhqKWOXlKIfcgkdIHFfvigapwmB+LJSgo6
+pwIUHucK8fFQR/MjfEF8BEyPupYoWbc4iN0bMqMO5NzInZk7MImNYs6ZXHH4r+7M
+0eUkZAQbDiLnvbW9xwI+vOaZrAYz34puWyOLU2Z1YZKmYzYhmys34HrhOm04nH+J
+URpGij560lf86Dbxo5Rl6xqWBvpZehj5hgL3Ntt0b5hcZBEjqCvYNqg7J4S+mz8z
+DaNmg5on2mH7GZUm2KwgdzpRNNscrcfm5on0uL9ElboO6qVPR0+B4+XjBPlltqSF
+XCLc5UVm9/8N2kBN/IQxz5IybsYA/wVKYhaeCtSNdDG8KiD2lrpLhRf7O+5ramZE
++bcoB58D7mro/+1kY2ArK2dPTIEhNXk6teO0DEXQIRvrhPTvtWNDeeCAByiGFjem
+0O9o0X0AX5aYtQeJV/npJzRctK/75WhGPaW8G96z+YP9abldoimJ+ZJGNheeOKRU
+zsuuBKRI9gAQgiKwQ6zInCVoIdMu5BLmuXPMA6SP+tLSLIrxTTRALtGwoj6p5Tj6
+Kl5tK5xtL32OeNEBYvfZ7gDWBv3p+oZmpY9Gax4gXtr4uyUdtWlV8zgVof/+dti1

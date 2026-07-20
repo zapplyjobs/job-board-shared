@@ -1,198 +1,142 @@
-#!/usr/bin/env node
-
-/**
- * Evergreen/Ghost Job Detector (AGG-QUALITY-1)
- *
- * Analyzes the job pool for evergreen (perpetual postings) and ghost
- * (never-hire listings) jobs. Uses posted_at age, per-company concentration,
- * and title repetition patterns.
- *
- * Usage:
- *   node evergreen-detector.js --data-dir .github/data
- *   node evergreen-detector.js --data-dir .github/data --json
- *   node evergreen-detector.js --remote [--json]
- */
-
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-
-const args = process.argv.slice(2);
-const DATA_DIR = args.includes('--data-dir')
-  ? args[args.indexOf('--data-dir') + 1]
-  : '.github/data';
-const JSON_OUTPUT = args.includes('--json');
-const USE_REMOTE = args.includes('--remote');
-
-const TTL_DAYS = 14;
-const EVERGREEN_THRESHOLD_DAYS = 10;
-const CONCENTRATION_THRESHOLD = 0.3;
-const MIN_COMPANY_JOBS = 10;
-
-async function loadJobs() {
-  if (USE_REMOTE) {
-    try {
-      const { loadJsonFromR2 } = require('./r2-loader');
-      const records = await loadJsonFromR2('all_jobs.json');
-      console.error(`Loaded ${records.length} jobs from R2`);
-      return records;
-    } catch (e) {
-      console.error(`R2 load failed: ${e.message}`);
-      console.error('ERROR: Could not load all_jobs.json from R2. Check R2 env vars.');
-      process.exit(1);
-    }
-  }
-  const p = path.join(DATA_DIR, 'all_jobs.json');
-  if (!fs.existsSync(p)) { console.error('No all_jobs.json found'); process.exit(1); }
-  return fs.readFileSync(p, 'utf8').trim().split('\n')
-    .filter(Boolean).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
-}
-
-function daysBetween(a, b) {
-  return (new Date(b) - new Date(a)) / (1000 * 60 * 60 * 24);
-}
-
-function analyze(jobs) {
-  const now = new Date();
-  const cutoff = new Date(now - EVERGREEN_THRESHOLD_DAYS * 24 * 60 * 60 * 1000);
-
-  // Per-job age classification
-  const byAge = { fresh: [], aging: [], evergreen: [] };
-  for (const j of jobs) {
-    const posted = j.posted_at ? new Date(j.posted_at) : null;
-    if (!posted) { byAge.aging.push(j); continue; }
-    const ageDays = daysBetween(posted, now);
-    j._age_days = Math.round(ageDays * 10) / 10;
-    if (ageDays <= 3) byAge.fresh.push(j);
-    else if (ageDays <= EVERGREEN_THRESHOLD_DAYS) byAge.aging.push(j);
-    else byAge.evergreen.push(j);
-  }
-
-  // Per-company evergreen concentration
-  const companyMap = new Map();
-  for (const j of jobs) {
-    const c = j.company_name || 'unknown';
-    if (!companyMap.has(c)) companyMap.set(c, { total: 0, evergreen: 0, titles: new Map() });
-    const entry = companyMap.get(c);
-    entry.total++;
-    if (byAge.evergreen.includes(j)) entry.evergreen++;
-    const title = (j.title || '').toLowerCase().replace(/\s+/g, ' ').trim();
-    entry.titles.set(title, (entry.titles.get(title) || 0) + 1);
-  }
-
-  const companyConcentration = [];
-  for (const [name, data] of companyMap) {
-    if (data.total < MIN_COMPANY_JOBS) continue;
-    const rate = data.evergreen / data.total;
-    if (rate >= CONCENTRATION_THRESHOLD) {
-      // Find repeated titles (same title posted multiple times)
-      const repeatedTitles = [...data.titles.entries()]
-        .filter(([, count]) => count > 1)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 5);
-      companyConcentration.push({
-        company: name,
-        total: data.total,
-        evergreen: data.evergreen,
-        rate: Math.round(rate * 1000) / 10,
-        repeated_titles: repeatedTitles.map(([t, c]) => ({ title: t.substring(0, 80), count: c })),
-      });
-    }
-  }
-  companyConcentration.sort((a, b) => b.evergreen - a.evergreen);
-
-  // Source-level evergreen distribution
-  const sourceMap = new Map();
-  for (const j of byAge.evergreen) {
-    const s = j.source || 'unknown';
-    sourceMap.set(s, (sourceMap.get(s) || 0) + 1);
-  }
-  const sourceEvergreen = [...sourceMap.entries()]
-    .map(([source, count]) => ({ source, count }))
-    .sort((a, b) => b.count - a.count);
-
-  // Age distribution histogram (day buckets)
-  const ageHist = new Map();
-  for (const j of jobs) {
-    const age = j._age_days || 0;
-    const bucket = Math.floor(age);
-    ageHist.set(bucket, (ageHist.get(bucket) || 0) + 1);
-  }
-  const ageDistribution = [...ageHist.entries()]
-    .sort((a, b) => a[0] - b[0])
-    .map(([day, count]) => ({ day, count }));
-
-  return {
-    summary: {
-      total_jobs: jobs.length,
-      fresh_0_3d: byAge.fresh.length,
-      aging_4_10d: byAge.aging.length,
-      evergreen_10_14d: byAge.evergreen.length,
-      evergreen_pct: Math.round(byAge.evergreen.length / jobs.length * 1000) / 10,
-    },
-    evergreen_by_source: sourceEvergreen,
-    evergreen_companies: companyConcentration,
-    age_distribution: ageDistribution,
-    top_evergreen_jobs: byAge.evergreen
-      .sort((a, b) => (a._age_days || 0) - (b._age_days || 0))
-      .slice(0, 20)
-      .map(j => ({
-        id: j.id,
-        title: (j.title || '').substring(0, 80),
-        company: j.company_name,
-        source: j.source,
-        posted_at: j.posted_at,
-        age_days: j._age_days,
-        employment: j.tags?.employment,
-        domains: j.tags?.domains,
-      })),
-  };
-}
-
-function printReport(result) {
-  const s = result.summary;
-  console.log('============================================');
-  console.log('  Evergreen/Ghost Job Detection Report');
-  console.log('============================================');
-  console.log();
-  console.log(`Pool: ${s.total_jobs} jobs | Fresh (0-3d): ${s.fresh_0_3d} | Aging (4-10d): ${s.aging_4_10d} | Evergreen (10-14d): ${s.evergreen_10_14d} (${s.evergreen_pct}%)`);
-  console.log();
-
-  console.log('=== Evergreen by Source ===');
-  for (const { source, count } of result.evergreen_by_source) {
-    console.log(`  ${source.padEnd(20)} ${count}`);
-  }
-  console.log();
-
-  console.log('=== Companies with High Evergreen Concentration (>30%) ===');
-  for (const c of result.evergreen_companies.slice(0, 15)) {
-    console.log(`  ${c.company} (${c.evergreen}/${c.total} = ${c.rate}%)`);
-    for (const t of c.repeated_titles.slice(0, 3)) {
-      console.log(`    ×${t.count} ${t.title}`);
-    }
-  }
-  console.log();
-
-  console.log('=== Age Distribution (day buckets) ===');
-  for (const { day, count } of result.age_distribution) {
-    const bar = '█'.repeat(Math.min(Math.round(count / 500), 40));
-    console.log(`  Day ${String(day).padStart(2)}: ${String(count).padStart(5)} ${bar}`);
-  }
-  console.log();
-
-  console.log('=== Oldest Jobs in Pool ===');
-  for (const j of result.top_evergreen_jobs.slice(0, 10)) {
-    console.log(`  ${j.age_days}d | ${j.company} | ${j.title}`);
-  }
-}
-
-(async () => {
-const jobs = await loadJobs();
-const result = analyze(jobs);
-if (JSON_OUTPUT) {
-  console.log(JSON.stringify(result, null, 2));
-} else {
-  printReport(result);
-}
-})();
+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

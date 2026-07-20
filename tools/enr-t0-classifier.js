@@ -1,299 +1,255 @@
-#!/usr/bin/env node
-
-/**
- * ENR Tier Classifier (INF-TOOL-2 / ENR-QUALITY)
- *
- * Structured analysis of enrichment tier distribution, T1 quality decomposition,
- * and description quality metrics. Replaces inline python analysis blocks.
- *
- * Reads enriched_jobs.json (+ optional descriptions sidecars for quality metrics).
- * Outputs human-readable summary + optional JSON (--json flag).
- *
- * Usage:
- *   node tools/enr-t0-classifier.js /path/to/enriched_jobs.json
- *   node tools/enr-t0-classifier.js /path/to/enriched_jobs.json --json
- *   node tools/enr-t0-classifier.js /path/to/enriched_jobs.json --desc-dir /path/to/descriptions/
- *
- * Output sections:
- *   1. Tier distribution (overall + per-source)
- *   2. T1 quality decomposition (degree/visa present, only skills missing)
- *   3. T2 missing-field decomposition
- *   4. Version propagation
- *   5. Description quality (with --desc-dir: length stats, template detection)
- *   6. Per-company T1/T2 concentration
- */
-
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-
-const https = require('https');
-
-const args = process.argv.slice(2);
-const jsonOutput = args.includes('--json');
-const useRemote = args.includes('--remote');
-const enrichedPath = useRemote ? '--remote' : args.find(a => !a.startsWith('--'));
-const descDir = args.indexOf('--desc-dir') >= 0 ? args[args.indexOf('--desc-dir') + 1] : null;
-
-function fetchText(url) {
-  return new Promise((resolve) => {
-    const req = https.get(url, { headers: { 'User-Agent': 'ZJP-ENR-Classifier/1.0' } }, (res) => {
-      let d = '';
-      res.on('data', chunk => d += chunk);
-      res.on('end', () => resolve({ ok: res.statusCode === 200, text: d }));
-    });
-    req.setTimeout(60000, () => { req.destroy(); resolve({ ok: false, text: '' }); });
-    req.on('error', () => resolve({ ok: false, text: '' }));
-  });
-}
-
-async function loadFromRemote() {
-  // Try r2-loader first (S3 client, live data when env vars set)
-  try {
-    const { loadJsonFromR2 } = require('./r2-loader');
-    return await loadJsonFromR2('enriched_jobs.json');
-  } catch {}
-  // Fallback: public URLs
-  const urls = [
-    'https://pub-7c6b1d38c7974dd7a11e3a1e6e46c68b.r2.dev/data/enriched_jobs.json',
-    `https://raw.githubusercontent.com/zapplyjobs/jobs-data-2026/main/.github/data/enriched_jobs.json?t=${Math.floor(Date.now()/1000)}`,
-  ];
-  for (const url of urls) {
-    console.error(`Fetching from ${url.split('/').slice(-2).join('/')}...`);
-    const resp = await fetchText(url);
-    if (!resp.ok || !resp.text) continue;
-    const records = [];
-    for (const line of resp.text.split('\n').filter(Boolean)) {
-      try { records.push(JSON.parse(line)); } catch (_) {}
-    }
-    if (records.length > 100) return records;
-  }
-  return null;
-}
-
-if (!enrichedPath) {
-  console.error('Usage: node enr-t0-classifier.js <enriched_jobs.json> [--json] [--desc-dir <dir>]');
-  console.error('       node enr-t0-classifier.js --remote [--json]');
-  process.exit(1);
-}
-
-// --- Load data ---
-(async () => {
-let records = [];
-if (enrichedPath === '--remote') {
-  const remote = await loadFromRemote();
-  if (!remote) { console.error('ERROR: Could not fetch enriched_jobs.json from remote.'); process.exit(1); }
-  records = remote;
-} else {
-  for (const line of fs.readFileSync(enrichedPath, 'utf8').trim().split('\n').filter(Boolean)) {
-    try { records.push(JSON.parse(line)); } catch (_) {}
-  }
-}
-console.error(`[enr-t0-classifier] Loaded ${records.length} records`);
-
-// --- Helpers ---
-const hasSkills = r => Array.isArray(r.required_skills) && r.required_skills.length > 0;
-const hasDegree = r => r.min_degree !== null && r.min_degree !== undefined;
-const hasVisa = r => r.sponsors_visa !== null || r.possible_sponsor !== null || r.visa_question_present !== null;
-
-function classifyTier(r) {
-  if (!r.has_description) return 0;
-  if (!hasSkills(r)) return 1;
-  if (hasDegree(r) && hasVisa(r)) return 4;
-  if (hasDegree(r)) return 3;
-  return 2;
-}
-
-// --- Section 1: Tier distribution ---
-const tiers = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0 };
-const tiersBySource = {};
-for (const r of records) {
-  const t = classifyTier(r);
-  tiers[t]++;
-  const src = r.source || 'unknown';
-  if (!tiersBySource[src]) tiersBySource[src] = { t0: 0, t1: 0, t2: 0, t3: 0, t4: 0, total: 0 };
-  tiersBySource[src][`t${t}`]++;
-  tiersBySource[src].total++;
-}
-const total = tiers[0] + tiers[1] + tiers[2] + tiers[3] + tiers[4];
-const t3PlusPct = total > 0 ? ((tiers[3] + tiers[4]) / total * 100).toFixed(1) : '0.0';
-const t3Pct = total > 0 ? (tiers[3] / total * 100).toFixed(1) : '0.0';
-const t4Pct = total > 0 ? (tiers[4] / total * 100).toFixed(1) : '0.0';
-
-// --- Section 2: T1 decomposition ---
-const t1Records = records.filter(r => classifyTier(r) === 1);
-const t1WithDegree = t1Records.filter(r => hasDegree(r)).length;
-const t1WithVisa = t1Records.filter(r => hasVisa(r)).length;
-const t1WithBoth = t1Records.filter(r => hasDegree(r) && hasVisa(r)).length;
-const t1WithNeither = t1Records.filter(r => !hasDegree(r) && !hasVisa(r)).length;
-
-const t1BySource = {};
-for (const r of t1Records) {
-  const src = r.source || 'unknown';
-  if (!t1BySource[src]) t1BySource[src] = { total: 0, hasDegreeVisa: 0 };
-  t1BySource[src].total++;
-  if (hasDegree(r) && hasVisa(r)) t1BySource[src].hasDegreeVisa++;
-}
-
-// --- Section 3: T2 decomposition ---
-const t2Records = records.filter(r => classifyTier(r) === 2);
-const t2NoDegree = t2Records.filter(r => !hasDegree(r)).length;
-const t2NoVisa = t2Records.filter(r => !hasVisa(r)).length;
-const t2NoBoth = t2Records.filter(r => !hasDegree(r) && !hasVisa(r)).length;
-const t2NoDegreeOnly = t2NoDegree - t2NoBoth;
-const t2NoVisaOnly = t2NoVisa - t2NoBoth;
-
-// --- Section 4: Version propagation ---
-const versionCounts = {};
-for (const r of records) {
-  const v = r.enricher_version || 0;
-  versionCounts[v] = (versionCounts[v] || 0) + 1;
-}
-
-// --- Section 5: Description quality (optional) ---
-let descQuality = null;
-if (descDir && fs.existsSync(descDir)) {
-  descQuality = { sources: {} };
-  const files = fs.readdirSync(descDir).filter(f => /^descriptions-.*\.jsonl$/.test(f));
-  for (const file of files) {
-    const src = file.replace('descriptions-', '').replace('.jsonl', '');
-    const lengths = [];
-    let templateCount = 0;
-    let total_ = 0;
-    const templates = [
-      'Write product or system development code',
-      'Imagine what you',
-      'Imagine what you could do here',
-    ];
-    for (const line of fs.readFileSync(path.join(descDir, file), 'utf8').trim().split('\n').filter(Boolean)) {
-      try {
-        const obj = JSON.parse(line);
-        const text = obj.description_text || '';
-        total_++;
-        lengths.push(text.length);
-        for (const t of templates) {
-          if (text.includes(t)) { templateCount++; break; }
-        }
-      } catch (_) {}
-    }
-    if (lengths.length > 0) {
-      lengths.sort((a, b) => a - b);
-      descQuality.sources[src] = {
-        count: total_,
-        minLen: lengths[0],
-        maxLen: lengths[lengths.length - 1],
-        medianLen: lengths[Math.floor(lengths.length / 2)],
-        meanLen: Math.round(lengths.reduce((a, b) => a + b, 0) / lengths.length),
-        templateCount,
-        templatePct: (templateCount / total_ * 100).toFixed(1),
-      };
-    }
-  }
-}
-
-// --- Section 6: Per-company T1/T2 concentration ---
-const companyMap = {};
-for (const r of records) {
-  const co = r.company_name || 'Unknown';
-  if (!companyMap[co]) companyMap[co] = { t0: 0, t1: 0, t2: 0, t3: 0, t4: 0, total: 0, source: r.source };
-  const t = classifyTier(r);
-  companyMap[co][`t${t}`]++;
-  companyMap[co].total++;
-}
-const topT1Companies = Object.entries(companyMap)
-  .filter(([_, v]) => v.t1 > 2)
-  .sort((a, b) => b[1].t1 - a[1].t1)
-  .slice(0, 20);
-
-// --- Output ---
-const result = {
-  generated: new Date().toISOString(),
-  totalRecords: records.length,
-  tiers: { ...tiers, total, t3_pct: parseFloat(t3Pct), t4_pct: parseFloat(t4Pct), t3_plus_pct: parseFloat(t3PlusPct) },
-  tiersBySource,
-  t1Decomposition: {
-    total: t1Records.length,
-    hasDegreeAndVisa: t1WithBoth,
-    hasDegreeOnly: t1WithDegree - t1WithBoth,
-    hasVisaOnly: t1WithVisa - t1WithBoth,
-    hasNeither: t1WithNeither,
-    pctCloseToT3: t1Records.length > 0 ? parseFloat((t1WithBoth / t1Records.length * 100).toFixed(1)) : 0,
-    bySource: t1BySource,
-  },
-  t2Decomposition: {
-    total: t2Records.length,
-    missingDegreeOnly: t2NoDegreeOnly,
-    missingVisaOnly: t2NoVisaOnly,
-    missingBoth: t2NoBoth,
-  },
-  versionPropagation: versionCounts,
-  descriptionQuality: descQuality,
-  topT1Companies: topT1Companies.map(([name, v]) => ({ company: name, ...v })),
-};
-
-if (jsonOutput) {
-  console.log(JSON.stringify(result, null, 2));
-} else {
-  // Human-readable output
-  console.log(`\n=== ENR Tier Classifier Report ===\n`);
-  console.log(`Records: ${total}  |  T3+T4: ${tiers[3]+tiers[4]} (${t3PlusPct}%)  |  T3: ${tiers[3]} (${t3Pct}%)  |  T4: ${tiers[4]} (${t4Pct}%)  |  T2: ${tiers[2]}  |  T1: ${tiers[1]}  |  T0: ${tiers[0]}\n`);
-
-  console.log(`--- Per-Source Tiers (sorted by T3+T4%) ---`);
-  const srcSorted = Object.entries(tiersBySource).sort((a, b) => {
-    const pctA = (a[1].t3 + a[1].t4) / a[1].total;
-    const pctB = (b[1].t3 + b[1].t4) / b[1].total;
-    return pctB - pctA;
-  });
-  for (const [src, t] of srcSorted) {
-    const pct = ((t.t3 + t.t4) / t.total * 100).toFixed(1);
-    console.log(`  ${src.padEnd(16)} T3+T4=${pct.padStart(5)}%  (${t.t3+t.t4}/${t.total})  T3=${t.t3} T4=${t.t4} T1=${t.t1} T2=${t.t2}`);
-  }
-
-  console.log(`\n--- T1 Decomposition (${t1Records.length} records) ---`);
-  console.log(`  Has degree+visa, only missing skills: ${t1WithBoth} (${(t1WithBoth/t1Records.length*100).toFixed(0)}%)`);
-  console.log(`  Has degree only (missing visa+skills): ${t1WithDegree - t1WithBoth}`);
-  console.log(`  Has visa only (missing degree+skills): ${t1WithVisa - t1WithBoth}`);
-  console.log(`  Has neither:                          ${t1WithNeither}`);
-  console.log(`  → ${t1WithBoth} records would become T3/T4 if descriptions had tech terms`);
-  console.log(`  → Projected T3+T4 with T1→T3 conversion: ${tiers[3]+tiers[4] + t1WithBoth}/${total} = ${((tiers[3]+tiers[4] + t1WithBoth)/total*100).toFixed(1)}%`);
-
-  console.log(`\n  T1 by source:`);
-  for (const [src, d] of Object.entries(t1BySource).sort((a, b) => b[1].total - a[1].total)) {
-    console.log(`    ${src.padEnd(16)} ${d.total} T1  (${d.hasDegreeVisa} close to T3)`);
-  }
-
-  console.log(`\n--- T2 Decomposition (${t2Records.length} records) ---`);
-  console.log(`  Missing degree only: ${t2NoDegreeOnly}`);
-  console.log(`  Missing visa only:   ${t2NoVisaOnly}`);
-  console.log(`  Missing both:        ${t2NoBoth}`);
-
-  console.log(`\n--- Version Propagation ---`);
-  for (const [v, cnt] of Object.entries(versionCounts).sort((a, b) => Number(b[0]) - Number(a[0]))) {
-    console.log(`  v${v}: ${cnt} (${(cnt/total*100).toFixed(1)}%)`);
-  }
-
-  if (descQuality) {
-    console.log(`\n--- Description Quality ---`);
-    for (const [src, d] of Object.entries(descQuality.sources).sort((a, b) => b[1].count - a[1].count)) {
-      console.log(`  ${src.padEnd(16)} ${d.count} descs  len: ${d.minLen}-${d.maxLen} (med ${d.medianLen})  template: ${d.templateCount} (${d.templatePct}%)`);
-    }
-  }
-
-  console.log(`\n--- Top 20 Companies by T1 Count ---`);
-  for (const [name, v] of topT1Companies.slice(0, 20)) {
-    const pct = (v.t1 / v.total * 100).toFixed(0);
-    console.log(`  ${name.padEnd(30)} T1=${v.t1} (${pct}% of ${v.total})  src=${v.source}`);
-  }
-
-  console.log(`\n--- Impact Projections ---`);
-  const gaT1 = (t1BySource['google']?.total || 0) + (t1BySource['apple']?.total || 0);
-  const t3t4 = tiers[3] + tiers[4];
-  console.log(`  Google+Apple T1→T3 (AGG-FETCH-10): ${t3t4} + ${gaT1} = ${t3t4 + gaT1} → ${((t3t4 + gaT1)/total*100).toFixed(1)}%`);
-  console.log(`  All T1→T3 (ideal):                  ${t3t4} + ${t1Records.length} = ${t3t4 + t1Records.length} → ${((t3t4 + t1Records.length)/total*100).toFixed(1)}%`);
-  const allT2toT3 = t3t4 + t1Records.length + t2Records.length;
-  console.log(`  All T1+T2→T3 (unrealistic):         ${allT2toT3}/${total} → ${(allT2toT3/total*100).toFixed(1)}%`);
-
-  console.log();
-}
-})();
+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

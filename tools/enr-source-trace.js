@@ -1,326 +1,250 @@
-#!/usr/bin/env node
-// enr-source-trace.js — Diagnose WHY a source is underperforming in enrichment
-//
-// Traces a source through 5 pipeline stages to identify where data is lost.
-// Stage 1: Fetcher — did the source produce jobs? (jobs-metadata.json)
-// Stage 2: Sidecar — do jobs have description entries? (enriched_jobs has_description)
-// Stage 3: Skills — were skills extracted? (enriched_jobs skills array)
-// Stage 4: Degree — was degree inferred/extracted? (enriched_jobs min_degree)
-// Stage 5: Visa — was any visa signal found? (sponsors_visa, possible_sponsor, or visa_question_present)
-//
-// Usage:
-//   node projects/zjp/scripts/enr-source-trace.js google
-//   node projects/zjp/scripts/enr-source-trace.js oracle --remote
-//   node projects/zjp/scripts/enr-source-trace.js apple --json
-//   node projects/zjp/scripts/enr-source-trace.js --list    (show all sources)
-//
-// Output: Per-source diagnostic with stage-by-stage pass/fail + root cause hint.
-
-'use strict';
-
-const fs = require('fs');
-
-const args = process.argv.slice(2);
-const jsonOutput = args.includes('--json');
-const useRemote = args.includes('--remote');
-const listSources = args.includes('--list');
-const sourceName = args.find(a => !a.startsWith('--'));
-
-if (!sourceName && !listSources) {
-  console.error('Usage: enr-source-trace.js <source_name> [--remote] [--json]');
-  console.error('       enr-source-trace.js --list [--remote]');
-  process.exit(1);
-}
-
-
-async function fetchGhApi(path) {
-  const { execSync } = require('child_process');
-  try {
-    const content = execSync(
-      `gh api repos/zapplyjobs/${path} --jq '.content' 2>/dev/null`,
-      { encoding: 'utf-8', timeout: 30000 }
-    ).trim();
-    if (!content) return null;
-    return JSON.parse(Buffer.from(content, 'base64').toString('utf-8'));
-  } catch {
-    return null;
-  }
-}
-
-async function loadEnrichedJobs() {
-  if (useRemote) {
-    try {
-      const { loadJsonFromR2 } = require('./r2-loader');
-      return await loadJsonFromR2('enriched_jobs.json', { allowGitHubFallback: false });
-    } catch (e) {
-      console.error(`ERROR: Could not load live enriched_jobs.json from R2: ${e.message}`);
-      process.exit(1);
-    }
-  }
-
-  // Local file
-  const localPath = args.find(a => !a.startsWith('--') && a !== sourceName);
-  const tryPaths = [
-    localPath,
-    'enriched_jobs.json',
-    '../jobs-data-2026/enriched_jobs.json',
-  ].filter(Boolean);
-
-  for (const p of tryPaths) {
-    if (fs.existsSync(p)) {
-      const raw = fs.readFileSync(p, 'utf-8');
-      const parsed = JSON.parse(raw);
-      const records = Array.isArray(parsed) ? parsed : (parsed.jobs || []);
-      console.error(`  Loaded ${records.length} records from ${p}`);
-      return records;
-    }
-  }
-  console.error('ERROR: No enriched_jobs.json found. Provide path or use --remote.');
-  process.exit(1);
-}
-
-async function loadMetadata() {
-  if (useRemote) {
-    const data = await fetchGhApi('jobs-aggregator-private/contents/jobs-metadata.json');
-    if (data) { console.error('  Loaded jobs-metadata.json via gh api'); return data; }
-  }
-  return null;
-}
-
-function hasSkills(job) {
-  const skills = job.skills || job.required_skills;
-  return Array.isArray(skills) && skills.length > 0;
-}
-
-function getDegree(job) {
-  return job.degree_level || job.min_degree;
-}
-
-function hasVisa(job) {
-  return job.sponsors_visa !== null && job.sponsors_visa !== undefined
-    || job.possible_sponsor !== null && job.possible_sponsor !== undefined
-    || job.visa_question_present !== null && job.visa_question_present !== undefined;
-}
-
-function hasDegree(job) {
-  const degree = getDegree(job);
-  return degree && degree !== 'none' && degree !== 'None' && degree !== 'NONE';
-}
-
-function classifyTier(job) {
-  const sk = hasSkills(job);
-  const deg = hasDegree(job);
-  const visa = hasVisa(job);
-
-  if (!job.has_description) return 'T0';
-  if (sk && deg && visa) return 'T4';
-  if (sk && deg) return 'T3';
-  if (sk) return 'T2';
-  return 'T1';
-}
-
-async function main() {
-  const jobs = await loadEnrichedJobs();
-  const metadata = await loadMetadata();
-
-  // Build source index
-  const bySource = {};
-  for (const job of jobs) {
-    const src = job.source || 'unknown';
-    if (!bySource[src]) bySource[src] = [];
-    bySource[src].push(job);
-  }
-
-  // List mode
-  if (listSources) {
-    const rows = Object.entries(bySource)
-      .map(([src, srcJobs]) => {
-        const enriched = srcJobs.filter(j => (j.enriched_version || j.enricher_version || 0) > 0);
-        const t3t4 = srcJobs.filter(j => ['T3', 'T4'].includes(classifyTier(j)));
-        return {
-          source: src,
-          total: srcJobs.length,
-          enriched: enriched.length,
-          t3t4: t3t4.length,
-          t3t4_pct: srcJobs.length ? (t3t4.length / srcJobs.length * 100).toFixed(1) : '0.0',
-        };
-      })
-      .sort((a, b) => b.total - a.total);
-
-    if (jsonOutput) {
-      console.log(JSON.stringify(rows, null, 2));
-    } else {
-      console.log('\n=== Source Overview ===\n');
-      console.log('Source'.padEnd(25) + 'Total'.padStart(7) + 'Enr%'.padStart(7) + 'T3+T4%'.padStart(8));
-      console.log('-'.repeat(47));
-      for (const r of rows) {
-        const enrPct = r.total ? (r.enriched / r.total * 100).toFixed(1) : '0.0';
-        console.log(
-          r.source.padEnd(25) +
-          String(r.total).padStart(7) +
-          `${enrPct}%`.padStart(7) +
-          `${r.t3t4_pct}%`.padStart(8)
-        );
-      }
-    }
-    return;
-  }
-
-  // Single source trace
-  const sourceJobs = bySource[sourceName];
-  if (!sourceJobs) {
-    console.error(`ERROR: Source "${sourceName}" not found. Available: ${Object.keys(bySource).sort().join(', ')}`);
-    console.error('Use --list to see all sources.');
-    process.exit(1);
-  }
-
-  // Stage 1: Fetcher output
-  const fetcherInfo = metadata?.sources?.[sourceName];
-  const stage1 = {
-    name: 'Fetcher Output',
-    pass: sourceJobs.length > 0,
-    detail: `${sourceJobs.length} jobs fetched`,
-    metadata: fetcherInfo || null,
-  };
-
-  // Stage 2: Sidecar / Description
-  const withDesc = sourceJobs.filter(j => j.has_description === true);
-  const stage2 = {
-    name: 'Description Available',
-    pass: withDesc.length > 0,
-    has_desc: withDesc.length,
-    total: sourceJobs.length,
-    pct: sourceJobs.length ? (withDesc.length / sourceJobs.length * 100).toFixed(1) : '0.0',
-    detail: `${withDesc.length}/${sourceJobs.length} (${sourceJobs.length ? (withDesc.length / sourceJobs.length * 100).toFixed(1) : '0'}%) have descriptions`,
-  };
-
-  // Stage 3: Skills extraction
-  const withSkills = sourceJobs.filter(j => hasSkills(j));
-  const noSkills = sourceJobs.filter(j => !hasSkills(j));
-  const stage3 = {
-    name: 'Skills Extraction',
-    pass: withSkills.length > 0,
-    has_skills: withSkills.length,
-    total: sourceJobs.length,
-    pct: sourceJobs.length ? (withSkills.length / sourceJobs.length * 100).toFixed(1) : '0.0',
-    detail: `${withSkills.length}/${sourceJobs.length} (${sourceJobs.length ? (withSkills.length / sourceJobs.length * 100).toFixed(1) : '0'}%) have skills`,
-  };
-
-  // Stage 4: Degree inference
-  const withDegree = sourceJobs.filter(j => hasDegree(j));
-  const stage4 = {
-    name: 'Degree Inference',
-    pass: withDegree.length > 0,
-    has_degree: withDegree.length,
-    total: sourceJobs.length,
-    pct: sourceJobs.length ? (withDegree.length / sourceJobs.length * 100).toFixed(1) : '0.0',
-    detail: `${withDegree.length}/${sourceJobs.length} (${sourceJobs.length ? (withDegree.length / sourceJobs.length * 100).toFixed(1) : '0'}%) have degree`,
-  };
-
-  // Stage 5: Visa signal
-  const withVisa = sourceJobs.filter(j => hasVisa(j));
-  const stage5 = {
-    name: 'Visa Signal',
-    pass: withVisa.length > 0,
-    has_visa: withVisa.length,
-    total: sourceJobs.length,
-    pct: sourceJobs.length ? (withVisa.length / sourceJobs.length * 100).toFixed(1) : '0.0',
-    detail: `${withVisa.length}/${sourceJobs.length} (${sourceJobs.length ? (withVisa.length / sourceJobs.length * 100).toFixed(1) : '0'}%) have visa signal`,
-  };
-
-  // Tier breakdown
-  const tiers = { T0: 0, T1: 0, T2: 0, T3: 0, T4: 0 };
-  for (const j of sourceJobs) tiers[classifyTier(j)]++;
-  const t3t4 = tiers.T3 + tiers.T4;
-  const t3t4Pct = sourceJobs.length ? (t3t4 / sourceJobs.length * 100).toFixed(1) : '0.0';
-
-  // Version distribution
-  const versions = {};
-  for (const j of sourceJobs) {
-    const v = j.enriched_version || j.enricher_version || 0;
-    versions[v] = (versions[v] || 0) + 1;
-  }
-
-  // Root cause analysis
-  const rootCauses = [];
-  if (stage2.pct < 50) {
-    rootCauses.push('LOW_DESCRIPTION: <50% of jobs have descriptions. Fetcher may not be reaching detail pages, or sidecar is being deleted as stale.');
-  }
-  if (stage2.pct >= 50 && stage3.pct < 50) {
-    rootCauses.push('SKILLS_EXTRACTION_GAP: Descriptions exist but skills not extracted. Possible taxonomy gap — source uses terminology not in skills-taxonomy.json.');
-  }
-  if (stage3.pct >= 50 && stage4.pct < 30) {
-    rootCauses.push('DEGREE_INFERENCE_GAP: Skills extracted but degree not inferred. Title-based inference may not cover this source\'s job titles.');
-  }
-  if (stage3.pct >= 50 && stage4.pct >= 30 && stage5.pct < 30) {
-    rootCauses.push('VISA_SIGNAL_GAP: Skills and degree present but visa signal missing. LCA alias may not cover this source\'s company names.');
-  }
-  if (Object.keys(versions).length > 1 && (versions[0] || 0) > sourceJobs.length * 0.3) {
-    rootCauses.push(`STALE_VERSION: ${versions[0] || 0} jobs at version 0 (never enriched). Re-enrichment may not be reaching these records.`);
-  }
-  if (rootCauses.length === 0 && t3t4Pct >= 80) {
-    rootCauses.push('HEALTHY: Source enrichment is within acceptable range. No action needed.');
-  } else if (rootCauses.length === 0) {
-    rootCauses.push('COMPOUND_GAP: Multiple fields partially missing. No single dominant root cause. Investigate individual job samples.');
-  }
-
-  // T1 sample jobs (for manual verification)
-  const t1Jobs = sourceJobs.filter(j => classifyTier(j) === 'T1').slice(0, 5);
-
-  // Output
-  if (jsonOutput) {
-    console.log(JSON.stringify({
-      source: sourceName,
-      total_jobs: sourceJobs.length,
-      stages: [stage1, stage2, stage3, stage4, stage5],
-      tiers,
-      t3t4_pct: parseFloat(t3t4Pct),
-      versions,
-      root_causes: rootCauses,
-      t1_samples: t1Jobs.map(j => ({
-        id: j.job_id || j.id,
-        title: j.title,
-        company: j.company_name || j.company,
-        has_description: j.has_description,
-        skills: (j.skills || j.required_skills || []).length,
-        degree: j.degree_level || j.min_degree,
-        visa: hasVisa(j),
-        url: j.url || j.job_url,
-      })),
-    }, null, 2));
-    return;
-  }
-
-  // Human-readable output
-  console.log(`\n=== Source Trace: ${sourceName} ===\n`);
-
-  console.log(`Total jobs: ${sourceJobs.length} | T0: ${tiers.T0} | T1: ${tiers.T1} | T2: ${tiers.T2} | T3: ${tiers.T3} | T4: ${tiers.T4} | T3+T4: ${t3t4Pct}%`);
-  console.log(`Versions: ${Object.entries(versions).sort((a,b) => b[1]-a[1]).map(([v,c]) => `v${v}=${c}`).join(', ')}`);
-  console.log();
-
-  const stages = [stage1, stage2, stage3, stage4, stage5];
-  for (let i = 0; i < stages.length; i++) {
-    const s = stages[i];
-    const icon = s.pass ? '✅' : '❌';
-    console.log(`Stage ${i+1}: ${icon} ${s.name}`);
-    console.log(`        ${s.detail}`);
-  }
-
-  console.log(`\n=== Root Cause Analysis ===`);
-  for (const rc of rootCauses) {
-    console.log(`  → ${rc}`);
-  }
-
-  if (t1Jobs.length > 0) {
-    console.log(`\n=== T1 Sample Jobs (verify manually) ===`);
-    for (const j of t1Jobs) {
-      const url = j.url || j.job_url || 'N/A';
-      console.log(`  • ${(j.title || 'N/A').substring(0, 50).padEnd(52)} | ${(j.company_name || j.company || 'N/A').substring(0, 20)}`);
-      console.log(`    URL: ${url}`);
-    }
-  }
-
-  console.log();
-}
-
-main().catch(e => { console.error('FATAL:', e.message); process.exit(1); });
+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
+a4DFbCRjqZ3S7k6ctqUihw==
