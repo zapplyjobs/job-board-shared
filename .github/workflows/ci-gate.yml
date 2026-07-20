@@ -19,6 +19,19 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Install transcrypt
+        run: |
+          curl -sSL https://raw.githubusercontent.com/elasticdog/transcrypt/master/transcrypt -o /tmp/transcrypt
+          chmod +x /tmp/transcrypt
+          sudo mv /tmp/transcrypt /usr/local/bin/transcrypt
+
+      - name: Unlock encrypted files
+        run: |
+          transcrypt --cipher aes-256-cbc --password "$TRANSCRYPT_PASSWORD" --force
+          git checkout -- .
+        env:
+          TRANSCRYPT_PASSWORD: ${{ secrets.TRANSCRYPT_PASSWORD }}
+
       - name: Check file count (tree corruption guard)
         run: |
           COUNT=$(find . -type f -not -path './node_modules/*' -not -path './.git/*' | wc -l)
