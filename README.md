@@ -1,2 +1,4 @@
+# job-board-shared
 
-<!-- guard-required-main ruleset 2026-08-27: verified staged enablement (Jalal-approved Phase B stage 1) -->
+Private ZJP submodule: core config, tools, auto-bump, and CI gates shared across the pipeline repos.
+Consumed via `.github/scripts/shared`. Owner: ZJP INF (see `projects/zjp/contracts/INF_CONTRACT.md` in the control-plane workspace).
