@@ -1,14 +1,16 @@
 # CI Gate — validates job-board-shared changes before they can propagate.
 # Catches: syntax errors, empty files, file count drops, missing critical files.
-# Runs on push to main and pull requests targeting main for shipped shared-code paths.
+# Runs on EVERY push to main and pull requests targeting main.
+# NO paths-ignore: workflow-only commits still change what the parent repos consume,
+# and auto-bump is workflow_run-gated on THIS workflow — skipping CI here silently
+# killed the bump chain (shared HEAD sat unpinned 38h, Aug 30 pattern; root cause
+# of the incident the parents' P-2 freshness check now also catches).
 
 name: CI Gate
 
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - '.github/workflows/**'
   pull_request:
     branches: [main]
 jobs:
