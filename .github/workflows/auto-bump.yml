@@ -1,5 +1,5 @@
 # Auto Bump Submodule — fires only after CI Gate succeeds on job-board-shared main.
-# Dispatches bump-submodule.yml in jobs-aggregator-private with the exact tested SHA.
+# Dispatches bump-submodule.yml in jobs-aggregator-engine with the exact tested SHA.
 #
 # Prerequisite: GH_PAT secret must be in job-board-shared repo settings.
 # Why: bumping on raw push can propagate a bad shared commit before CI finishes.
@@ -28,7 +28,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           gh workflow run bump-submodule.yml \
-            --repo zapplyjobs/jobs-aggregator-private \
+            --repo zapplyjobs/jobs-aggregator-engine \
             --field submodule_name=shared \
             --field target_sha="${{ steps.sha.outputs.sha }}"
           echo "Dispatched bump-submodule.yml (shared) with tested SHA ${{ steps.sha.outputs.sha }}"
